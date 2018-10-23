@@ -1,0 +1,115 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+%\usepackage{geometry} 
+%\geometry{a4paper,top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,% heightrounded,bindingoffset=5mm}
+
+\begin{document}
+
+\author{Manuel Trivilino, Davide Salaorni, Luca Terracciano}
+
+\title{\Large Data4Help\\
+\Large RASD Requirements Analysis and Specification Document
+}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Purpose}
+
+\subsection{Scope}
+
+\paragraph{Goals}
+
+\begin{enumerate}
+	
+	%Data4Help
+	
+	\item Data are collected only for people who are registred to Data4Help.
+	\item Individual data can be accessed only if the user agreed to share his/her data with a third party service.
+	\item Data4Help allows to register two kind of users: single person and third parties.
+	\item Third parties can request for accessing a specific person data.
+	\item A person can allow or deny the access to their personal data from a specific third party service that requests for them.
+	\item Third parties can request for anonymazed data using various filters.
+	\item Data4Help can decide to not share anonymazed data with the third party service if the set of filters applied create a subset of the users smaller than 1000.
+	\item Once a third party service has obtained the access to the data it can subscribe for new data.
+	
+	%AutomatedSOS
+	\item AutomatedSOS monitors the health status of people registred to it.
+	\item AutomatedSOS sends a notification to an ambulance if the user health parameter are below a certain tresholds. 
+	
+	%Track4Run
+	\item Track4Run allows users to create a run and define a path for it, the participants and the spectators.
+	\item The spectators can see the participants position during the run.
+	\item Users can accept or refuse to participate in a run.
+	
+\end{enumerate}
+
+\subsection{Definitions, Acronyms, Abbreviation}
+
+\subsection{Revision History}
+
+\subsection{Reference Documents}
+
+\subsection{Document Structure}
+
+\section{Overall Description}
+
+\subsection{Product Perspective}
+
+\subsection{Product Functions}
+
+\subsection{User Characteristics}
+
+\subsection{Assumption, Dependencies and Constraints}
+
+\section{Specific Requirements}
+
+\subsection{External Interface Requirements}
+
+\subsubsection{User Interfaces}
+
+\subsubsection{Hardware Interfaces}
+
+\subsubsection{Software Interfaces}
+
+\subsubsection{Communication Interfaces}
+
+\subsection{Functional Requirements}
+
+\subsection{Performance Requirements}
+
+\subsection{Design Constraints}
+
+\subsubsection{Standards Compliance}
+
+\subsubsection{Hardware Limitations}
+
+\subsubsection{Any other Constraint}
+
+\subsection{Software System Attributes}
+
+\subsubsection{Reliability}
+
+\subsubsection{Availability}
+
+\subsubsection{Security}
+
+\subsubsection{Maintainability}
+
+\subsubsection{Portability}
+
+\section{Formal Analysis Using Alloy}
+
+\section{Effort Spent}
+
+\section{References}
+
+
+\end{document}
