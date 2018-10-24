@@ -26,6 +26,38 @@
 
 \subsection{Scope}
 
+\paragraph{Description of the given problem}
+
+\begin{para}
+
+TrackMe is a company that develops software-based services for third parties and for consumers. The main service is called Data4Help.
+ Data4Help is a service that allows third parties to monitor the location and the health status of individual, it handles a policy of permissions for each user and collects individual’s data from their personal devices.
+The service supports the registration of individuals who, by registering, agree that TrackMe acquires their data. After registration, these third parties can request:
+\begin{itemize}
+    \item Access to the data of some specific individuals (we can assume, for instance, that they know an 
+    individual by his/her social security number or fiscal code in Italy). In this case, TrackMe passes 
+    the request to the specific individuals who can accept or refuse it.
+    
+    \item Access to anonymized data of groups of individuals (for instance, all those living in a certain 
+    geographical area, all those of a specific age range, etc.). These requests are handled directly 
+    by TrackMe that approves them if it is able to properly anonymize the requested data. For 
+    instance, if the third party is asking for data about 10-year-old children living in a certain street 
+    in Milano and the number of these children is two, then the third party could be able to derive 
+    their identity simply having people monitoring the residents of the street between 8.00 and 
+    9.00 when kids go to school. Then, to avoid this risk and the possibility of a misuse of data,
+    TrackMe will not accept the request. For simplicity, we assume that TrackMe will accept any 
+    request for which the number of individuals whose data satisfy the request is higher than 
+    1000.
+
+\end{itemize}
+
+As soon as a request for data is approved, TrackMe makes the previously saved data available to the 
+third party. Also, it allows the third party to subscribe to new data and to receive them as soon as 
+they are produced.
+TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
+
+\end{para}
+
 \paragraph{Goals}
 
 \begin{enumerate}[label={[G.\arabic*]}]
@@ -54,6 +86,7 @@
 
 \subsection{Definitions, Acronyms, Abbreviation}
 
+
 \subsection{Revision History}
 
 \subsection{Reference Documents}
@@ -68,17 +101,28 @@
 
 \subsection{User Characteristics}
 
+\begin{para}
+    The following actors are the users of the services offered by TrackMe. 
+\end{para}
+
+\begin{itemize}
+    \item User:  a person that is successfully registered to TrackMe as consumer and allow to acquire anonymous data, eventually a client of third party services (i.e. AutomatedSOS, Track4Run) that allows even personal data.
+    
+    \item Third Parties:  a company or a person who is registred to TrackMe as "Third party" that access to anonymous and can require to access to individual data.
+    
+\end{itemize}
+
 \subsection{Assumption, Dependencies and Constraints}
 
 \subsubsection{Domain Assumptions}
 
 
-\begin{itemize}[label={[D.\arabic*]}]
+\begin{enumerate}[label={[D.\arabic*]}]
     \item Users by registering to TrackMe give the consense to share anonymous data with third parties.
     \item Registered people log in with his own account, collected data belongs to the account owner and the personal informations (Age, address, sex...) given from the users are correct.
     \item Users log in with devices from which is possible to collect information and data (like smartphones, smartwatches, laptops with an internet connection, sensors like GPS, accelerometer, pulse sensor...).
     \item The data collected from the devices is reliable and accurate.
-\end{itemize}
+\end{enumerate}
 
 
 \section{Specific Requirements}
