@@ -28,11 +28,11 @@
 
 \paragraph{Description of the given problem}
 
-\begin{para}
-
+\paragraph{}
 TrackMe is a company that develops software-based services for third parties and for consumers. The main service is called Data4Help.
  Data4Help is a service that allows third parties to monitor the location and the health status of individual, it handles a policy of permissions for each user and collects individual’s data from their personal devices.
 The service supports the registration of individuals who, by registering, agree that TrackMe acquires their data. After registration, these third parties can request:
+
 \begin{itemize}
     \item Access to the data of some specific individuals (we can assume, for instance, that they know an 
     individual by his/her social security number or fiscal code in Italy). In this case, TrackMe passes 
@@ -51,12 +51,11 @@ The service supports the registration of individuals who, by registering, agree 
 
 \end{itemize}
 
+\paragraph{}
 As soon as a request for data is approved, TrackMe makes the previously saved data available to the 
 third party. Also, it allows the third party to subscribe to new data and to receive them as soon as 
 they are produced.
 TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
-
-\end{para}
 
 \paragraph{Goals}
 
@@ -64,23 +63,20 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 	
 	%Data4Help
 	
-	\item Data are collected only for people who are registred to Data4Help.
-	\item Individual data can be accessed only if the user agreed to share his/her data with a third party service.
-	\item Data4Help allows to register two kind of users: single person and third parties.
-	\item Third parties can request for accessing a specific person data.
-	\item A person can allow or deny the access to their personal data from a specific third party service that requests for them.
-	\item Third parties can request for anonymazed data using various filters.
-	\item Data4Help can decide to not share anonymazed data with the third party service if the set of filters applied create a subset of the users smaller than 1000.
-	\item Once a third party service has obtained the access to the data it can subscribe for new data.
+	\item Allow users to register in two different ways: single person and third parties.
+	\item Third parties can request for users' data.
+	    \begin{enumerate}[label={[G.\arabic*]}]
+	        \item Third parties can request for anonymized data.
+	        \item Third parties can request for a specific person's data.
+	    \end{enumerate}
 	
 	%AutomatedSOS
-	\item AutomatedSOS monitors the health status of people registred to it.
-	\item AutomatedSOS sends a notification to an ambulance if the user health parameter are below a certain tresholds. 
+	\item The user can receive medical support in case of health emergency thanks to AutomatedSOS.
 	
 	%Track4Run
-	\item Track4Run allows users to create a run and define a path for it, the participants and the spectators.
-	\item The spectators can see the participants position during the run.
-	\item Users can accept or refuse to participate in a run.
+	\item Users can organize a run and define its path.
+	\item Users can enroll to a run.
+	\item Users can be spectators of a run seeing the partecipants' position on a map.
 	
 \end{enumerate}
 
@@ -101,9 +97,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \subsection{User Characteristics}
 
-\begin{para}
-    The following actors are the users of the services offered by TrackMe. 
-\end{para}
+\paragraph{}The following actors are the users of the services offered by TrackMe. 
+
 
 \begin{itemize}
     \item User:  a person that is successfully registered to TrackMe as consumer and allow to acquire anonymous data, eventually a client of third party services (i.e. AutomatedSOS, Track4Run) that allows even personal data.
