@@ -1,8 +1,10 @@
 \documentclass[a4paper]{article}
 \usepackage[T1]{fontenc}
-\usepackage{enumitem}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
 %\usepackage{geometry} 
 %\geometry{a4paper,top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,% heightrounded,bindingoffset=5mm}
 
@@ -59,17 +61,20 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \paragraph{Goals}
 
-\begin{enumerate}[label={[G.\arabic*]}]
+\setlist[enumerate]{label*=G.\arabic*}
+
+\begin{enumerate}
 	
 	%Data4Help
 	
 	\item Allow users to register in two different ways: single person and third parties.
 	\item Third parties can request for users' data.
-	    \begin{enumerate}[label={[G.\arabic*]}]
+	    
+	    \begin{enumerate}[label*=.\arabic*]
 	        \item Third parties can request for anonymized data.
 	        \item Third parties can request for a specific person's data.
 	    \end{enumerate}
-	
+	    
 	%AutomatedSOS
 	\item The user can receive medical support in case of health emergency thanks to AutomatedSOS.
 	
@@ -92,6 +97,21 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 \section{Overall Description}
 
 \subsection{Product Perspective}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{phenomenaSets}
+    \caption{World, machine and shared phenomena.}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics{setsLegend}
+    \caption{Legend of the colored circles.}
+    \label{fig:my_label}
+\end{figure}
+
 
 \subsection{Product Functions}
 
