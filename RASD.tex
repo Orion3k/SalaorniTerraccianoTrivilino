@@ -5,6 +5,7 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \graphicspath{{./images/}}
+\usepackage{tabularx}
 %\usepackage{geometry} 
 %\geometry{a4paper,top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,% heightrounded,bindingoffset=5mm}
 
@@ -98,15 +99,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{phenomenaSets}
+    \includegraphics[width=\linewidth]{worldMachineShared-small}
     \caption{World, machine and shared phenomena.}
-    \label{fig:my_label}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics{setsLegend}
-    \caption{Legend of the colored circles.}
     \label{fig:my_label}
 \end{figure}
 
@@ -154,86 +148,172 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \subsection{Functional Requirements}
 
-\paragraph{Goals}
-
-\begin{enumerate}[label*={[G.\arabic*]}]
+\begin{enumerate}[label*=\bf{G.\arabic*}]
 	
 	%Data4Help
 	
 	\item \textbf{Allow users to register in two different ways: single person and third parties.}
 	
 	\begin{enumerate}
-	    
 	    \item [D.2] Collected data belongs to the account owner and the personal informations (age, address, sex...) are correct.
 	    \item [R.1] People can create a user account selecting username, password, giving personal informations (age, address,sex) and allow to share their anonymized data.
 	    \item [R.2] People or companies can a create third party account selecting username and password.
-	    
 	\end{enumerate}
 	
 	\item Third parties can request for users' data.
 	    
-	    \begin{enumerate}[label*=.\arabic*]
-	        \item Third parties can request for anonymized data.
+    \begin{enumerate}[label*=.\arabic*]
+        \item Third parties can request for anonymized data.
 	        
-	            \begin{enumerate}
-	                
-	                \item [R.3] Data4Help allows requests for anonymized data from a group of users having certain characteristics (age, sex, address, etc.) from third parties.
-	                \item [R.4] Data4Help collects data from registered users and gives access to third parties only if the number of individuals whose data satisfy the request is higher than 1000.
-	                \item [D.2] Collected data belongs to the account owner and the personal informations (age, address, sex...) are correct.
-	                \item 
-	                
-	            \end{enumerate}
-	        \item Third parties can request for a specific person's data.
+        \begin{enumerate}
+	        \item [R.3] Data4Help allows requests for anonymized data from a group of users having certain characteristics (age, sex, address, etc.) from third parties.
+            \item [R.4] Data4Help collects data from registered users and gives access to third parties only if the number of individuals whose data satisfy the request is higher than 1000.
+            \item [D.2] Collected data belongs to the account owner and the personal informations (age, address, sex...) are correct.
+            \item     
+        \end{enumerate}
+
+        \item Third parties can request for a specific person's data.
 	        
-	            \begin{enumerate}
-	                
-	                \item [R.3] Users can accept or refuse third parties' request for individual data.
-	                \item [R.6] Data4Help keeps track of the connections between a specific user and the third parties that can access his/her data.
-	                
-	            \end{enumerate}
+        \begin{enumerate}
+            \item [R.3] Users can accept or refuse third parties' request for individual data.
+            \item [R.6] Data4Help keeps track of the connections between a specific user and the third parties that can access his/her data.
+        \end{enumerate}
 	        
-	    \end{enumerate}
+    \end{enumerate}
 	    
 	%AutomatedSOS
 	\item Users' health status is continuously checked in AutomatedSOS and in case of it overcomes a certain threshold values an ambulance is called within 5 seconds and sent to the user's position.
-	    \begin{enumerate}
-	                
-            \item [D.1] The data collected from the devices (position and health status) are reliable, accurate and in real time.
-            \item [R.7] Users' Health informations are collected from their devices and analyzed.
-            \item [R.8] In case of emergency (the health status values overcome the threshold) a request fro an ambulance is sent to the ambulance contact center in 5 seconds, containing the information about user's health status and position.
-            \item [D.3] Ambulance call and information about patients' status and position are correctly dispatched to the ambulance contact center.
-         
-         \end{enumerate}
+
+    \begin{enumerate}
+        \item [D.1] The data collected from the devices (position and health status) are reliable, accurate and in real time.
+        \item [R.7] Users' Health informations are collected from their devices and analyzed.
+        \item [R.8] In case of emergency (the health status values overcome the threshold) a request fro an ambulance is sent to the ambulance contact center in 5 seconds, containing the information about user's health status and position.
+        \item [D.3] Ambulance call and information about patients' status and position are correctly dispatched to the ambulance contact center.
+    \end{enumerate}
 	
 	%Track4Run
 	\item Users can organize a run.
-	    \begin{enumerate}
-            
-            \item [R.9] Users select the day, the hour at which the run begins, the starting point, the ending points and the path for the run.
-            \item [R.10] The run event is stored in order to be managed when the run is about to start and during the run.
-	                
-        \end{enumerate}
+	
+	\begin{enumerate}
+        \item [R.9] Users select the day, the hour at which the run begins, the starting point, the ending points and the path for the run.
+        \item [R.10] The run event is stored in order to be managed when the run is about to start and during the run.
+    \end{enumerate}
 	
 	\item Users can enroll to a run.
 	
-		\begin{enumerate}
-            
-            \item [R.11] Users can navigate among the the available runs and see their informations.
-            \item [R.12] Users can choice to see runs filtering them by city and/or date. 
-            \item [R.13] The system saves the enrolled users as runners to the run event.
-	                
-        \end{enumerate}
+	\begin{enumerate}
+        \item [R.11] Users can navigate among the the available runs and see their information.
+        \item [R.12] Users can choice to see runs filtering them by city and/or date. 
+        \item [R.13] The system saves the enrolled users as runners to the run event.
+    \end{enumerate}
 	
-	\item Users can be spectators of a run seeing the partecipants' position on a map.
+	\item Users can be spectators of a run seeing the participants' position on a map.
 	
-			\begin{enumerate}
-            
-                \item [R.14] The system keeps track of all the enrolled runners' position during the run.
-                \item [R.15] Users who require to watch a run are saved as spectators to the run event.
-            
-        \end{enumerate}
+	\begin{enumerate}
+        \item [R.14] The system keeps track of all the enrolled runners' position during the run.
+        \item [R.15] Users who require to watch a run are saved as spectators to the run event.
+    \end{enumerate}
 	
 \end{enumerate}
+
+%Data4Help
+\subsubsection{User's sign up}
+\begin{center}
+    \begin{tabular}{ l || p{6cm} ||}
+        ACTORS & ciao \\ \hline
+        GOALS & ciao \\ \hline
+        ENTRY CONDITIONS & ciao come  \\ \hline
+        EVENTS FLOW & ciao\\ \hline
+        EXIT CONDITIONS & ciao\\ \hline
+        EXCEPTIONS & ciao\\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsubsection{Request for anonymous data}
+\begin{center}
+    \begin{tabular}{l || p{6cm} ||}
+        ACTORS & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
+        GOALS & ciao \\ \hline
+        ENTRY CONDITIONS & ciao come  \\ \hline
+        EVENTS FLOW & ciao\\ \hline
+        EXIT CONDITIONS & ciao\\ \hline
+        EXCEPTIONS & ciao\\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsubsection{Request for specific user's data}
+\begin{center}
+    \begin{tabular}{l || p{6cm} ||}
+        ACTORS & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
+        GOALS & ciao \\ \hline
+        ENTRY CONDITIONS & ciao come  \\ \hline
+        EVENTS FLOW & ciao\\ \hline
+        EXIT CONDITIONS & ciao\\ \hline
+        EXCEPTIONS & ciao\\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+%AutomatedSOS
+\subsubsection{Alert emergency status}
+\begin{center}
+    \begin{tabular}{l || p{6cm} ||}
+        ACTORS & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
+        GOALS & ciao \\ \hline
+        ENTRY CONDITIONS & ciao come  \\ \hline
+        EVENTS FLOW & ciao\\ \hline
+        EXIT CONDITIONS & ciao\\ \hline
+        EXCEPTIONS & ciao\\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+%Track4Run
+\subsubsection{Creation of a run event}
+\begin{center}
+    \begin{tabular}{l || p{6cm} ||}
+        ACTORS & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
+        GOALS & ciao \\ \hline
+        ENTRY CONDITIONS & ciao come  \\ \hline
+        EVENTS FLOW & ciao\\ \hline
+        EXIT CONDITIONS & ciao\\ \hline
+        EXCEPTIONS & ciao\\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsubsection{Enrollment in a run}
+\begin{center}
+    \begin{tabular}{l || p{6cm} ||}
+        ACTORS & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
+        GOALS & ciao \\ \hline
+        ENTRY CONDITIONS & ciao come  \\ \hline
+        EVENTS FLOW & ciao\\ \hline
+        EXIT CONDITIONS & ciao\\ \hline
+        EXCEPTIONS & ciao\\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsubsection{Specatation of a run}
+\begin{center}
+    \begin{tabular}{l || p{6cm} ||}
+        ACTORS & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
+        GOALS & ciao \\ \hline
+        ENTRY CONDITIONS & ciao come  \\ \hline
+        EVENTS FLOW & ciao\\ \hline
+        EXIT CONDITIONS & ciao\\ \hline
+        EXCEPTIONS & ciao\\ \hline \hline
+    \end{tabular}
+\end{center}
 
 \subsection{Performance Requirements}
 
