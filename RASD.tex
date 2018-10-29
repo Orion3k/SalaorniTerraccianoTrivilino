@@ -149,6 +149,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \subsection{Functional Requirements}
 
+\paragraph{Goals}
+
 \begin{enumerate}[label*=\bf{G.\arabic*}]
 	
 	%Data4Help
@@ -218,22 +220,32 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 \end{enumerate}
 
 %Data4Help
+
+\paragraph{Use cases}
+
 \subsubsection{User's sign up}
 \begin{center}
-    \begin{tabular}{ l || p{6cm} ||}
-        \bf{ACTORS} & ciao \\ 
+    \begin{tabular}{ l || p{8cm} ||}
+        \bf{ACTORS} & User \\ 
         \hline
-        \bf{GOALS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] test
-            \item[2.] test2
-        \end{itemize} \\
+        \bf{ENTRY CONDITIONS} & No entry condition needed  \\ 
         \hline
-        \bf{ENTRY CONDITIONS} & ciao come  \\ 
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] User opens Data4Help app and press “Sign Up” button.
+            \item[2.] User inserts personal informations (name, address, age, gender, fiscal code).
+            \item[3.] User selects email and password.
+            \item[4.] User allows terms of conditions to share anonymized data with Data4Help.
+            \item[5.] User completes the registration.
+            \item[6.] The system saves the new account.
+        \end{itemize}\\ 
         \hline
-        \bf{EVENTS FLOW} & ciao\\ 
-        \hline
-        \bf{EXIT CONDITIONS} & ciao\\ \hline
-        \bf{EXCEPTIONS} & ciao\\ \hline \hline
+        \bf{EXIT CONDITIONS} & The user is successfully registered and his/her data can be collected by Data4Help, he/she is redirected to the user page\\ \hline
+        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The user doesn’t fill all the mandatory fields with valid data.
+            \item[2.]The inserted email is already used by another user.
+            \item[3.] The user doesn’t allow the term of condition and he/she can’t complete the registration.
+        \end{itemize}
+        \\ \hline \hline
     \end{tabular}
 \end{center}
 
@@ -241,9 +253,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \subsubsection{Request for anonymous data}
 \begin{center}
-    \begin{tabular}{l || p{6cm} ||}
+    \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-        \bf{GOALS} & ciao \\ \hline
         \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
         \bf{EVENTS FLOW} & ciao\\ \hline
         \bf{EXIT CONDITIONS} & ciao\\ \hline
@@ -255,9 +266,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \subsubsection{Request for specific user's data}
 \begin{center}
-    \begin{tabular}{l || p{6cm} ||}
+    \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-        \bf{GOALS} & ciao \\ \hline
         \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
         \bf{EVENTS FLOW} & ciao\\ \hline
         \bf{EXIT CONDITIONS} & ciao\\ \hline
@@ -270,9 +280,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 %AutomatedSOS
 \subsubsection{Alert emergency status}
 \begin{center}
-    \begin{tabular}{l || p{6cm} ||}
+    \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-        \bf{GOALS} & ciao \\ \hline
         \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
         \bf{EVENTS FLOW} & ciao\\ \hline
         \bf{EXIT CONDITIONS} & ciao\\ \hline
@@ -285,9 +294,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 %Track4Run
 \subsubsection{Creation of a run event}
 \begin{center}
-    \begin{tabular}{l || p{6cm} ||}
+    \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-        \bf{GOALS} & ciao \\ \hline
         \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
         \bf{EVENTS FLOW} & ciao\\ \hline
         \bf{EXIT CONDITIONS} & ciao\\ \hline
@@ -299,9 +307,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \subsubsection{Enrollment in a run}
 \begin{center}
-    \begin{tabular}{l || p{6cm} ||}
+    \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-        \bf{GOALS} & ciao \\ \hline
         \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
         \bf{EVENTS FLOW} & ciao\\ \hline
         \bf{EXIT CONDITIONS} & ciao\\ \hline
@@ -313,9 +320,8 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \subsubsection{Specatation of a run}
 \begin{center}
-    \begin{tabular}{l || p{6cm} ||}
+    \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-        \bf{GOALS} & ciao \\ \hline
         \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
         \bf{EVENTS FLOW} & ciao\\ \hline
         \bf{EXIT CONDITIONS} & ciao\\ \hline
