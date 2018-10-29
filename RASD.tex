@@ -254,11 +254,21 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 \subsubsection{Request for anonymous data}
 \begin{center}
     \begin{tabular}{l || p{8cm} ||}
-        \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-        \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
-        \bf{EVENTS FLOW} & ciao\\ \hline
-        \bf{EXIT CONDITIONS} & ciao\\ \hline
-        \bf{EXCEPTIONS} & ciao\\ \hline \hline
+        \bf{ACTORS} & Third Party \\ \hline
+        \bf{ENTRY CONDITIONS} & The third party is registered, successfully logged in to Data4Help and is connected to the app.\\ \hline
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The Third Party click on "Data Request" button.
+            \item[2.] The third party select to require Anonymous Data.
+            \item[3.] The third party select the filter to choice the target of user.
+            \item[4.] The system check if the request can be accepted to guarantee the users' anonymity or not.
+            \item[5.] Third party receives the request confirm.
+        \end{itemize}
+        \\ \hline
+        \bf{EXIT CONDITIONS} & The request is accepted and anonymazed data is now accessible by the third party\\ \hline
+        \bf{EXCEPTIONS} &\begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The group of individuals detected from the request is smaller than 1000 people, the request is refused.
+        \end{itemize}
+        \\ \hline \hline
     \end{tabular}
 \end{center}
 
