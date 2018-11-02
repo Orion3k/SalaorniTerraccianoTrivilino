@@ -128,7 +128,7 @@
     \begin{enumerate}[label={[D.\arabic*]}]
         
         \item The data collected from the devices (position and health status) are reliable, accurate and in real time.
-        \item The personal informations given by the user (age, address, gender...) and the third parties are correct and the account is not used by other people. 
+        \item The personal information given by the user (age, address, gender...) are correct and the account is not used by other people. 
         \item Ambulance call and information about patients' status and position are correctly dispatched to the ambulance contact center.
         \item Information and data (places, maps, paths, etc.) received from external services are correct are reliable.
         
@@ -227,125 +227,173 @@
         
     \end{enumerate}
     
-    %Data4Help
     
     \paragraph{Use cases}
-    
-    \subsubsection{User's sign up}
-    \begin{center}
-        \begin{tabular}{ l || p{8cm} ||}
-            \bf{ACTORS} & User \\ 
-            \hline
-            \bf{ENTRY CONDITIONS} & No entry condition needed  \\ 
-            \hline
-            \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-                \item[1.] User opens Data4Help app and press “Sign Up” button.
-                \item[2.] User inserts personal informations (name, address, age, gender, fiscal code).
-                \item[3.] User selects email and password.
-                \item[4.] User allows terms of conditions to share anonymized data with Data4Help.
-                \item[5.] User completes the registration.
-                \item[6.] The system saves the new account.
-            \end{itemize}\\ 
-            \hline
-            \bf{EXIT CONDITIONS} & The user is successfully registered and his/her data can be collected by Data4Help, he/she is redirected to the user page\\ \hline
-            \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-                \item[1.] The user doesn’t fill all the mandatory fields with valid data.
-                \item[2.]The inserted email is already used by another user.
-                \item[3.] The user doesn’t allow the term of condition and he/she can’t complete the registration.
-            \end{itemize}
-            \\ \hline \hline
-        \end{tabular}
-    \end{center}
-    
-    \vspace{1cm}
-    
-    \subsubsection{Request for anonymous data}
-    \begin{center}
-        \begin{tabular}{l || p{8cm} ||}
-            \bf{ACTORS} & Third Party \\ \hline
-            \bf{ENTRY CONDITIONS} & The third party is registered, successfully logged in to Data4Help and is connected to the app.\\ \hline
-            \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-                \item[1.] The Third Party click on "Data Request" button.
-                \item[2.] The third party select to require Anonymous Data.
-                \item[3.] The third party select the filter to choice the target of user.
-                \item[4.] The system check if the request can be accepted to guarantee the users' anonymity or not.
-                \item[5.] Third party receives the request confirm.
-            \end{itemize}
-            \\ \hline
-            \bf{EXIT CONDITIONS} & The request is accepted and anonymazed data is now accessible by the third party\\ \hline
-            \bf{EXCEPTIONS} &\begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-                \item[1.] The group of individuals detected from the request is smaller than 1000 people, the request is refused.
-            \end{itemize}
-            \\ \hline \hline
-        \end{tabular}
-    \end{center}
-    
-    \vspace{1cm}
-    
-    \subsubsection{Request for specific user's data}
-    \begin{center}
-        \begin{tabular}{l || p{8cm} ||}
-            \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-            \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
-            \bf{EVENTS FLOW} & ciao\\ \hline
-            \bf{EXIT CONDITIONS} & ciao\\ \hline
-            \bf{EXCEPTIONS} & ciao\\ \hline \hline
-        \end{tabular}
-    \end{center}
-    
-    \vspace{1cm}
-    
-    %AutomatedSOS
-    \subsubsection{Alert emergency status}
-    \begin{center}
-        \begin{tabular}{l || p{8cm} ||}
-            \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-            \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
-            \bf{EVENTS FLOW} & ciao\\ \hline
-            \bf{EXIT CONDITIONS} & ciao\\ \hline
-            \bf{EXCEPTIONS} & ciao\\ \hline \hline
-        \end{tabular}
-    \end{center}
-    
-    \vspace{1cm}
-    
-    %Track4Run
-    \subsubsection{Creation of a run event}
-    \begin{center}
-        \begin{tabular}{l || p{8cm} ||}
-            \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-            \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
-            \bf{EVENTS FLOW} & ciao\\ \hline
-            \bf{EXIT CONDITIONS} & ciao\\ \hline
-            \bf{EXCEPTIONS} & ciao\\ \hline \hline
-        \end{tabular}
-    \end{center}
-    
-    \vspace{1cm}
-    
-    \subsubsection{Enrollment in a run}
-    \begin{center}
-        \begin{tabular}{l || p{8cm} ||}
-            \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-            \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
-            \bf{EVENTS FLOW} & ciao\\ \hline
-            \bf{EXIT CONDITIONS} & ciao\\ \hline
-            \bf{EXCEPTIONS} & ciao\\ \hline \hline
-        \end{tabular}
-    \end{center}
-    
-    \vspace{1cm}
-    
-    \subsubsection{Specatation of a run}
-    \begin{center}
-        \begin{tabular}{l || p{8cm} ||}
-            \bf{ACTORS} & ciao faskjdkgajgdjgaskdgkagakjgkajgkaj fjdkjf gjsdaak djfsak fjakjfkda \\ \hline
-            \bf{ENTRY CONDITIONS} & ciao come  \\ \hline
-            \bf{EVENTS FLOW} & ciao\\ \hline
-            \bf{EXIT CONDITIONS} & ciao\\ \hline
-            \bf{EXCEPTIONS} & ciao\\ \hline \hline
-        \end{tabular}
-    \end{center}
+
+\subsubsection{User's sign up}
+\begin{center}
+    \begin{tabular}{ l || p{8cm} ||}
+        \bf{ACTORS} & User \\ 
+        \hline
+        \bf{ENTRY CONDITIONS} & No entry condition needed  \\ 
+        \hline
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] User opens Data4Help app and press “Sign Up” button.
+            \item[2.] User inserts personal informations (name, address, age, gender, fiscal code).
+            \item[3.] User selects email and password.
+            \item[4.] User allows terms of conditions to share anonymized data with Data4Help.
+            \item[5.] User completes the registration.
+            \item[6.] The system saves the new account.
+        \end{itemize}\\ 
+        \hline
+        \bf{EXIT CONDITIONS} & The user is successfully registered and his/her data can be collected by Data4Help, he/she is redirected to the user page\\ \hline
+        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The user doesn’t fill all the mandatory fields with valid data.
+            \item[2.]The inserted email is already used by another user.
+            \item[3.] The user doesn’t allow the term of condition and he/she can’t complete the registration.
+        \end{itemize}
+        \\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsubsection{Request for anonymous data}
+\begin{center}
+    \begin{tabular}{l || p{8cm} ||}
+        \bf{ACTORS} & Third Party \\ \hline
+        \bf{ENTRY CONDITIONS} & The third party is registered, successfully logged in to Data4Help and is connected to the app or web page.\\ \hline
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The Third Party click on "Data Request" button.
+            \item[2.] The third party select to require Anonymous Data.
+            \item[3.] The third party select the filter to choice the target of user.
+            \item[4.] The system check if the request can be accepted to guarantee the users' anonymity or not.
+            \item[5.] Third party receives the request confirm.
+        \end{itemize}
+        \\ \hline
+        \bf{EXIT CONDITIONS} & The request is accepted and anonymazed data is now accessible by the third party\\ \hline
+        \bf{EXCEPTIONS} &\begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The group of individuals detected from the request is smaller than 1000 people, the request is refused.
+        \end{itemize}
+        \\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsubsection{Request for specific user's data}
+\begin{center}
+    \begin{tabular}{l || p{8cm} ||}
+        \bf{ACTORS} & Third Party \\ \hline
+        \bf{ENTRY CONDITIONS} & The third party is registered, successfully logged in to Data4Help and is connected to the app or web page.   \\ \hline
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The Third Party click on "Data Request" button.
+            \item[2.] The third party select the option " Require individuals data".
+            \item[3.] The system sends a request to the users who want to use service offered by the third party.
+            \item[4.] Once a user has allowed the permission to acquire hies/her personal data, a confirmation to the request is sent to the third party.
+            \item[5.] The third party is redirected to the main page.
+        \end{itemize}
+        \\ \hline
+        \bf{EXIT CONDITIONS} & The third party obtains the permits from the user and now he can require and acquire the personal data from Data4Help. \\ \hline
+        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The user doesn't allow to share personal data, the system sends to the third party a notify to  warn that he can't acquire any data from the user.
+        \end{itemize}
+        \\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+%AutomatedSOS
+\subsubsection{Alert emergency status}
+\begin{center}
+    \begin{tabular}{l || p{8cm} ||}
+        \bf{ACTORS} & User, Ambulance Contact Center \\ \hline
+        \bf{ENTRY CONDITIONS} & The user is registered and logged in to AutomatedSOS on his/her device, moreover has allowed the permission to share personal data with this third party. \\ \hline
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The system acquires the user's health data collected from his/her device.
+            \item[2.] The system analyzes the data and notices that the health status is under the secure threshold.
+            \item[3.] The system sends an ambulance request to the ambulance contact center within 5 seconds, reporting the user's health status and the position.
+            \item[4.] The system send a warning to the user's device to notify that the health status is under the threshold and that an ambulance has been called to reach his/her position.
+        \end{itemize}
+        \\ \hline
+        \bf{EXIT CONDITIONS} & The ambulance dispatcher sends a confirmation to the system that an ambulance has been sent to the user position. The system keep monitoring the user's health status.  \\ \hline
+        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The Ambulance contact center doesn't send any confirmation. The system sends again a request with the updated information until a confirmation is received or the health status comes back to safe values.
+        \end{itemize}
+        \\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+%Track4Run
+\subsubsection{Creation of a run event}
+\begin{center}
+    \begin{tabular}{l || p{8cm} ||}
+        \bf{ACTORS} & User \\ \hline
+        \bf{ENTRY CONDITIONS} & The user is registered and logged in to Track4Run on his/her device, moreover has allowed the permission to share personal data with this third party.  \\ \hline
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The user select the "Create a run" button.
+            \item[2.] The user choose the starting point, the ending point and the path on the map.
+            \item[3.] The user selects the day and the starting time of the run event.
+            \item[4.] The system confirms the run event creation to the user and saves it in the database.
+        \end{itemize}
+        \\ \hline
+        \bf{EXIT CONDITIONS} & The run event is created and the track4Run users can enroll to the event.\\ \hline
+        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The selected path or the starting/ending point are unavailable for a run. The system let the user an available one.
+        \end{itemize}
+        \\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsubsection{Enrollment in a run}
+\begin{center}
+    \begin{tabular}{l || p{8cm} ||}
+        \bf{ACTORS} & User \\ \hline
+        \bf{ENTRY CONDITIONS} & The user is registered and logged in to Track4Run on his/her device. Moreover has allowed the permission to share personal data with this third party and at least a run event has been already created. \\ \hline
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The user select the "Enroll to a run" button.
+            \item[2.] The user selects the city that interests him/her.
+            \item[3.] The system shows the list of available runs in the selected city.
+            \item[4.] The user select the run event he /she wants to enroll.
+            \item[5.] The system saves the user in the run event as a runner.
+            \item[6.] The system notifies the user when the run is going to start.
+        \end{itemize}
+        \\ \hline
+        \bf{EXIT CONDITIONS} & The user is correctly enrolled to the run event and can take part to it. \\ \hline
+        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The run event is already started. The user can't enroll the run, he/she is redirected to the run event's list.
+        \end{itemize}
+        \\ \hline \hline
+    \end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\subsubsection{Watch a run}
+\begin{center}
+    \begin{tabular}{l || p{8cm} ||}
+        \bf{ACTORS} & User \\ \hline
+        \bf{ENTRY CONDITIONS} & The user is registered and logged in to Track4Run on his/her device,on the main page. Moreover has allowed the permission to share personal data with this third party and at least a run event has been already created. \\ \hline
+        \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] The user select the "View a run" button.
+            \item[2.] The user selects the city that interests him/her. 
+            \item[3.] The system shows the list of available runs in the selected city.
+            \item[4.] The user select the run event he /she wants to watch.
+            \item[5.] The system saves the user in the run event as a spectator.
+        \end{itemize}
+        \\ \hline
+        \bf{EXIT CONDITIONS} & The user can watch on his/her device the map with the path and the runners positions updated in real time. \\ \hline
+        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
+            \item[1.] 
+        \end{itemize}
+        \\ \hline \hline
+    \end{tabular}
+\end{center}
     
     \subsection{Performance Requirements}
     
