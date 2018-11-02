@@ -141,11 +141,46 @@
     
     \subsubsection{User Interfaces}
     
+    %MOCKUP
+    
+    
     \subsubsection{Hardware Interfaces}
+    
+    \paragraph{Data4Help:} is the main service offered by TrackMe. It is a software based service and its function is to collect data from the users, make them available to third parties who require for it and handle the permissions between users and third parties. The service can be accessible from a web browser or from the smartphone app.
+    
+    \paragraph{AutomatedSOS:} to guarantee its non-intrusive SOS services it needs to collect personal information from a mobile device (smartphone, smartwatche, smart bands linked to the smartphone etc.) with GPS and a cardiac pulse sensor or other sensors that let to monitor the user's health status.
+    
+    \paragraph{Track4Run} requires a mobile devices (smartphone, smartwatch, smart band linked to the smartphone) with GPS to keep track of the runners' position.
     
     \subsubsection{Software Interfaces}
     
+    \paragraph{Data4Help:} the system needs to transfer data with users and thirds parties and keep track of the permissions the interfaces needed are:
+    \begin{itemize}
+        \item REST API to communicate and transfer data on the web.
+        \item mySQL DBMS to manage the database.
+    \end{itemize}
+    
+    \paragraph{AutomatedSOS:} the system needs to manage the communication between the users and Data4Help, to analyze the data and to communicate with the ambulance dispatscher. The interfaces needed are:
+    
+    \begin{itemize}
+        \item REST API to communicate and transfer data on the web.
+        \item Interface with Push service to a safe connection to send reliable messages to require health care to the ambulance dispatcher.
+    \end{itemize}
+    
+    \paragraph{Track4Run:} the system needs to manage the run events with the respective runners and spectators and let the spectators watch the run events on the map. The interfaces needed are:
+    
+    \begin{itemize}
+        \item REST API to communicate and transfer data on the web.
+        \item interface with the Google Maps API to manage the map for the runs.
+    \end{itemize}
+    
+    
     \subsubsection{Communication Interfaces}
+    
+    The system is based on the Client-Server architecture, in particular the communication between the different actors and elements of the system (Users-Data4Help, Third Parties-Data4Help, Users-AutomatedSOS, Users-Track4Run) is based on: the REST API to make requests, the AJAX API to transfer data.
+    This is a possible coniguration of the system:
+
+    %Communication interface diagram
     
     \subsection{Functional Requirements}
     
