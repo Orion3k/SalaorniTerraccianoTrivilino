@@ -69,8 +69,6 @@
         
         \item Allow users to register in two different ways: single person and third parties.
         
-    %	\item Users share with Data4Help their own health status data and position.
-        
         \item Third parties can request for anonymized data.
     
         \item Third parties can subscribe to the service in order to periodically receive new data.
@@ -130,7 +128,7 @@
     \begin{enumerate}[label={[D.\arabic*]}]
         
         \item The data collected from the devices (position and health status) are reliable, accurate and in real time.
-        \item The personal informations given by the user (age, address, gender...) are correct and the account is not used by other people. 
+        \item The personal informations given by the user (age, address, gender...) and the third parties are correct and the account is not used by other people. 
         \item Ambulance call and information about patients' status and position are correctly dispatched to the ambulance contact center.
         \item Information and data (places, maps, paths, etc.) received from external services are correct are reliable.
         
@@ -158,17 +156,17 @@
         \item \textbf{Allow users to register in two different ways: single person and third parties.}
         
         \begin{enumerate}
-            \item [D.2] The personal informations given by the user (age, address, gender...) are correct and the account is not used by any other people. 
+            \item [D.2] The personal informations given by the user (age, address, gender...) and the third parties are correct and the account is not used by other people. 
             \item [R.1] People can create a user account selecting username, password, giving personal informations (age, address,gender) and allow to share their anonymized data.
             \item [R.2] It is possible to create a third party account selecting username and password and giving the company main information.
         \end{enumerate}
         
-        \item Third parties can receive for anonymized data.
+        \item Third parties can receive anonymized data.
                 
             \begin{enumerate}
                 \item [R.3] Data4Help allows third parties to request anonymized data acquired from a filtered group of users (by age, gender, address, etc.).
                 \item [R.4] Data4Help collects data from registered users and gives access to third parties only if the number of individuals whose data satisfy the request is higher than 1000.
-                \item [D.2] The personal informations given by the user (age, address, gender...) are correct and the account is not used by other people.
+                \item [D.2] The personal informations given by the user (age, address, gender...) and the third parties are correct and the account is not used by other people.
             \end{enumerate}
             
             
@@ -197,7 +195,7 @@
         \begin{enumerate}
             \item [D.1] The data collected from the devices (position and health status) are reliable, accurate and in real time.
             \item [R.7] Users' health and position information received by Data4Help are analyzed and compared with the threshold values.
-            \item [R.8] In case of emergency (the health status values overcome the threshold) a request for an ambulance is sent to the ambulance contact center in 5 seconds, containing the information about user's health status and position.
+            \item [R.8] In case of emergency (the health status values overcome the threshold) a request for an ambulance is sent to the ambulance dispatcher in 5 seconds, containing the user's information.
             \item [D.3] Ambulance call and information about patients' status and position are correctly dispatched to the ambulance contact center.
         \end{enumerate}
         
@@ -205,17 +203,18 @@
         \item Users can organize a run.
         
         \begin{enumerate}
-            \item [R.9] Users select the day, the hour at which the run begins, the starting point, the ending points and the path for the run.
-            \item [R.10] The run event is stored in order to be managed when the run is about to start and during the run.
-            \item [D.4] Information and data (places, maps, paths, etc.) received from external services are correct are reliable.
+            \item [R.9] Users select the day, the hour at which the run begins, the starting point, the ending point and the path for the run.
+            \item [R.10] The run event is stored in the system in order to be managed during its lifecycle.
+            \item [D.4] Information and data (places, maps, paths, etc.) received from external services are correct and reliable.
         \end{enumerate}
         
         \item Users can enroll to a run.
         
         \begin{enumerate}
             \item [R.11] Users can browse among the available runs and see their information.
-            \item [R.12] Users can choose to see runs filtering them by city and/or date. 
-            \item [R.13] The system saves the enrolled users as runners to the run event.
+            \item [R.12] Users can choose a run and register to it as a runners.
+  % NON-FUNCTIONAL         \item [R.12] Users can choose to see the available runs filtering them by city and/or date. 
+            \item [R.13] The system saves the enrolled users as runners and keeps track of the association with the run event.
         \end{enumerate}
         
         \item Users can be spectators of a run seeing the participants' position on a map.
@@ -223,6 +222,7 @@
         \begin{enumerate}
             \item [R.14] The system keeps track of all the enrolled runners' position during the run.
             \item [R.15] Users who require to watch a run are saved as spectators to the run event.
+            \item [R.16] Track4Run offers the possibility to see the run live through a map.
         \end{enumerate}
         
     \end{enumerate}
