@@ -179,8 +179,6 @@
     
     The system is based on the Client-Server architecture, in particular the communication between the different actors and elements of the system (Users-Data4Help, Third Parties-Data4Help, Users-AutomatedSOS, Users-Track4Run) is based on: the REST API to make requests, the AJAX API to transfer data.
     This is a possible coniguration of the system:
-
-    %Communication interface diagram
     
     \subsection{Functional Requirements}
     
@@ -433,13 +431,44 @@
     
     \subsection{Performance Requirements}
     
+    \paragraph{Data4Help} The system is designed to provide a large number of users and third parties moreover it is necessary to guarantee that the data is acquired, analyzed and made available to third parties in reasonable times. Especially individual data has to be provided to the third parties as soon they require them (periodically or even with real time updates).
+    
+    \paragraph{AutomatedSOS} This is a non-intrusive SOS service that needs to monitor the user health status in every moment. Once user's data are received from Data4Help the system must analyze the values and compare them with safe thresholds in a short time. If the values are under the fixed thresholds the system must warn the ambulance contact center in 5 seconds to send an ambulance to the user location.
+    
+    \paragraph{Track4Run} the system must be able to manage a large number of users enrolled in a single run event (the number of runners for a single run can be between less then 10 and almost 1000), a large number of run events for several cities and it must guarantee that the spectators can watch the runners' position on the map with a real time update.
+    
+    
     \subsection{Design Constraints}
     
     \subsubsection{Standards Compliance}
     
+    Individual people to get access to Data4Help, AutomatedSOS and Track4Run services must sign in to Data4Help. By registering to Data4Help the user must allow the permissions to share anonymazed data with Data4Help and third parties, unless he/she can't complete the registration.
+    AutomatedSOS and Track4Run are third parties actors developed by TrackMe and, as such, they have to require to Data4Help the permission to receive individual data from the users.
+    If an user wants to use AutomatedSOS and Track4Run services must accept the permissions to share individual data with them, unless their data can't be dispatched from Data4Help to the specific third partiy and the third party service can't be provided.
+    
     \subsubsection{Hardware Limitations}
+ \textbf{Data4Help} doesn't require specific hardware limitations for third parties. Users should use mobile devices with sensors useful for collecting data (GPS, cardiac pulse sensor, accelerometer, camera, light sensor) even if they are not strictly required. The only necessary requirement is that the device must have an internet connection (possibly fast):
+    \begin{itemize}
+        \item 3G/4G internet connection
+    \end{itemize}
+    
+\noindent The hardware requirements for \textbf{AutomatedSOS} users' device, to collect the health information are:
+    \begin{itemize}
+        \item 3G/4G internet connection
+        \item GPS
+        \item Cardiac pulse sensor, other health sensors
+    \end{itemize}
+\noindent The hardware requirements for \textbf{Track4Run} users' devices are:
+    \begin{itemize}
+        \item 3G/4G internet connection
+        \item GPS
+        \item Device that supports Google maps API
+    \end{itemize}
     
     \subsubsection{Any other Constraint}
+    
+    
+    %Design constraints end
     
     \subsection{Software System Attributes}
     
