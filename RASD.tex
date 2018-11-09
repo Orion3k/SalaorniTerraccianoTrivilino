@@ -27,6 +27,7 @@
     \section{Introduction}
     
     \subsection{Purpose}
+    The purpose of this document is to describe the software-based solutions that TrackMe wants to offer to its customers. First of all the system is analyzed in terms of description of the problem and analysis of goals, requirements, constraints. After that a solution is modeled in terms of software, hardware constraints paying attention also at some implemenation details. This document is addressed to the developers who will implement this solution.
     
     \subsection{Scope}
     
@@ -97,6 +98,11 @@
     \subsection{Reference Documents}
     
     \subsection{Document Structure}
+    The RASD is composed by three parts:
+    \begin{enumerate}
+        \item Explanation of the given problem, the analysis in terms of goals and it gives some informations in order to better understand all the other document's parts.
+        \item 
+    \end{enumerate}
     
     \section{Overall Description}
     
@@ -111,6 +117,28 @@
     
     
     \subsection{Product Functions}
+    The main function that the system must perform are divided in the three software components.
+    \begin{itemize}
+        \item Data4Help
+        \begin{enumerate}
+            \item Allow individual users (?) to share their personal data with Data4Help and, by transitive property, with the third parties who require them.
+            \item Allow third parties to require users' data in anonymous form by using filters and offers the possibility to make a subscription to the request.
+            \item Third parties can request for a specific user's data.
+            \item Users can decide whether accept or not a data request from a third party.
+        \end{enumerate}
+        \item AutomatedSOS
+        \begin{enumerate}
+            \item Offers to the registered users to have their health status be continuously monitored.
+            \item If the system detects an emergency situation it notifies an ambulance.
+        \end{enumerate}
+        \item Track4Run
+        \begin{enumerate}
+            \item Users can organize runs.
+            \item Users can enroll to a run.
+            \item Users can watch a run.
+        \end{enumerate}
+    \end{itemize}
+    
     
     \subsection{User Characteristics}
     
@@ -438,6 +466,7 @@
         \bf{EXIT CONDITIONS} & The user is correctly enrolled to the run event and can take part to it. \\ \hline
         \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
             \item[1.] The run event is already started. The user can't enroll the run, he/she is redirected to the run event's list.
+            \item[2.] There are no available run for the selected city, the users is redirected to the home.
         \end{itemize}
         \\ \hline \hline
     \end{tabular}
