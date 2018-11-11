@@ -946,202 +946,203 @@ In the Alloy model only the relevant elements for the system behaviour analysis 
 In general customer's data are not considered because they don't affect the system behaviour except only for the user's health status and the time at which a run begins. \newline The most important aspect of the analysis are the permission because they represent the relation between users and third parties which is the most sensible part of the service. \newline In fact, Data4Help aims to collect data but most importantly to give access to them only to the authorized entities. \newline
 To model the permission evolution the system uses three states: Accepted, Refused and Undefined. \newline
 The request status Undefined is used to represent when a permission is just created and it has not been approved yet.
+In the dynamic analysis the pred show is run with the group of user constraints for the anonymous permission setted to 2 persons instead of 1000.
 
 \clearpage
 
 {\fontfamily{pcr}\selectfont
 open util/relation 
-open util/integer
-
-sig User {
-dataFor: set ThirdParty,
-health:one Int
-} { health >=0 and health <= 4}
-
-sig GroupOfUsers {
-targetUsers: set User
-}{#targetUsers > 0}
-
-sig ThirdParty {
-individualDataFrom: set User,
-anonymizedDataFrom: set GroupOfUsers
-}
-
-one sig AutomatedSOS extends ThirdParty {
-	emergency: set User
-}
-
-one sig Track4Run extends ThirdParty {
-runs: set Run 
-}
-
-sig Run{
-runners: some User,
-spectators: set User,
-time:one Int
-}{(all r: Run | r in Track4Run.runs) and time >= 0 and time <= 6 }
-
-
-abstract sig RequestStatus {}
-one sig ACCEPTED extends RequestStatus {}
-one sig REFUSED extends RequestStatus {}
-one sig UNDEFINED extends RequestStatus{}
-
-sig IndividualPermission {
-thirdParty: one ThirdParty,
-user: one User,
-status: one RequestStatus
-}
-
-sig AnonymousPermission {
-thirdParty: one ThirdParty,
-group: one GroupOfUsers,
-status: one  RequestStatus
-}
-
---Data4Help
-
-fact individualDataRequestCondition {
-all ip: IndividualPermission | ip.status = ACCEPTED iff (ip.user in ip.thirdParty.individualDataFrom and ip.thirdParty in ip.user.dataFor )
-}
-
-fact toAcquireIndividualDataMustExistsAPermission{
-all u: User, tp: ThirdParty | u in tp.individualDataFrom iff ( one ip : IndividualPermission | ip.user = u and ip.thirdParty = tp and ip.status = ACCEPTED )
-}
-
-fact oneToOnePermissionCondition{
-	all u: User, tp: ThirdParty | u in tp.individualDataFrom iff tp in u.dataFor
-}
-
-fact notAcceptedPermissionAvoidDataExchange{
-all ip: IndividualPermission | (ip.status = REFUSED or ip.status = UNDEFINED) iff !( ip.user in ip.thirdParty.individualDataFrom)
-}
-
-fact individualPermissionAreUnique{
-no disj ip1, ip2 : IndividualPermission |  ip1.user = ip2.user and  ip1.thirdParty = ip2.thirdParty and !(ip1.status = UNDEFINED or ip2.status = UNDEFINED)
-}
-
-fact anonymazedPermissionCondition {
-all ap: AnonymousPermission | (ap.status = ACCEPTED iff #ap.group.targetUsers > 1000) and ( ap.status = REFUSED iff #ap.group.targetUsers <= 1000  ) and !(ap.status = UNDEFINED)
-}
-
-fact groupExistsOnlyForAnonymazedPermissions {
-all gu: GroupOfUsers | some ap: AnonymousPermission | ap.group = gu
-}
-
-fact toAcquireAnonymazedDataMustExistAPermission{
-all gu: GroupOfUsers, tp : ThirdParty |  gu in tp.anonymizedDataFrom iff ( some ap: AnonymousPermission | ap.group = gu and ap.thirdParty = tp and ap.status = ACCEPTED )
-}
-
-fact anonymazedPermissionsAreUnique {
-no disj ap1,ap2: AnonymousPermission | ap1.thirdParty = ap2.thirdParty and ap1.group = ap2.group
-}
-
-fact usersInGroupAreUnique {
-all gu: GroupOfUsers | ( no disj u1,u2: User | u1 in gu.targetUsers and u2 in gu.targetUsers and u1 = u2 )
-}
-
-pred notExistsAnAcceptedIndividualPermission[u: User,tp: ThirdParty] {
-	!(u in tp.individualDataFrom)
-}
-
-pred addUserToThirdParty[tp,tp':ThirdParty,u:User] {
-	tp'.individualDataFrom = tp.individualDataFrom + u
-}
-
-pred addThirdPartyToUser[u,u':User, tp:ThirdParty] {
-	u'.dataFor = u.dataFor + tp
-}
-
-pred addIndividualPermission[ u,u' : User, tp,tp' : ThirdParty] {
-
-	notExistsAnAcceptedIndividualPermission[u, tp]
-
-	addUserToThirdParty[tp,tp',u]
-
-	one ip:IndividualPermission | ip.status = ACCEPTED and ip.user = u' and ip.thirdParty = tp'
-}
-
---AutomatedSOS
-
-fact userInEmergencyCondition {
-	all u:AutomatedSOS.individualDataFrom | (u.health < 3  iff u in AutomatedSOS.emergency) 
-}
-
-fact onlyAutomatedSOSUserCouldBeInEmergency {
-	AutomatedSOS.emergency in AutomatedSOS.individualDataFrom
-}
-
-pred isUserSafe[u:User] {
-	!(u.health < 3)
-}
-
-pred userIsNotSafe[u,u':User] {
-	u'.health = minus[u.health,2]
-}
-
-pred userEnterInEmergencySituation[u,u':User] {
-	u in AutomatedSOS.individualDataFrom
-	u' in AutomatedSOS.individualDataFrom
-	isUserSafe[u]
-	!(u in AutomatedSOS.emergency)
-
-	userIsNotSafe[u,u']
-	(u' in AutomatedSOS.emergency)
-}
-
---Track4Run
-
-fact noAnonymousPermissionAutomatedTrack4Run{
-	no ap:AnonymousPermission | ap.thirdParty = AutomatedSOS or ap.thirdParty = Track4Run 
-}
-
-fact noSameUserIsRunnerAndSpectatorsInSameRun{
-all r: Run | no u: User | u in r.runners and u in r.spectators
-}
-
-fact onlyTrack4RunUserCanBeRunnerOrSpectators{
-all u: User | (some r: Run | (u in r.runners or u in r.spectators ) ) implies u in Track4Run.individualDataFrom
-}
-
-fact noUserInTwoRunEventsAt{
-	no u:User | some disj r1,r2:Run | (u in r1.runners or u in r1.spectators) and (u in r2.runners or u in r2.spectators) and r1.time = r2.time
-}
-
-pred addRunner[r,r':Run, ru:User]{
-	r'.runners = r.runners + ru
-}
-
-pred addSpectator[r,r':Run, s:User]{
-	r'.spectators = r.spectators + s
-}
-
-pred addSpectatorAndRunnerToARun[r,r':Run, s,s',ru,ru':User]{
-	!(s in r.spectators or ru in r.runners)
-	addRunner[r,r',ru]
-	addSpectator[r,r',s]
-
-	!(ru in r'.spectators or s in r'.runners)
-}
-
-assert noRunnerInTwoRunAtSameTime{
-	all u:User | all disj r1,r2:Run | !(u in r1.runners  and u in r2.runners and r1.time = r2.time)
-}
-
-
-pred show {
-	some u:User| u in AutomatedSOS.emergency 
-	some ip:IndividualPermission | ip.status = ACCEPTED 
-	some ap:AnonymousPermission |ap.status = ACCEPTED
-	some r:Run | #r.runners>0 and #r.runners<3 and #r.spectators>0 and #r.spectators<3
-}
-
-run show for 5 but 4 AnonymousPermission, 4 IndividualPermission, 3 ThirdParty,5 User
-run addIndividualPermission
-run  userEnterInEmergencySituation
-run addSpectatorAndRunnerToARun
-check noRunnerInTwoRunAtSameTime for 5}
-
+\newline open util/integer
+\newline 
+\newline sig User {
+\newline dataFor: set ThirdParty,
+\newline health:one Int
+\newline } { health >=0 and health <= 4}
+\newline 
+\newline sig GroupOfUsers {
+\newline targetUsers: set User
+\newline }{#targetUsers > 0}
+\newline 
+\newline sig ThirdParty {
+\newline individualDataFrom: set User,
+\newline anonymizedDataFrom: set GroupOfUsers
+\newline }
+\newline 
+\newline one sig AutomatedSOS extends ThirdParty {
+\newline 	emergency: set User
+\newline }
+\newline 
+\newline one sig Track4Run extends ThirdParty {
+\newline runs: set Run 
+\newline }
+\newline 
+\newline sig Run{
+\newline runners: some User,
+\newline spectators: set User,
+\newline time:one Int
+\newline }{(all r: Run | r in Track4Run.runs) and time >= 0 and time <= 6 }
+\newline 
+\newline 
+\newline abstract sig RequestStatus {}
+\newline one sig ACCEPTED extends RequestStatus {}
+\newline one sig REFUSED extends RequestStatus {}
+\newline one sig UNDEFINED extends RequestStatus{}
+\newline 
+\newline sig IndividualPermission {
+\newline thirdParty: one ThirdParty,
+\newline user: one User,
+\newline status: one RequestStatus
+\newline }
+\newline 
+\newline sig AnonymousPermission {
+\newline thirdParty: one ThirdParty,
+\newline group: one GroupOfUsers,
+\newline status: one  RequestStatus
+\newline }
+\newline 
+\newline --Data4Help
+\newline 
+\newline fact individualDataRequestCondition {
+\newline all ip: IndividualPermission | ip.status = ACCEPTED iff (ip.user in ip.thirdParty.individualDataFrom and ip.thirdParty in ip.user.dataFor )
+\newline }
+\newline 
+\newline fact toAcquireIndividualDataMustExistsAPermission{
+\newline all u: User, tp: ThirdParty | u in tp.individualDataFrom iff ( one ip : IndividualPermission | ip.user = u and ip.thirdParty = tp and ip.status = ACCEPTED )
+\newline }
+\newline 
+\newline fact oneToOnePermissionCondition{
+\newline 	all u: User, tp: ThirdParty | u in tp.individualDataFrom iff tp in u.dataFor
+\newline }
+\newline 
+\newline fact notAcceptedPermissionAvoidDataExchange{
+\newline all ip: IndividualPermission | (ip.status = REFUSED or ip.status = UNDEFINED) iff !( ip.user in ip.thirdParty.individualDataFrom)
+\newline }
+\newline 
+\newline fact individualPermissionAreUnique{
+\newline no disj ip1, ip2 : IndividualPermission |  ip1.user = ip2.user and  ip1.thirdParty = ip2.thirdParty and !(ip1.status = UNDEFINED or ip2.status = UNDEFINED)
+\newline }
+\newline 
+\newline fact anonymazedPermissionCondition {
+\newline all ap: AnonymousPermission | (ap.status = ACCEPTED iff #ap.group.targetUsers > 1000) and ( ap.status = REFUSED iff #ap.group.targetUsers <= 1000  ) and !(ap.status = UNDEFINED)
+\newline }
+\newline 
+\newline fact groupExistsOnlyForAnonymazedPermissions {
+\newline all gu: GroupOfUsers | some ap: AnonymousPermission | ap.group = gu
+\newline }
+\newline 
+\newline fact toAcquireAnonymazedDataMustExistAPermission{
+\newline all gu: GroupOfUsers, tp : ThirdParty |  gu in tp.anonymizedDataFrom iff ( some ap: AnonymousPermission | ap.group = gu and ap.thirdParty = tp and ap.status = ACCEPTED )
+\newline }
+\newline 
+\newline fact anonymazedPermissionsAreUnique {
+\newline no disj ap1,ap2: AnonymousPermission | ap1.thirdParty = ap2.thirdParty and ap1.group = ap2.group
+\newline }
+\newline 
+\newline fact usersInGroupAreUnique {
+\newline all gu: GroupOfUsers | ( no disj u1,u2: User | u1 in gu.targetUsers and u2 in gu.targetUsers and u1 = u2 )
+\newline }
+\newline 
+\newline pred notExistsAnAcceptedIndividualPermission[u: User,tp: ThirdParty] {
+\newline 	!(u in tp.individualDataFrom)
+\newline }
+\newline 
+\newline pred addUserToThirdParty[tp,tp':ThirdParty,u:User] {
+\newline 	tp'.individualDataFrom = tp.individualDataFrom + u
+\newline }
+\newline 
+\newline pred addThirdPartyToUser[u,u':User, tp:ThirdParty] {
+\newline 	u'.dataFor = u.dataFor + tp
+\newline }
+\newline 
+\newline pred addIndividualPermission[ u,u' : User, tp,tp' : ThirdParty] {
+\newline 
+\newline 	notExistsAnAcceptedIndividualPermission[u, tp]
+\newline 
+\newline 	addUserToThirdParty[tp,tp',u]
+\newline 
+\newline 	one ip:IndividualPermission | ip.status = ACCEPTED and ip.user = u' and ip.thirdParty = tp'
+\newline }
+\newline 
+\newline --AutomatedSOS
+\newline 
+\newline fact userInEmergencyCondition {
+\newline 	all u:AutomatedSOS.individualDataFrom | (u.health < 3  iff u in AutomatedSOS.emergency) 
+\newline }
+\newline 
+\newline fact onlyAutomatedSOSUserCouldBeInEmergency {
+\newline 	AutomatedSOS.emergency in AutomatedSOS.individualDataFrom
+\newline }
+\newline 
+\newline pred isUserSafe[u:User] {
+\newline 	!(u.health < 3)
+\newline }
+\newline 
+\newline pred userIsNotSafe[u,u':User] {
+\newline 	u'.health = minus[u.health,2]
+\newline }
+\newline 
+\newline pred userEnterInEmergencySituation[u,u':User] {
+\newline 	u in AutomatedSOS.individualDataFrom
+\newline 	u' in AutomatedSOS.individualDataFrom
+\newline 	isUserSafe[u]
+\newline 	!(u in AutomatedSOS.emergency)
+\newline 
+\newline 	userIsNotSafe[u,u']
+\newline 	(u' in AutomatedSOS.emergency)
+\newline }
+\newline 
+\newline --Track4Run
+\newline 
+\newline fact noAnonymousPermissionAutomatedTrack4Run{
+\newline 	no ap:AnonymousPermission | ap.thirdParty = AutomatedSOS or ap.thirdParty = Track4Run 
+\newline }
+\newline 
+\newline fact noSameUserIsRunnerAndSpectatorsInSameRun{
+\newline all r: Run | no u: User | u in r.runners and u in r.spectators
+\newline }
+\newline 
+\newline fact onlyTrack4RunUserCanBeRunnerOrSpectators{
+\newline all u: User | (some r: Run | (u in r.runners or u in r.spectators ) ) implies u in Track4Run.individualDataFrom
+\newline }
+\newline 
+\newline fact noUserInTwoRunEventsAt{
+\newline 	no u:User | some disj r1,r2:Run | (u in r1.runners or u in r1.spectators) and (u in r2.runners or u in r2.spectators) and r1.time = r2.time
+\newline }
+\newline 
+\newline pred addRunner[r,r':Run, ru:User]{
+\newline 	r'.runners = r.runners + ru
+\newline }
+\newline 
+\newline pred addSpectator[r,r':Run, s:User]{
+\newline 	r'.spectators = r.spectators + s
+\newline }
+\newline 
+\newline pred addSpectatorAndRunnerToARun[r,r':Run, s,s',ru,ru':User]{
+\newline 	!(s in r.spectators or ru in r.runners)
+\newline 	addRunner[r,r',ru]
+\newline 	addSpectator[r,r',s]
+\newline 
+\newline 	!(ru in r'.spectators or s in r'.runners)
+\newline }
+\newline 
+\newline assert noRunnerInTwoRunAtSameTime{
+\newline 	all u:User | all disj r1,r2:Run | !(u in r1.runners  and u in r2.runners and r1.time = r2.time)
+\newline }
+\newline 
+\newline 
+\newline pred show {
+\newline 	some u:User| u in AutomatedSOS.emergency 
+\newline 	some ip:IndividualPermission | ip.status = ACCEPTED 
+\newline 	some ap:AnonymousPermission |ap.status = ACCEPTED
+\newline 	some r:Run | #r.runners>0 and #r.runners<3 and #r.spectators>0 and #r.spectators<3
+\newline }
+\newline 
+\newline run show for 5 but 4 AnonymousPermission, 4 IndividualPermission, 3 ThirdParty,5 User
+\newline run addIndividualPermission
+\newline run  userEnterInEmergencySituation
+\newline run addSpectatorAndRunnerToARun
+\newline check noRunnerInTwoRunAtSameTime for 5}
+\newline 
 
 
 \begin{figure}[H]
