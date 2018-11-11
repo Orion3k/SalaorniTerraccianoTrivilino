@@ -142,9 +142,9 @@ pred userEnterInEmergencySituation[u,u':User] {
 pred show {
 }
 
-run show for 5 but 4 AnonymousPermission, 4 IndividualPermission, 3 ThirdParty,5 User
+--run show for 5 but 4 AnonymousPermission, 4 IndividualPermission, 3 ThirdParty,5 User
 --run addIndividualPermission
---run  userEnterInEmergencySituation
+run  userEnterInEmergencySituation
 
 
 

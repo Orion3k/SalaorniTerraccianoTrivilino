@@ -303,7 +303,7 @@
     Suddenly, in the middle of the walk, the smartwatch starts to   flash and emit an alert noise. Uncle Jamie watches his clock and understands that he is having some health issue. Immedialtely, he begins to have blurry vision and he collapses on the ground. \newline
     The last sound he hears is a notification from his smartwatch that an ambulance has been sent to rescue him.
     
-    %track4run
+    %Track4Run
     \subsubsection{Forrest, the run planner}
     Forrest is a young man which loves running. He recently learns about a new application, called Track4Run, with the purpose to allow its users to organize run event. Excited for the new discovery, he invites a lot of friend to download the application and tries to set a run event for the next week. \newline
     After the registration to Track4Run and the previous sign up to Data4Help, he launches the app. First of all, he clicks on "Create a run" button, choosing starting and ending point and the path in the middle from the map. Then, he gives the day and the hour at which the run will start. Finally, he receives the notification of the event creation and the opening of the subscription period. \newline
@@ -548,7 +548,7 @@
             \item[4.] The system confirms the run event creation to the user and saves it in the database.
         \end{itemize}
         \\ \hline
-        \bf{EXIT CONDITIONS} & The run event is created and the track4Run users can enroll to the event.\\ \hline
+        \bf{EXIT CONDITIONS} & The run event is created and the Track4Run users can enroll to the event.\\ \hline
         \bf{EXCEPTIONS} &  The selected path or the starting/ending point is unavailable for a run. The system lets the user choose an available one. \\ \hline \hline
     \end{tabular}
 \end{center}
@@ -610,7 +610,7 @@
     
     \subsubsection{Standards Compliance}
     
-    Individual people to get access to Data4Help, AutomatedSOS and Track4Run services must sign in to Data4Help. By registering to Data4Help the user must allow the permissions to share anonymazed data with Data4Help and third parties, unless he/she can't complete the registration.
+    Individual people to get access to Data4Help, AutomatedSOS and Track4Run services must sign in to Data4Help. By registering to Data4Help the user must allow the permissions to share anonymized data with Data4Help and third parties, unless he/she can't complete the registration.
     AutomatedSOS and Track4Run are third parties actors developed by TrackMe and, as such, they have to require to Data4Help the permission to receive individual data from the users.
     If an user wants to use AutomatedSOS and Track4Run services must accept the permissions to share individual data with them, unless their data can't be dispatched from Data4Help to the specific third party and the third party service can't be provided.
     
@@ -654,7 +654,7 @@
     
     \paragraph{AutomatedSOS} Also the AutomatedSOS system must have an high level of availability, to provide a better service is preferable an availability of two nines (0.99) in the "nines" metric.
     
-    \paragraph{Track4run} The system should offer their service for the runners with an availability at least of 150/168, with the priority of availabilty for the the day time and evening hours.
+    \paragraph{Track4Run} The system should offer their service for the runners with an availability at least of 150/168, with the priority of availabilty for the the day time and evening hours.
     
     \subsubsection{Security}
     
@@ -672,7 +672,27 @@
     
     The system should have an high level of portability in order that TrackMe can guarantee its services to a wide range of devices and users.
     Providing a set of API instead of creating a dedicated app for Data4Help is useful to achieve this goal, in fact the third parties can choose different OS and devices for developing their own services and application, integrating the Data4Help service with them.
+    
     \section{Formal Analysis Using Alloy}
+    In the Alloy model only the relevant elements for the system behaviour analysis are present. The model focuses, in particularly, on these entities:
+
+    \begin{itemize}
+        \item User
+        \item Group of Users (used in anonymized data requests)
+        \item Third Party
+        \item AutomatedSOS
+        \item Track4Run
+        \item Request Status
+        \item Individual permission
+        \item Anonymous permission      
+    \end{itemize}
+
+    In general customer's data are not considered because they don't affect the system behaviour except only for the user's health status. \newline The most important aspect of the analysis are the permission because they represent the relation between users and third parties which is the most sensible part of the service. \newline In fact, Data4Help aims to collect data but most importantly to give access to them only to the authorized entities. \newline
+    To model the permission evolution the system uses three states: Accepted, Refused and Undefined. \newline
+    The request status Undefined is used to represent when a permission is just created and it has not been approved yet.
+
+
+
     
     \section{Effort Spent}
     
