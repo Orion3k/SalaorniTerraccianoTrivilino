@@ -2,10 +2,13 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
+\usepackage{courier}
 \usepackage{float}
 \usepackage{subcaption}
 \usepackage{enumitem}
 \usepackage{graphicx}
+\usepackage{rotating}
+\usepackage{tikz}
 \usepackage{makecell}
 \graphicspath{{./images/}}
 \usepackage{tabularx}
@@ -50,9 +53,8 @@ The purpose of this document is to describe the software-based solutions that Tr
 
 \subsection{Scope}
 
-\paragraph{Description of the given problem}
+\subsubsection{Description of the given problem}
 
-\paragraph{}
 TrackMe is a company that develops software-based services for third parties and for consumers. The main service is called Data4Help.
  Data4Help is a service that allows third parties to monitor the location and the health status of individual, it handles a policy of permissions for each user and collects individual’s data from their personal devices.
 The service supports the registration of individuals who, by registering, agree that TrackMe acquires their data. After registration, these third parties can request:
@@ -72,16 +74,15 @@ The service supports the registration of individuals who, by registering, agree 
     TrackMe will not accept the request. For simplicity, we assume that TrackMe will accept any 
     request for which the number of individuals whose data satisfy the request is higher than 
     1000.
-
 \end{itemize}
 
-\paragraph{}
 As soon as a request for data is approved, TrackMe makes the previously saved data available to the 
 third party. Also, it allows the third party to subscribe to new data and to receive them as soon as 
 they are produced.
 TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
+\clearpage
 
-\paragraph{Goals}
+\subsubsection{Goals}
 
 \begin{enumerate}[label*={G.\arabic*}]
     
@@ -141,7 +142,10 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
         \item \textit{R.n} Requirement number n
     \end{itemize}
 
+\clearpage    
+
 \subsection{Document Structure}
+
 The RASD is composed by:
 \begin{enumerate}
     \item Explanation of the given problem, the analysis in terms of goals and it gives some information in order to better understand all the other document's parts.
@@ -149,6 +153,8 @@ The RASD is composed by:
     \item The software implementation is analyzed paying attention to the software and hardware details adding also a description in terms of functional requirements, scenarios and use cases.
     \item The system is analyzed both in its static aspects and the dynamic ones using a specific formal modeling language, Alloy, in which the most important features are analyzed in order to verify if every constraint of the system is not violated.
 \end{enumerate}
+
+\clearpage
 
 \section{Overall Description}
 
@@ -183,6 +189,41 @@ The RASD is composed by:
 
 \clearpage
 
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=\textwidth]{classDiagram}
+    \caption{Class Diagram of the whole system.}
+    \label{fig:my_label}
+\end{sidewaysfigure}
+
+\clearpage
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{StateDiagram-2}
+    \caption{Data4Help state diagram.}
+    \label{fig:my_label}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{StateDiagram-1}
+    \caption{AutomatedSOS state diagram.}
+    \label{fig:my_label}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{StateDiagram-3}
+    \caption{Track4Run state diagram.}
+    \label{fig:my_label}
+\end{figure}
+
+\clearpage
 
 \subsection{Product Functions}
 The main function that the system must perform are divided in three section, one for each software components.
@@ -209,8 +250,7 @@ The main function that the system must perform are divided in three section, one
 \clearpage
 
 \subsection{User Characteristics}
-
-\paragraph{}The following actors are the users of the services offered by TrackMe. 
+The following actors are the users of the services offered by TrackMe. 
 
 
 \begin{itemize}
@@ -247,7 +287,7 @@ Data4Help offer a web-based interface to register and manage the account, the us
 AutomatedSOS and Track4Run provide to the users a mobile app available for the most popular devices (Android or iOS smartphone or smartwatch) to access to the services.
 
 %MOCKUPs
-\vspace{0.5cm}
+\vspace{1cm}
 
 \begin{figure}[H]
     \centering
@@ -555,10 +595,16 @@ Arya watches the event until the end, being witness of his brother defeat.
 \end{enumerate}
 \clearpage
 
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=\textwidth]{UseCaseDiagram}
+    \caption{Use Case Diagram of the whole system.}
+    \label{fig:my_label}
+\end{sidewaysfigure}
 
+\clearpage
 
-\paragraph{Use cases}
-
+\paragraph{Use Cases}
 \subsubsection{User's sign up}
 
 \begin{center}
@@ -733,6 +779,70 @@ Arya watches the event until the end, being witness of his brother defeat.
 
 \clearpage
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight]{SequenceDiagrams-7}
+    \caption{Sequence diagram of a user's sign up.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight]{SequenceDiagrams-3}
+    \caption{Sequence diagram of one-time anonymous data request.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight]{SequenceDiagrams-5}
+    \caption{Sequence diagram of an anonymous group data request.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight]{SequenceDiagrams-4}
+    \caption{Sequence diagram of an user's personal data request .}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight]{SequenceDiagrams-6}
+    \caption{Sequence diagram of an emergency alert event.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight]{SequenceDiagrams-1}
+    \caption{Sequence diagram of the creation of a run event.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight]{SequenceDiagrams-2}
+    \caption{Sequence diagram of the enrollment in a run.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight]{SequenceDiagrams-8}
+    \caption{Sequence diagram of the viewing of a run.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
 \subsection{Performance Requirements}
 
 \paragraph{Data4Help} The system is designed to provide a large number of users and third parties moreover it is necessary to guarantee that the data is acquired, analyzed and made available to third parties in reasonable times. Especially individual data has to be provided to the third parties as soon they require them (periodically or even with real time updates).
@@ -745,10 +855,11 @@ Arya watches the event until the end, being witness of his brother defeat.
 \subsection{Design Constraints}
 
 \subsubsection{Standards Compliance}
-
 Individual people to get access to Data4Help, AutomatedSOS and Track4Run services must sign in to Data4Help. By registering to Data4Help the user must allow the permissions to share anonymazed data with Data4Help and third parties, unless he/she can't complete the registration.
 AutomatedSOS and Track4Run are third parties actors developed by TrackMe and, as such, they have to require to Data4Help the permission to receive individual data from the users.
 If an user wants to use AutomatedSOS and Track4Run services must accept the permissions to share individual data with them, unless their data can't be dispatched from Data4Help to the specific third party and the third party service can't be provided.
+
+\vspace{0.5cm}
 
 \subsubsection{Hardware Limitations}
 \textbf{Data4Help} doesn't require specific hardware limitations for third parties. Users should use mobile devices with sensors useful for collecting data (GPS, cardiac pulse sensor, accelerometer, camera, light sensor) even if they are not strictly required. The only necessary requirement is that the device must have an internet connection (possibly fast):
@@ -818,75 +929,323 @@ Providing a set of API instead of creating a dedicated app for Data4Help is usef
 \clearpage
 
 \section{Formal Analysis Using Alloy}
+
+In the Alloy model only the relevant elements for the system behaviour analysis are present. The model focuses, in particularly, on these entities:
+
+\begin{itemize}
+    \item User
+    \item Group of Users (used in anonymized data requests)
+    \item Third Party
+    \item AutomatedSOS
+    \item Track4Run
+    \item Request Status
+    \item Individual permission
+    \item Anonymous permission      
+\end{itemize}
+
+In general customer's data are not considered because they don't affect the system behaviour except only for the user's health status and the time at which a run begins. \newline The most important aspect of the analysis are the permission because they represent the relation between users and third parties which is the most sensible part of the service. \newline In fact, Data4Help aims to collect data but most importantly to give access to them only to the authorized entities. \newline
+To model the permission evolution the system uses three states: Accepted, Refused and Undefined. \newline
+The request status Undefined is used to represent when a permission is just created and it has not been approved yet.
+
+\clearpage
+
+{\fontfamily{pcr}\selectfont
+open util/relation 
+open util/integer
+
+sig User {
+dataFor: set ThirdParty,
+health:one Int
+} { health >=0 and health <= 4}
+
+sig GroupOfUsers {
+targetUsers: set User
+}{#targetUsers > 0}
+
+sig ThirdParty {
+individualDataFrom: set User,
+anonymizedDataFrom: set GroupOfUsers
+}
+
+one sig AutomatedSOS extends ThirdParty {
+	emergency: set User
+}
+
+one sig Track4Run extends ThirdParty {
+runs: set Run 
+}
+
+sig Run{
+runners: some User,
+spectators: set User,
+time:one Int
+}{(all r: Run | r in Track4Run.runs) and time >= 0 and time <= 6 }
+
+
+abstract sig RequestStatus {}
+one sig ACCEPTED extends RequestStatus {}
+one sig REFUSED extends RequestStatus {}
+one sig UNDEFINED extends RequestStatus{}
+
+sig IndividualPermission {
+thirdParty: one ThirdParty,
+user: one User,
+status: one RequestStatus
+}
+
+sig AnonymousPermission {
+thirdParty: one ThirdParty,
+group: one GroupOfUsers,
+status: one  RequestStatus
+}
+
+--Data4Help
+
+fact individualDataRequestCondition {
+all ip: IndividualPermission | ip.status = ACCEPTED iff (ip.user in ip.thirdParty.individualDataFrom and ip.thirdParty in ip.user.dataFor )
+}
+
+fact toAcquireIndividualDataMustExistsAPermission{
+all u: User, tp: ThirdParty | u in tp.individualDataFrom iff ( one ip : IndividualPermission | ip.user = u and ip.thirdParty = tp and ip.status = ACCEPTED )
+}
+
+fact oneToOnePermissionCondition{
+	all u: User, tp: ThirdParty | u in tp.individualDataFrom iff tp in u.dataFor
+}
+
+fact notAcceptedPermissionAvoidDataExchange{
+all ip: IndividualPermission | (ip.status = REFUSED or ip.status = UNDEFINED) iff !( ip.user in ip.thirdParty.individualDataFrom)
+}
+
+fact individualPermissionAreUnique{
+no disj ip1, ip2 : IndividualPermission |  ip1.user = ip2.user and  ip1.thirdParty = ip2.thirdParty and !(ip1.status = UNDEFINED or ip2.status = UNDEFINED)
+}
+
+fact anonymazedPermissionCondition {
+all ap: AnonymousPermission | (ap.status = ACCEPTED iff #ap.group.targetUsers > 1000) and ( ap.status = REFUSED iff #ap.group.targetUsers <= 1000  ) and !(ap.status = UNDEFINED)
+}
+
+fact groupExistsOnlyForAnonymazedPermissions {
+all gu: GroupOfUsers | some ap: AnonymousPermission | ap.group = gu
+}
+
+fact toAcquireAnonymazedDataMustExistAPermission{
+all gu: GroupOfUsers, tp : ThirdParty |  gu in tp.anonymizedDataFrom iff ( some ap: AnonymousPermission | ap.group = gu and ap.thirdParty = tp and ap.status = ACCEPTED )
+}
+
+fact anonymazedPermissionsAreUnique {
+no disj ap1,ap2: AnonymousPermission | ap1.thirdParty = ap2.thirdParty and ap1.group = ap2.group
+}
+
+fact usersInGroupAreUnique {
+all gu: GroupOfUsers | ( no disj u1,u2: User | u1 in gu.targetUsers and u2 in gu.targetUsers and u1 = u2 )
+}
+
+pred notExistsAnAcceptedIndividualPermission[u: User,tp: ThirdParty] {
+	!(u in tp.individualDataFrom)
+}
+
+pred addUserToThirdParty[tp,tp':ThirdParty,u:User] {
+	tp'.individualDataFrom = tp.individualDataFrom + u
+}
+
+pred addThirdPartyToUser[u,u':User, tp:ThirdParty] {
+	u'.dataFor = u.dataFor + tp
+}
+
+pred addIndividualPermission[ u,u' : User, tp,tp' : ThirdParty] {
+
+	notExistsAnAcceptedIndividualPermission[u, tp]
+
+	addUserToThirdParty[tp,tp',u]
+
+	one ip:IndividualPermission | ip.status = ACCEPTED and ip.user = u' and ip.thirdParty = tp'
+}
+
+--AutomatedSOS
+
+fact userInEmergencyCondition {
+	all u:AutomatedSOS.individualDataFrom | (u.health < 3  iff u in AutomatedSOS.emergency) 
+}
+
+fact onlyAutomatedSOSUserCouldBeInEmergency {
+	AutomatedSOS.emergency in AutomatedSOS.individualDataFrom
+}
+
+pred isUserSafe[u:User] {
+	!(u.health < 3)
+}
+
+pred userIsNotSafe[u,u':User] {
+	u'.health = minus[u.health,2]
+}
+
+pred userEnterInEmergencySituation[u,u':User] {
+	u in AutomatedSOS.individualDataFrom
+	u' in AutomatedSOS.individualDataFrom
+	isUserSafe[u]
+	!(u in AutomatedSOS.emergency)
+
+	userIsNotSafe[u,u']
+	(u' in AutomatedSOS.emergency)
+}
+
+--Track4Run
+
+fact noAnonymousPermissionAutomatedTrack4Run{
+	no ap:AnonymousPermission | ap.thirdParty = AutomatedSOS or ap.thirdParty = Track4Run 
+}
+
+fact noSameUserIsRunnerAndSpectatorsInSameRun{
+all r: Run | no u: User | u in r.runners and u in r.spectators
+}
+
+fact onlyTrack4RunUserCanBeRunnerOrSpectators{
+all u: User | (some r: Run | (u in r.runners or u in r.spectators ) ) implies u in Track4Run.individualDataFrom
+}
+
+fact noUserInTwoRunEventsAt{
+	no u:User | some disj r1,r2:Run | (u in r1.runners or u in r1.spectators) and (u in r2.runners or u in r2.spectators) and r1.time = r2.time
+}
+
+pred addRunner[r,r':Run, ru:User]{
+	r'.runners = r.runners + ru
+}
+
+pred addSpectator[r,r':Run, s:User]{
+	r'.spectators = r.spectators + s
+}
+
+pred addSpectatorAndRunnerToARun[r,r':Run, s,s',ru,ru':User]{
+	!(s in r.spectators or ru in r.runners)
+	addRunner[r,r',ru]
+	addSpectator[r,r',s]
+
+	!(ru in r'.spectators or s in r'.runners)
+}
+
+assert noRunnerInTwoRunAtSameTime{
+	all u:User | all disj r1,r2:Run | !(u in r1.runners  and u in r2.runners and r1.time = r2.time)
+}
+
+
+pred show {
+	some u:User| u in AutomatedSOS.emergency 
+	some ip:IndividualPermission | ip.status = ACCEPTED 
+	some ap:AnonymousPermission |ap.status = ACCEPTED
+	some r:Run | #r.runners>0 and #r.runners<3 and #r.spectators>0 and #r.spectators<3
+}
+
+run show for 5 but 4 AnonymousPermission, 4 IndividualPermission, 3 ThirdParty,5 User
+run addIndividualPermission
+run  userEnterInEmergencySituation
+run addSpectatorAndRunnerToARun
+check noRunnerInTwoRunAtSameTime for 5}
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{alloyResult1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{alloyResult2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{alloyResult3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{alloyResult4}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{alloyResult5}
+\end{figure}
+
+\clearpage
+
+\begin{sidewaysfigure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{worldAlloy}
+\end{sidewaysfigure}
+
+\clearpage
     
-    \section{Effort Spent}
-    
-    Davide Salaorni
-    
-    \begin{center}
-    \begin{tabular}{|l | l |}
-        \hline \bf{Purpose, Scope, Definitions} & 1 \\ \hline
-        \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 4 \\ \hline
-        \bf{External Interfaces} & 3 \\ \hline
-        \bf{Functional Requirements} & 11 \\ \hline
-        \bf{Design Constraint} & 3\\ \hline
-        \bf{Software System Attributes} & 1 \\ \hline
-        \bf{Alloy} & 9 \\ \hline
-    \end{tabular}
+\section{Effort Spent}
+
+Davide Salaorni
+
+\begin{center}
+\begin{tabular}{|l | l |}
+    \hline \bf{Purpose, Scope, Definitions} & 1 \\ \hline
+    \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 4 \\ \hline
+    \bf{External Interfaces} & 3 \\ \hline
+    \bf{Functional Requirements} & 11 \\ \hline
+    \bf{Design Constraint} & 3\\ \hline
+    \bf{Software System Attributes} & 1 \\ \hline
+    \bf{Alloy} & 9 \\ \hline
+\end{tabular}
 \end{center}
 
 \noindent  Luca Terracciano
-    
-        \begin{center}
-    \begin{tabular}{|l | l |}
-        \hline \bf{Purpose, Scope, Definitions} & 2 \\ \hline
-        \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 3 \\ \hline
-        \bf{External Interfaces} & 4 \\ \hline
-        \bf{Functional Requirements} & 9 \\ \hline
-        \bf{Design Constraint} & 2\\ \hline
-        \bf{Software System Attributes} & 3 \\ \hline
-        \bf{Alloy} & 9 \\ \hline
-    \end{tabular}
+
+    \begin{center}
+\begin{tabular}{|l | l |}
+    \hline \bf{Purpose, Scope, Definitions} & 2 \\ \hline
+    \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 3 \\ \hline
+    \bf{External Interfaces} & 4 \\ \hline
+    \bf{Functional Requirements} & 9 \\ \hline
+    \bf{Design Constraint} & 2\\ \hline
+    \bf{Software System Attributes} & 3 \\ \hline
+    \bf{Alloy} & 9 \\ \hline
+\end{tabular}
 \end{center}
 
-    \noindent Manuel Trivilino
-    
-        \begin{center}
-    \begin{tabular}{|l | l |}
-        \hline \bf{Purpose, Scope, Definitions} & 1 \\ \hline
-        \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 2 \\ \hline
-        \bf{External Interfaces} & 5 \\ \hline
-        \bf{Functional Requirements} & 9 \\ \hline
-        \bf{Design Constraint} & 3 \\ \hline
-        \bf{Software System Attributes} & 3 \\ \hline
-        \bf{Alloy} & 9 \\ \hline
-    \end{tabular}
+\noindent Manuel Trivilino
+
+    \begin{center}
+\begin{tabular}{|l | l |}
+    \hline \bf{Purpose, Scope, Definitions} & 1 \\ \hline
+    \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 2 \\ \hline
+    \bf{External Interfaces} & 5 \\ \hline
+    \bf{Functional Requirements} & 9 \\ \hline
+    \bf{Design Constraint} & 3 \\ \hline
+    \bf{Software System Attributes} & 3 \\ \hline
+    \bf{Alloy} & 9 \\ \hline
+\end{tabular}
 \end{center}
-    
-    
-    \section{References}
 
-    \subsubsection{Used Tool}
 
-    \begin{itemize}
-        \item MagicDraw (diagrams)
-        \item Alloy Analyzer 5.0
-        \item Overleaf LaTex Editor
-        \item gitHub
-        \item Proto.io (mockups)
-        \item Adobe Photoshop
-        \item Visual Studio Code
-        
-    \end{itemize}
-    
-    \begin{itemize}
-        \item Mandatory Project Assignment AY 2018-2019
-        \item ISO/IEC/IEEE 29148 dated Dec 2011
-        \item Alloy Documentation http://alloytools.org/documentation.html
-        \item Slides: Alloy, Use of Alloy in RE
-        \item LaTex Documentation: https://www.latex-project.org/help/documentation/
-        
-    \end{itemize}
+\section{References}
 
+\subsubsection{Used Tool}
+
+\begin{itemize}
+    \item MagicDraw (diagrams)
+    \item Alloy Analyzer 5.0
+    \item Overleaf LaTex Editor
+    \item gitHub
+    \item Proto.io (mockups)
+    \item Adobe Photoshop
+    \item Visual Studio Code
     
-    \end{document}
+\end{itemize}
+
+\begin{itemize}
+    \item Mandatory Project Assignment AY 2018-2019
+    \item ISO/IEC/IEEE 29148 dated Dec 2011
+    \item Alloy Documentation http://alloytools.org/documentation.html
+    \item Slides: Alloy, Use of Alloy in RE
+    \item LaTex Documentation: https://www.latex-project.org/help/documentation/
+    
+\end{itemize}
+
+
+\end{document}
