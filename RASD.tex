@@ -562,8 +562,8 @@ Arya watches the event until the end, being witness of his brother defeat.
 \subsubsection{User's sign up}
 
 \begin{center}
-\begin{tabular}{ l || p{8cm} ||}
-    \bf{ACTORS} & User \\ 
+\begin{tabular}{|l || p{8cm} ||}
+    \hline\bf{ACTORS} & User \\ 
     \hline
     \bf{ENTRY CONDITIONS} & No entry condition needed  \\ 
     \hline
@@ -590,8 +590,8 @@ Arya watches the event until the end, being witness of his brother defeat.
 
 \subsubsection{One-time request for anonymous data}
 \begin{center}
-\begin{tabular}{l || p{8cm} ||}
-    \bf{ACTORS} & Third Party \\ \hline
+\begin{tabular}{|l || p{8cm} ||}
+    \hline\bf{ACTORS} & Third Party \\ \hline
     \bf{ENTRY CONDITIONS} & This use case starts when the third party is registered, successfully logged in to Data4Help and is connected to the web page.\\ \hline
     \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
         \item[1.] The Third Party click on "Data Request" button.
@@ -609,8 +609,8 @@ Arya watches the event until the end, being witness of his brother defeat.
 
 \subsubsection{Subscription to anonymous data set}
 \begin{center}
-\begin{tabular}{l || p{8cm} ||}
-    \bf{ACTORS} & Third Party \\ \hline
+\begin{tabular}{|l || p{8cm} ||}
+    \hline\bf{ACTORS} & Third Party \\ \hline
     \bf{ENTRY CONDITIONS} & This use case starts when the third party is registered, successfully logged in to Data4Help and connected to the web page.\\ \hline
     \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
         \item[1.] The Third Party clicks on "Data Request" button.
@@ -634,8 +634,8 @@ Arya watches the event until the end, being witness of his brother defeat.
 
 \subsubsection{Request for specific user's data}
 \begin{center}
-\begin{tabular}{l || p{8cm} ||}
-    \bf{ACTORS} & Third Party, User \\ \hline
+\begin{tabular}{|l || p{8cm} ||}
+    \hline \bf{ACTORS} & Third Party, User \\ \hline
     \bf{ENTRY CONDITIONS} & This use case starts when the Third Party is registered, successfully logged in to Data4Help and connected to the web page.   \\ \hline
     \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
         \item[1.] The Third Party clicks on "Data Request" button.
@@ -653,8 +653,8 @@ Arya watches the event until the end, being witness of his brother defeat.
 %AutomatedSOS
 \subsubsection{Alert emergency status}
 \begin{center}
-\begin{tabular}{l || p{8cm} ||}
-    \bf{ACTORS} & User, Ambulance Dispatcher \\ \hline
+\begin{tabular}{|l || p{8cm} ||}
+    \hline \bf{ACTORS} & User, Ambulance Dispatcher \\ \hline
     \bf{ENTRY CONDITIONS} & This use case starts when the user is registered and logged in to AutomatedSOS on his/her device, moreover has allowed the permission to share personal data with this third party. \\ \hline
     \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
         \item[1.] The system receives the user's health data collected from his/her device by Data4Help.
@@ -676,8 +676,8 @@ Arya watches the event until the end, being witness of his brother defeat.
 %Track4Run
 \subsubsection{Creation of a run event}
 \begin{center}
-\begin{tabular}{l || p{8cm} ||}
-    \bf{ACTORS} & User \\ \hline
+\begin{tabular}{|l || p{8cm} ||}
+    \hline\bf{ACTORS} & User \\ \hline
     \bf{ENTRY CONDITIONS} & This use case starts when the user is registered and logged in to Track4Run on his/her device, moreover has allowed the permission to share personal data with this third party.  \\ \hline
     \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
         \item[1.] The user selects the "Create a run" button.
@@ -695,8 +695,8 @@ Arya watches the event until the end, being witness of his brother defeat.
 
 \subsubsection{Enrollment in a run}
 \begin{center}
-\begin{tabular}{l || p{8cm} ||}
-    \bf{ACTORS} & User \\ \hline
+\begin{tabular}{|l || p{8cm} ||}
+    \hline\bf{ACTORS} & User \\ \hline
     \bf{ENTRY CONDITIONS} & This use case starts when the user is registered and logged in to Track4Run on his/her device. Moreover has allowed the permission to share personal data with this third party and at least a run event has been already created. \\ \hline
     \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
         \item[1.] The user selects the "Enroll in a run" button.
@@ -715,8 +715,8 @@ Arya watches the event until the end, being witness of his brother defeat.
 
 \subsubsection{Watch a run}
 \begin{center}
-\begin{tabular}{l || p{8cm} ||}
-    \bf{ACTORS} & User \\ \hline
+\begin{tabular}{|l || p{8cm} ||}
+    \hline\bf{ACTORS} & User \\ \hline
     \bf{ENTRY CONDITIONS} & This use case starts when the user is registered and logged in to Track4Run on his/her device, on the main page. Moreover has allowed the permission to share personal data with this third party and at least a run event has been already created. \\ \hline
     \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
         \item[1.] The user selects the "View a run" button.
@@ -818,10 +818,75 @@ Providing a set of API instead of creating a dedicated app for Data4Help is usef
 \clearpage
 
 \section{Formal Analysis Using Alloy}
+    
+    \section{Effort Spent}
+    
+    Davide Salaorni
+    
+    \begin{center}
+    \begin{tabular}{|l | l |}
+        \hline \bf{Purpose, Scope, Definitions} & 1 \\ \hline
+        \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 4 \\ \hline
+        \bf{External Interfaces} & 3 \\ \hline
+        \bf{Functional Requirements} & 11 \\ \hline
+        \bf{Design Constraint} & 3\\ \hline
+        \bf{Software System Attributes} & 1 \\ \hline
+        \bf{Alloy} & 9 \\ \hline
+    \end{tabular}
+\end{center}
 
-\section{Effort Spent}
+\noindent  Luca Terracciano
+    
+        \begin{center}
+    \begin{tabular}{|l | l |}
+        \hline \bf{Purpose, Scope, Definitions} & 2 \\ \hline
+        \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 3 \\ \hline
+        \bf{External Interfaces} & 4 \\ \hline
+        \bf{Functional Requirements} & 9 \\ \hline
+        \bf{Design Constraint} & 2\\ \hline
+        \bf{Software System Attributes} & 3 \\ \hline
+        \bf{Alloy} & 9 \\ \hline
+    \end{tabular}
+\end{center}
 
-\section{References}
+    \noindent Manuel Trivilino
+    
+        \begin{center}
+    \begin{tabular}{|l | l |}
+        \hline \bf{Purpose, Scope, Definitions} & 1 \\ \hline
+        \bf{Product Perspective and Functions, Assumptions,Scenarios}  & 2 \\ \hline
+        \bf{External Interfaces} & 5 \\ \hline
+        \bf{Functional Requirements} & 9 \\ \hline
+        \bf{Design Constraint} & 3 \\ \hline
+        \bf{Software System Attributes} & 3 \\ \hline
+        \bf{Alloy} & 9 \\ \hline
+    \end{tabular}
+\end{center}
+    
+    
+    \section{References}
 
+    \subsubsection{Used Tool}
 
-\end{document}
+    \begin{itemize}
+        \item MagicDraw (diagrams)
+        \item Alloy Analyzer 5.0
+        \item Overleaf LaTex Editor
+        \item gitHub
+        \item Proto.io (mockups)
+        \item Adobe Photoshop
+        \item Visual Studio Code
+        
+    \end{itemize}
+    
+    \begin{itemize}
+        \item Mandatory Project Assignment AY 2018-2019
+        \item ISO/IEC/IEEE 29148 dated Dec 2011
+        \item Alloy Documentation http://alloytools.org/documentation.html
+        \item Slides: Alloy, Use of Alloy in RE
+        \item LaTex Documentation: https://www.latex-project.org/help/documentation/
+        
+    \end{itemize}
+
+    
+    \end{document}
