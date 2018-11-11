@@ -1,9 +1,10 @@
 open util/relation
+open util/integer
 
 sig User {
 dataFor: set ThirdParty,
 health:one Int
-} { health <= 7 and health >= 0}
+} { health >=0 and health <= 4}
 
 sig GroupOfUsers {
 targetUsers: set User
@@ -14,11 +15,20 @@ individualDataFrom: set User,
 anonymizedDataFrom: set GroupOfUsers
 }
 
-sig Ambulance{}
-
 one sig AutomatedSOS extends ThirdParty {
-	emergency: User -> lone Ambulance
+	emergency: set User
 }
+
+one sig Track4Run extends ThirdParty {
+runs: set Run 
+}
+
+sig Run{
+runners: some User,
+spectators: set User,
+time:one Int
+}{(all r: Run | r in Track4Run.runs) and time >= 0 and time <= 6 }
+
 
 abstract sig RequestStatus {}
 one sig ACCEPTED extends RequestStatus {}
@@ -96,73 +106,96 @@ pred addIndividualPermission[ u,u' : User, tp,tp' : ThirdParty] {
 	notExistsAnAcceptedIndividualPermission[u, tp]
 
 	addUserToThirdParty[tp,tp',u]
---	addThirdPartyToUser[u,u',tp]
 
 	one ip:IndividualPermission | ip.status = ACCEPTED and ip.user = u' and ip.thirdParty = tp'
 }
 
 --AutomatedSOS
 
-fact {
-all u: User | u in dom[AutomatedSOS.emergency] implies u in AutomatedSOS.individualDataFrom
+fact userInEmergencyCondition {
+	all u:AutomatedSOS.individualDataFrom | (u.health < 3  iff u in AutomatedSOS.emergency) 
 }
 
-fact {
-all u: User | u in dom[AutomatedSOS.emergency] implies u.health < 4
+fact onlyAutomatedSOSUserCouldBeInEmergency {
+	AutomatedSOS.emergency in AutomatedSOS.individualDataFrom
 }
-
-fact {
-all u: User | ( u in AutomatedSOS.individualDataFrom and  u.health < 4) implies u in dom[AutomatedSOS.emergency]
-}
-
 
 pred isUserSafe[u:User] {
-	u.health >= 2
+	!(u.health < 3)
 }
 
 pred userIsNotSafe[u,u':User] {
-	u'.health = u.health - 2
+	u'.health = minus[u.health,2]
 }
+
 pred userEnterInEmergencySituation[u,u':User] {
+	u in AutomatedSOS.individualDataFrom
+	u' in AutomatedSOS.individualDataFrom
 	isUserSafe[u]
-	!(u in dom[AutomatedSOS.emergency])
+	!(u in AutomatedSOS.emergency)
 
 	userIsNotSafe[u,u']
-	(u' in dom[AutomatedSOS.emergency])
-
-	
+	(u' in AutomatedSOS.emergency)
 }
 
 --Track4Run
 
-one sig Track4Run extends ThirdParty {
-runs: set Run 
+fact noAnonymousPermissionAutomatedTrack4Run{
+	no ap:AnonymousPermission | ap.thirdParty = AutomatedSOS or ap.thirdParty = Track4Run 
 }
 
-sig Run{
-runners: some User,
-spectators: set User 
-}{all r: Run | r in Track4Run.runs }
-
-fact {
+fact noSameUserIsRunnerAndSpectatorsInSameRun{
 all r: Run | no u: User | u in r.runners and u in r.spectators
 }
 
-fact {
+fact onlyTrack4RunUserCanBeRunnerOrSpectators{
 all u: User | (some r: Run | (u in r.runners or u in r.spectators ) ) implies u in Track4Run.individualDataFrom
 }
 
-pred show {
-some u: User | u in dom[AutomatedSOS.emergency]
-some u: User | u.health > 4  and u in AutomatedSOS.individualDataFrom
---#AutomatedSOS.individualDataFrom > 3
---#dom[AutomatedSOS.emergency] > 2
+fact noUserInTwoRunEventsAt{
+	no u:User | some disj r1,r2:Run | (u in r1.runners or u in r1.spectators) and (u in r2.runners or u in r2.spectators) and r1.time = r2.time
 }
 
-run show
---run show for 4 but 3 Run, 10 User, 0 ThirdParty
+pred addRunner[r,r':Run, ru:User]{
+	r'.runners = r.runners + ru
+}
 
---run show for 5 but 4 AnonymousPermission, 4 IndividualPermission, 3 ThirdParty, 5 User
---run addIndividualPermission
---run  userEnterInEmergencySituation
+pred addSpectator[r,r':Run, s:User]{
+	r'.spectators = r.spectators + s
+}
+
+pred addSpectatorAndRunnerToARun[r,r':Run, s,s',ru,ru':User]{
+	!(s in r.spectators or ru in r.runners)
+	addRunner[r,r',ru]
+	addSpectator[r,r',s]
+
+	!(ru in r'.spectators or s in r'.runners)
+}
+
+assert noRunnerInTwoRunAtSameTime{
+	all u:User | all disj r1,r2:Run | !(u in r1.runners  and u in r2.runners and r1.time = r2.time)
+}
+
+
+pred show {
+	some u:User| u in AutomatedSOS.emergency 
+	some ip:IndividualPermission | ip.status = ACCEPTED 
+	some ap:AnonymousPermission |ap.status = ACCEPTED
+	some r:Run | #r.runners>0 and #r.runners<3 and #r.spectators>0 and #r.spectators<3
+}
+
+run show for 5 but 4 AnonymousPermission, 4 IndividualPermission, 3 ThirdParty,5 User
+run addIndividualPermission
+run  userEnterInEmergencySituation
+run addSpectatorAndRunnerToARun
+check noRunnerInTwoRunAtSameTime for 5
+
+
+
+
+
+
+
+
+
 
