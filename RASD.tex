@@ -187,36 +187,41 @@
     
     \paragraph{Data4Help:} The system should be a sever-based system made up of:
     \begin{itemize}
-        \item A main server (possibly distributed to guarantee better reliability and scalability).
-        \item A database to store collected data.
+        \item A main server (possibly distributed to guarantee better reliability and scalability) with a server OS to handle the main functions: permission and request managing, data managing, etc.
+        \item A database to store the collected data (possibly in-source to preserve data sensibility).
+        \item A DBMS to manage the database.
     \end{itemize}
     The Data4Help services are accessible from the users through a web browser or through mobile device applications of third parties.
-    The system, to provide its services, exploits the devices of the users which use third parties applications based on Data4Help. 
+    The system, to collect data, exploits the devices of the users which use third parties services, these devices must integrate sensors in order to allow Data4Help to acquire data.
     
-    \paragraph{AutomatedSOS:} The system is based on a Client-Server architecture, moreover it has to communicate with Data4Help and the ambulance dispatcher. It is composed by:
+    \paragraph{AutomatedSOS:} The system is based on a Client-Server architecture. It is composed by:
     \begin{itemize}
-        \item A server to manage the users' data and handle the emergency status.
+        \item A server to provide the main functions: users' data managing and handle the emergency status and notify the ambulance dispatcher through the push notification external service.
+        \item A mobile device with a supported OS (Android OS, iOS, Android Wear OS, etc.) where it is possible to install the AutomateSOS app. The device (Smartphone, smartwatch, smartwears, etc.) must respect the constraints that Data4Help requires.
     \end{itemize}
-    The service can be provided to the user through his/her mobile devices (Smartphone, smartwatch, smartwears, etc.). The device must respect the constraints that Data4Help requires in order to 
     
-    \paragraph{Track4Run} requires a mobile devices (smartphone, smartwatch, smart band linked to the smartphone) with GPS to keep track of the runners' position.
+    \paragraph{Track4Run} Also this system is based on a Client-Server architecture. It is composed by:
+    \begin{itemize}
+        \item A server to provide the main functions: runs managing, runners tracking, streaming for the spectators during the run.
+        \item A mobile device with a supported OS (Android OS, iOS, Android Wear OS, etc.) where it is possible to install the Track4Run app. The device (Smartphone, smartwatch, smartwears, etc.) must respect the constraints that Data4Help requires.
+    \end{itemize}
     
     \subsubsection{Software Interfaces}
     
-    \paragraph{Data4Help:} the system needs to transfer data with users and thirds parties and keep track of the permissions the interfaces needed are:
+    \paragraph{Data4Help:} The interfaces needed from the system are:
     \begin{itemize}
-        \item REST API to communicate and transfer data on the web.
-        \item mySQL DBMS to manage the database.
+        \item A server OS to manage all the back-end functions. It has to implement REST API to communicate and transfer data with the mobile devices, the third parties' servers.
+        \item A DBMS to manage the database.
     \end{itemize}
-    Data4Help furthermore gives to the third parties a set of client-side APIs that provide an interface in order to connect their own application with Data4Help services.
+    Data4Help furthermore gives to the third parties a set of client-side APIs that provide an interface in order to connect their own client-side application with Data4Help services.
     
-    \paragraph{AutomatedSOS:} the system needs to manage the communication with Data4Help, to analyze the data and to communicate with the ambulance dispatcher and the communication between the app and the server. The interfaces needed are:
+    \paragraph{AutomatedSOS:} the system needs to manage the communication with Data4Help, to analyze the data and to communicate with the ambulance dispatcher and the communication between the app and the server. The software interfaces needed are:
     
     \begin{itemize}
         \item Android OS, Android Wear OS or iOS for the client-side application.
         \item Data4Help API to access to services and receive data with Data4Help.
         \item REST API to communicate and transfer data on the web between the client app and the server.
-        \item Interface with Push service to a safe connection to send reliable messages to require health care to the ambulance dispatcher.
+        \item Interface with the Push Notification service to send reliable messages to the ambulance dispatcher.
     \end{itemize}
     
     \paragraph{Track4Run:} the system needs to manage the run events with the respective runners and spectators and let the spectators watch the run events on the map. Otherwise has to manage the communication with Data4Help and between the client app and the server. The interfaces needed are:
@@ -231,10 +236,12 @@
     
     \subsubsection{Communication Interfaces}
     
-    The system is based on the Client-Server architecture, in particular the communication between the different actors and elements of the system (Data4Help Server-Data4Help API Client, Third Parties/User-Data4Help, AutomatedSOS Server-AutomatedSOS Client, Track4Run Server-Track4Run Client) is based on: the REST API to make requests, the AJAX API to transfer data.
-    Data4Help collect data from the users through its Client-side APIs. The third parties has to integrate the Data4Help API in their own app to access to their services. Data4Help acquires data from the users' devices and then provides them to the ThirdParties, managing the requests and the permissions. 
+    The system is based on the Client-Server architecture, in particular the communication between the different actors and elements of the system (Data4Help Server-Data4Help API Client, Third Parties/User-Data4Help, AutomatedSOS Server-AutomatedSOS Client, Track4Run Server-Track4Run Client) is based on: the REST API to make requests, the AJAX API to transfer data. The REST standard is recommended because is largely used on the web from the most of the devices and it guarantees better portability, maintainability and and compatibility.
+    Data4Help collects data from the users through its Client-side APIs. The third parties has to integrate the Data4Help API in their own app to access to their services. Data4Help acquires data from the users' devices and then provides them to the ThirdParties, managing the requests and the permissions. 
     This is a possible configuration of the system:
     
+    This is the schema of the communication by which data are collected and dispatched among third parties' app, Data4help API, third parties' server and Data4Help server services:
+   
     \subsection{Functional Requirements}
     
     \begin{enumerate}[label*=\bf{G.\arabic*}]
@@ -593,7 +600,6 @@
     
     The system should have an high level of portability in order that TrackMe can guarantee its services to a wide range of devices and users.
     Providing a set of API instead of creating a dedicated app for Data4Help is useful to achieve this goal, in fact the third parties can choose different OS and devices for developing their own services and application, integrating the Data4Help service with them.
-    
     \section{Formal Analysis Using Alloy}
     
     \section{Effort Spent}
