@@ -27,7 +27,7 @@
     \section{Introduction}
     
     \subsection{Purpose}
-    The purpose of this document is to describe the software-based solutions that TrackMe wants to offer to its customers. First of all the system is analyzed in terms of description of the problem and analysis of goals, requirements, constraints. After that a solution is modeled in terms of software, hardware constraints paying attention also at some implemenation details. This document is addressed to the developers who will implement this solution.
+    The purpose of this document is to describe the software-based solutions that TrackMe wants to offer to its customers. First of all, the system is analyzed in terms of description of the problem and analysis of goals, requirements and constraints. After that, a solution is modeled in terms of software and hardware constraints paying attention also to some implementation details. This document is addressed to the developers who will implement this solution.
     
     \subsection{Scope}
     
@@ -98,10 +98,12 @@
     \subsection{Reference Documents}
     
     \subsection{Document Structure}
-    The RASD is composed by three parts:
+    The RASD is composed by:
     \begin{enumerate}
-        \item Explanation of the given problem, the analysis in terms of goals and it gives some informations in order to better understand all the other document's parts.
-        \item 
+        \item Explanation of the given problem, the analysis in terms of goals and it gives some information in order to better understand all the other document's parts.
+        \item Describes the solution structure identifying it's general organization, the users, the operating environment and the major design and implementation constraints.
+        \item The software implementation is analyzed paying attention to the software and hardware details adding also a description in terms of functional requirements, scenarios and use cases.
+        \item The system is analyzed both in its static aspects and the dynamic ones using a specific formal modeling language, Alloy, in which the most important features are analyzed in order to verify if every constraint of the system is not violated.
     \end{enumerate}
     
     \section{Overall Description}
@@ -117,11 +119,11 @@
     
     
     \subsection{Product Functions}
-    The main function that the system must perform are divided in the three software components.
+    The main function that the system must perform are divided in three section, one for each software components.
     \begin{itemize}
         \item Data4Help
         \begin{enumerate}
-            \item Allow individual users (?) to share their personal data with Data4Help and, by transitive property, with the third parties who require them.
+            \item Allow users to share their personal data with Data4Help and with the third parties who require them.
             \item Allow third parties to require users' data in anonymous form by using filters and offers the possibility to make a subscription to the request.
             \item Third parties can request for a specific user's data.
             \item Users can decide whether accept or not a data request from a third party.
@@ -133,9 +135,9 @@
         \end{enumerate}
         \item Track4Run
         \begin{enumerate}
-            \item Users can organize runs.
-            \item Users can enroll to a run.
-            \item Users can watch a run.
+            \item Offers to the users the possibility to organize runs deciding the entire path, the day and the hour at which the event begins.
+            \item Users can search available runs that will take place in the city that they have selected previously and enroll to one of them.
+            \item Track4Run offers also to the users the possibility to watch a run event from their smartphones using a map representing the path and the real time runners' position.
         \end{enumerate}
     \end{itemize}
     
@@ -148,7 +150,7 @@
     \begin{itemize}
         \item User:  a person that is successfully registered to TrackMe as consumer and allow to acquire anonymous data, eventually a client of third party services (i.e. AutomatedSOS, Track4Run) that allows even personal data.
         
-        \item Third Parties:  a company or a person who is registred to TrackMe as "Third party" that access to anonymous and can require to access to individual data.
+        \item Third Parties:  a company or a person who is registered to TrackMe as "Third party" that access to anonymous and can require to access to individual data.
         
     \end{itemize}
     
@@ -246,7 +248,7 @@
         \begin{enumerate}[label*=\bf{.\arabic*}]
             \item \textbf{Registration can be done as individual user.}
             \begin{enumerate}
-                \item [R.1] People can create a user account selecting username, password, giving personal informations (age, address,gender) and allow to share their anonymized data.
+                \item [R.1] People can create a user account selecting username, password, giving personal information (age, address,gender) and allow to share their anonymized data.
                 
             \end{enumerate}
             
@@ -261,7 +263,7 @@
         \begin{enumerate}
             \item [R.3] Data4Help allows third parties to request anonymized data acquired from a filtered group of users (by age, gender, address, etc.).
             \item [R.4] Data4Help collects data from registered users and gives access to third parties only if the number of individuals whose data satisfy the request is higher than 1000.
-            \item [D.2] The personal informations given by the user (age, address, gender...) and the third parties are correct and the account is not used by other people.
+            \item [D.2] The personal information given by the user (age, address, gender...) and the third parties are correct and the account is not used by other people.
         \end{enumerate}
             
             
@@ -335,7 +337,7 @@
         \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
             \item[1.] User opens Data4Help app and press “Sign Up” button.
-            \item[2.] User inserts personal informations (name, address, age, gender, fiscal code).
+            \item[2.] User inserts personal information (name, address, age, gender, fiscal code).
             \item[3.] User selects email and password.
             \item[4.] User allows terms of conditions to share anonymized data with Data4Help.
             \item[5.] User completes the registration.
