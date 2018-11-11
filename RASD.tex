@@ -68,7 +68,7 @@
         
         %Data4Help
         
-        \item Allow users' registration.
+        \item Allow customers' registration.
         \begin{enumerate}[label*=.\arabic*]
             \item Registration can be done as individual user.
             \item Registration can be done as third party.
@@ -239,17 +239,68 @@
     The system is based on the Client-Server architecture, in particular the communication between the different actors and elements of the system (Data4Help Server-Data4Help API Client, Third Parties/User-Data4Help, AutomatedSOS Server-AutomatedSOS Client, Track4Run Server-Track4Run Client) is based on: the REST API to make requests, the AJAX API to transfer data. The REST standard is recommended because is largely used on the web from the most of the devices and it guarantees better portability, maintainability and and compatibility.
     Data4Help collects data from the users through its Client-side APIs. The third parties has to integrate the Data4Help API in their own app to access to their services. Data4Help acquires data from the users' devices and then provides them to the ThirdParties, managing the requests and the permissions. 
     This is a possible configuration of the system:
-    
     This is the schema of the communication by which data are collected and dispatched among third parties' app, Data4help API, third parties' server and Data4Help server services:
    
+    \clearpage
+    
+    \subsection{Scenarios}
+    
+    %Data4Help
+    \subsubsection{Bran and the sign up}
+    Bran, a 17-years old guy, likes athletics and, in particular, running, which usually performs with his friend Rickon. \newline
+    During the last training, Rickon has shown to him Runnister, a new Android app, which explains some exercises for the warm up and monitors the users' health status to warn about possible damaging workouts. The app leans on a system which collects data, called Data4Help, and to which is necessary to be registered to. \newline
+    Bran, enthusiastic, runs home and turns on the laptop, with the purpose to register to Data4Help. Enters in the homepage of the site and clicks the "Sign Up" button. Then completes the fields with his personal information, providing an email and the password. He also checks the terms of conditions, giving the consensus to the treatment of personal anonymized data. Finally, he finishes the registration and comes back automatically to the homepage.
+    
+    \subsubsection{Runnister's businnes plan}
+    The Runnister company, owner of the namesake application for mobile devices, wants to enlarge its range of users and start to cover a wider area. For this reason needs Data4Help service which can provide information about health status parameters of its users in the Dothraki District. \newline
+    First of all, the Runnister's agent accesses to the web site and logs in (Runnister has already used the service in the past and doesn't need to register anymore). He clicks on "Data Request" button and selects the one-time typology. Then selects the filter that must be applied to obtain data coming from a certain region (in this case "Dothraki District"). After that, he waits the confirmation to the request from Data4Help. \newline
+    Unfortunately, users of Data4Help residing in "Dothraki District" aren't enough to satisfy the threshold which preserves the anonymity. The request is refused and Runnister's agent receives the notification of the refusal.
+    
+    \subsubsection{Breakfast with Starkbucks}
+    Starkbucks is a company that makes statistics on the variations of health parameters generated from a non-healthy nutrition. For the next winter it has planned a analysis on the effects of the coffee on adult people's heartbeat and, to conduct this research, it needs to periodically acquire relevant data. Hence, it decides to ask Data4Help to get them. \newline 
+    After the company registration on the web site, the operator of Starkbucks, logged in the personal area, clicks on "Data Request" button and selects the acquirement of data through the subscription way. Then he chooses to pick users' data which have been collected only in the time slot between 7:00 and 9:00, i.e. the breakfast period. Then he waits for the confirmation. After some hour the operator receives the notification of confirmation and Starkbucks starts to periodically obtain the required data. \newline
+    In March, at the end of the winter, Starkbucks has already collected enough data, so decides to unsubscribe from the service and stops to receive updates from Data4Help. 
+    
+    \subsubsection{The worries of Brienne}
+    Hospitarly is an institute which conducts researches on diseases and cancer, offering to its patients the possibility to remain always updated on their own health condition. To integrate user's information, the company takes more precise data from Data4Help, but it must have the consensus of the user. \newline
+    Brienne is a middle-aged woman which has passed some sad moments for her health problems. For this reason, she wants to keep herself monitored and decides to use Hospitarly service. At the moment, she has already registered to Data4Help. \newline
+    During the sign up to the service, she receives the proposal to allow Data4Help to share her personal data with Hospitarly, in order to permit a richer and more updated analysis. She accepts the request. \newline
+    From this point, Hospitarly can ask whenever it needs information to Data4Help about Brienne's status and provide a more accurate service to its user.
+    
+    %automatedSOS
+    \subsubsection{The last walk of uncle Jamie}
+    Uncle Jamie has recently gone through a bad period, caused by his heart illness. To prevent another relapse, the doctor has advised him to get some walk everyday and install in his smartwatch an application, called AutomatedSOS, that provides an immediate rescue if his health parameters decrease under a given threshold. He listen to his doctor' advise and downloads the application. \newline
+    After the registration to AutomatedSOS and the previous sign up to Data4Help, uncle Jamie decides to try the new software during a walk. He wears his smartwatch and look at the AutomatedSOS interface, which reports a regular health status, with a normal heartbeat. Pleased with that, he starts his walk. \newline
+    Suddenly, in the middle of the walk, the smartwatch starts to   flash and emit an alert noise. Uncle Jamie watches his clock and understands that he is having some health issue. Immedialtely, he begins to have blurry vision and he collapses on the ground. \newline
+    The last sound he hears is a notification from his smartwatch that an ambulance has been sent to rescue him.
+    
+    %track4run
+    \subsubsection{Forrest, the run planner}
+    Forrest is a young man which loves running. He recently learns about a new application, called Track4Run, with the purpose to allow its users to organize run event. Excited for the new discovery, he invites a lot of friend to download the application and tries to set a run event for the next week. \newline
+    After the registration to Track4Run and the previous sign up to Data4Help, he launches the app. First of all, he clicks on "Create a run" button, choosing starting and ending point and the path in the middle from the map. Then, he gives the day and the hour at which the run will start. Finally, he receives the notification of the event creation and the opening of the subscription period. \newline
+    Now Forrest has only to enroll in his run event as a runner and wait until the day of the run. 
+    
+    \subsubsection{Jon knows something}
+    Jon is an autonomous athlete that has never joined in a sport association. To test himself he uses to access to Track4Run to find out some run events in which freely enroll. Now he wants to look for an event for the next week in South Carolina. \newline
+    First of all, he launches Track4Run application from his phone and selects the "Enroll in a run" button. Then Jon selects the city, in this case Beaufort, and chooses the run event that fits better with his appointments. He finds the Forrest's run and decides to enroll himself in that run. \newline
+    Jon is eventually registered as a runner in the event database and he will receive a notification just before the beginning of the event.
+    
+    \subsubsection{A runner as brother}
+    To be updated on the placement of his brother Jon, Arya, which has already downloaded Track4Run on is device, decides to watch the run during is progression. \newline
+    First of all, at the beginning of the run Arya launches Track4Run from her smartphone and selects the "View a run" button. Therefore, she indicates the city in which the run is held and chooses the desired run from the list of that is appeared. After that, on her phone appears the interface of the real-time map with the position of the runners, between which there is also Jon. \newline
+    Arya watches the event until the end, being witness of his brother defeat.
+    
+    \clearpage
+    
     \subsection{Functional Requirements}
     
+    \subsubsection{Specific Requirements}
     \begin{enumerate}[label*=\bf{G.\arabic*}]
         
         %Data4Help
-        \item \textbf{Allow users’ registration.}
+        \item \textbf{Allow customers’ registration.}
         \begin{enumerate}
-            \item [D.2] The personal information given by the user (age, address, gender...) and the third parties are correct and the account is not used by other people. 
+            \item [D.2] The personal information given by the user (age, address, gender, etc.) and the third parties (name, address, etc.) are correct and the account is not used by other people. 
         \end{enumerate}
         
         \begin{enumerate}[label*=\bf{.\arabic*}]
@@ -331,11 +382,14 @@
         \end{enumerate}
         
     \end{enumerate}
+    \clearpage
+    
     
     
     \paragraph{Use cases}
 
 \subsubsection{User's sign up}
+
 \begin{center}
     \begin{tabular}{ l || p{8cm} ||}
         \bf{ACTORS} & User \\ 
@@ -343,7 +397,7 @@
         \bf{ENTRY CONDITIONS} & No entry condition needed  \\ 
         \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] User opens Data4Help app and press “Sign Up” button.
+            \item[1.] User opens Data4Help web page and press “Sign Up” button.
             \item[2.] User inserts personal information (name, address, age, gender, fiscal code).
             \item[3.] User selects email and password.
             \item[4.] User allows terms of conditions to share anonymized data with Data4Help.
@@ -351,7 +405,7 @@
             \item[6.] The system saves the new account.
         \end{itemize}\\ 
         \hline
-        \bf{EXIT CONDITIONS} & The user is successfully registered and his/her data can be collected by Data4Help, he/she is redirected to the user page\\ \hline
+        \bf{EXIT CONDITIONS} & The user is successfully registered and his/her data can be collected by Data4Help. He/she is redirected to the homepage. \\ \hline
         \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
             \item[1.] The user doesn’t fill all the mandatory fields with valid data.
             \item[2.]The inserted email is already used by another user.
@@ -361,13 +415,13 @@
     \end{tabular}
 \end{center}
 
-\vspace{1cm}
+\vspace{0.5cm}
 
-\subsubsection{One-time request for anonymous data set}
+\subsubsection{One-time request for anonymous data}
 \begin{center}
     \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & Third Party \\ \hline
-        \bf{ENTRY CONDITIONS} & This use case start when the third party is registered, successfully logged in to Data4Help and is connected to the web page.\\ \hline
+        \bf{ENTRY CONDITIONS} & This use case starts when the third party is registered, successfully logged in to Data4Help and is connected to the web page.\\ \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
             \item[1.] The Third Party click on "Data Request" button.
             \item[2.] The Third Party selects to require anonymous data with a one-time request.
@@ -382,13 +436,13 @@
     \end{tabular}
 \end{center}
 
-\vspace{1cm}
+\vspace{0.5cm}
 
-\subsubsection{Subscription to anonymous data}
+\subsubsection{Subscription to anonymous data set}
 \begin{center}
     \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & Third Party \\ \hline
-        \bf{ENTRY CONDITIONS} & This use case start when the third party is registered, successfully logged in to Data4Help and connected to the web page.\\ \hline
+        \bf{ENTRY CONDITIONS} & This use case starts when the third party is registered, successfully logged in to Data4Help and connected to the web page.\\ \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
             \item[1.] The Third Party clicks on "Data Request" button.
             \item[2.] The Third Party selects to require anonymous data with a subscription request.
@@ -407,26 +461,22 @@
     \end{tabular}
 \end{center}
 
-
-\vspace{1cm}
+\vspace{0.5cm}
 
 \subsubsection{Request for specific user's data}
 \begin{center}
     \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & Third Party, User \\ \hline
-        \bf{ENTRY CONDITIONS} & This use case start when the Third Party is registered, successfully logged in to Data4Help and connected to the web page.   \\ \hline
+        \bf{ENTRY CONDITIONS} & This use case starts when the Third Party is registered, successfully logged in to Data4Help and connected to the web page.   \\ \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
             \item[1.] The Third Party clicks on "Data Request" button.
-            \item[2.] The Third Party selects the option " Require Individual Data".
-            % Dubbio sul seguente punto
-            \item[3.] The system sends a request to the users who want to use service offered by the Third Party.
+            \item[2.] The Third Party selects the option "Require Individual Data".
+            \item[3.] The system sends a request to the users whose the Third Party needs data.
             \item[4.] Once the user has allowed to acquire his/her personal data, a confirmation to the request is sent to the Third Party.
-            % Dubbio se superfluo o meno
-            \item[5.] The Third Party is redirected to the main page.
         \end{itemize}
         \\ \hline
         \bf{EXIT CONDITIONS} & The Third Party can require and access to user's personal data. \\ \hline
-        \bf{EXCEPTIONS} & The user doesn't allow to share personal data and the system reject the request of the Third Party.
+        \bf{EXCEPTIONS} & The user doesn't allow to share personal data and the system rejects the request of the Third Party.
         \\ \hline \hline
     \end{tabular}
 \end{center}
@@ -437,19 +487,19 @@
 \subsubsection{Alert emergency status}
 \begin{center}
     \begin{tabular}{l || p{8cm} ||}
-        \bf{ACTORS} & User, Ambulance Contact Center \\ \hline
-        \bf{ENTRY CONDITIONS} & This use case start when the user is registered and logged in to AutomatedSOS on his/her device, moreover has allowed the permission to share personal data with this third party. \\ \hline
+        \bf{ACTORS} & User, Ambulance Dispatcher \\ \hline
+        \bf{ENTRY CONDITIONS} & This use case starts when the user is registered and logged in to AutomatedSOS on his/her device, moreover has allowed the permission to share personal data with this third party. \\ \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] The system acquires the user's health data collected from his/her device.
-            \item[2.] The system analyzes the data and notices that the health status is under the secure threshold.
-            \item[3.] The system sends an ambulance request to the ambulance contact center within 5 seconds, reporting the user's health status and the position.
-            \item[4.] The system send a warning to the user's device to notify that the health status is under the threshold and that an ambulance has been called to reach his/her position.
+            \item[1.] The system receives the user's health data collected from his/her device by Data4Help.
+            \item[2.] The system analyzes the data and notices that the health status is under the safety threshold.
+            \item[3.] The system notifies the emergency to the Ambulance Dispatcher within 5 seconds, reporting the user's health status and position.
+            \item[4.] The system sends a warning to the user's device to notify that the health status is under the threshold and that an ambulance has been called to reach his/her position.
+            \item[5.] The system receives the acknowledgement from the Ambulance Dispatcher which notifies that an ambulance has been sent.
+            \item[6.] The system notices that the health status has became regular again.
         \end{itemize}
         \\ \hline
-        \bf{EXIT CONDITIONS} & The ambulance dispatcher sends a confirmation to the system that an ambulance has been sent to the user position. The system keep monitoring the user's health status.  \\ \hline
-        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] The Ambulance contact center doesn't send any confirmation. The system sends again a request with the updated information until a confirmation is received or the health status comes back to safe values.
-        \end{itemize}
+        \bf{EXIT CONDITIONS} & The system keeps monitoring the user's health status and position. \\ \hline
+        \bf{EXCEPTIONS} & The Ambulance Dispatcher doesn't send any confirmation and the system continues to periodically notify it with the alert status until a confirmation is received.
         \\ \hline \hline
     \end{tabular}
 \end{center}
@@ -461,19 +511,16 @@
 \begin{center}
     \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & User \\ \hline
-        \bf{ENTRY CONDITIONS} & This use case start when the user is registered and logged in to Track4Run on his/her device, moreover has allowed the permission to share personal data with this third party.  \\ \hline
+        \bf{ENTRY CONDITIONS} & This use case starts when the user is registered and logged in to Track4Run on his/her device, moreover has allowed the permission to share personal data with this third party.  \\ \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] The user select the "Create a run" button.
-            \item[2.] The user choose the starting point, the ending point and the path on the map.
+            \item[1.] The user selects the "Create a run" button.
+            \item[2.] The user chooses the starting point, the ending point and the path on the map.
             \item[3.] The user selects the day and the starting time of the run event.
             \item[4.] The system confirms the run event creation to the user and saves it in the database.
         \end{itemize}
         \\ \hline
         \bf{EXIT CONDITIONS} & The run event is created and the track4Run users can enroll to the event.\\ \hline
-        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] The selected path or the starting/ending point are unavailable for a run. The system let the user choose another one which is available.
-        \end{itemize}
-        \\ \hline \hline
+        \bf{EXCEPTIONS} &  The selected path or the starting/ending point is unavailable for a run. The system lets the user choose an available one. \\ \hline \hline
     \end{tabular}
 \end{center}
 
@@ -483,21 +530,18 @@
 \begin{center}
     \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & User \\ \hline
-        \bf{ENTRY CONDITIONS} & This use case start when the user is registered and logged in to Track4Run on his/her device. Moreover has allowed the permission to share personal data with this third party and at least a run event has been already created. \\ \hline
+        \bf{ENTRY CONDITIONS} & This use case starts when the user is registered and logged in to Track4Run on his/her device. Moreover has allowed the permission to share personal data with this third party and at least a run event has been already created. \\ \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] The user select the "Enroll to a run" button.
+            \item[1.] The user selects the "Enroll in a run" button.
             \item[2.] The user selects the city that interests him/her.
             \item[3.] The system shows the list of available runs in the selected city.
-            \item[4.] The user select the run event he /she wants to enroll.
+            \item[4.] The user selects the run event he/she wants to enroll.
             \item[5.] The system saves the user in the run event as a runner.
             \item[6.] The system notifies the user when the run is going to start.
         \end{itemize}
         \\ \hline
         \bf{EXIT CONDITIONS} & The user is correctly enrolled to the run event and can take part to it. \\ \hline
-        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] The run event is already started. The user can't enroll the run, he/she is redirected to the run event's list.
-            \item[2.] There are no available run for the selected city, the users is redirected to the home.
-        \end{itemize}
+        \bf{EXCEPTIONS} & There are no available runs. 
         \\ \hline \hline
     \end{tabular}
 \end{center}
@@ -508,22 +552,21 @@
 \begin{center}
     \begin{tabular}{l || p{8cm} ||}
         \bf{ACTORS} & User \\ \hline
-        \bf{ENTRY CONDITIONS} & This use case start when the user is registered and logged in to Track4Run on his/her device,on the main page. Moreover has allowed the permission to share personal data with this third party and at least a run event has been already created. \\ \hline
+        \bf{ENTRY CONDITIONS} & This use case starts when the user is registered and logged in to Track4Run on his/her device, on the main page. Moreover has allowed the permission to share personal data with this third party and at least a run event has been already created. \\ \hline
         \bf{EVENTS FLOW} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] The user select the "View a run" button.
+            \item[1.] The user selects the "View a run" button.
             \item[2.] The user selects the city that interests him/her. 
             \item[3.] The system shows the list of available runs in the selected city.
-            \item[4.] The user select the run event he /she wants to watch.
+            \item[4.] The user selects the run event he/she wants to watch.
             \item[5.] The system saves the user in the run event as a spectator.
         \end{itemize}
         \\ \hline
         \bf{EXIT CONDITIONS} & The user can watch on his/her device the map with the path and the runners positions updated in real time. \\ \hline
-        \bf{EXCEPTIONS} & \begin{itemize}[noitemsep, topsep=0cm, leftmargin=*] \vspace{-0.2cm}
-            \item[1.] 
-        \end{itemize}
-        \\ \hline \hline
+        \bf{EXCEPTIONS} & \\ \hline \hline
     \end{tabular}
 \end{center}
+    
+    \clearpage
     
     \subsection{Performance Requirements}
     
@@ -538,7 +581,7 @@
     
     \subsubsection{Standards Compliance}
     
-    Individual people to get access to Data4Help, AutomatedSOS and Track4Run services must sign in to Data4Help. By registering to Data4Help the user must allow the permissions to share anonymized data with Data4Help and third parties, unless he/she can't complete the registration.
+    Individual people to get access to Data4Help, AutomatedSOS and Track4Run services must sign in to Data4Help. By registering to Data4Help the user must allow the permissions to share anonymazed data with Data4Help and third parties, unless he/she can't complete the registration.
     AutomatedSOS and Track4Run are third parties actors developed by TrackMe and, as such, they have to require to Data4Help the permission to receive individual data from the users.
     If an user wants to use AutomatedSOS and Track4Run services must accept the permissions to share individual data with them, unless their data can't be dispatched from Data4Help to the specific third party and the third party service can't be provided.
     
