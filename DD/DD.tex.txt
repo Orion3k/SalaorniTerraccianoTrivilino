@@ -1,0 +1,99 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{courier}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage{tikz}
+\usepackage{makecell}
+\graphicspath{{./images/}}
+\usepackage{tabularx}
+%\usepackage{geometry} 
+%\geometry{a4paper,top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,% heightrounded,bindingoffset=5mm}
+
+\begin{document}
+
+\author{Manuel Trivilino, Davide Salaorni, Luca Terracciano}
+
+\title{\Large \textbf{Data4Help DD}\\
+\textbf{Design Document}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=270pt]{data4helpblu}
+        \label{fig:my_label}
+    \end{figure}
+    \vspace{-2.4cm}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=200pt]{AutomatedSOSlogo.png}
+        \label{fig:my_label}
+    \end{figure}
+    \vspace{-2cm}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=150pt]{Track4Runlogo}
+        \label{fig:my_label}
+\end{figure}
+}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Purpose}
+
+\subsection{Scope}
+
+\clearpage
+
+\subsection{Definitions, Acronyms, Abbreviation}
+
+\subsubsection{Definitions}
+\subsubsection{Acronyms}
+\subsubsection{Abbreviation}
+
+\clearpage    
+
+\subsection{Document Structure}
+\clearpage
+
+\section{Architectural Design}
+
+\subsection{Overview}
+
+\subsection{High-level Architecture}
+
+\clearpage
+
+\subsection{Component View}
+
+\subsection{Deployment View}
+\clearpage
+
+\subsection{Runtime View}
+
+\subsection{Component Interfaces}
+
+\subsection{Selected Architectural Styles and Patterns}
+
+\subsection{Other Design Decision}
+
+\section{User Interface Design}
+
+\section{Requirements Traceability}
+
+\section{Implementation, Integration and Test Plan}
+
+\section{Effort Spent}
+
+\section{References}
+
+\end{document}
