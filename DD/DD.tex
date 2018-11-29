@@ -24,19 +24,19 @@
     \begin{figure}[h]
         \centering
         \includegraphics[width=270pt]{data4helpblu}
-        \label{fig:my_label}
+        \label{fig:my_label_1}
     \end{figure}
     \vspace{-2.4cm}
     \begin{figure}[h]
         \centering
         \includegraphics[width=200pt]{AutomatedSOSlogo.png}
-        \label{fig:my_label}
+        \label{fig:my_label_2}
     \end{figure}
     \vspace{-2cm}
     \begin{figure}[h]
         \centering
-        \includegraphics[width=150pt]{Track4Runlogo}
-        \label{fig:my_label}
+        \includegraphics[width=150pt]{Track4Runlogo.png}
+        \label{fig:my_label_3}
 \end{figure}
 }
 
@@ -49,6 +49,7 @@
 \section{Introduction}
 
 \subsection{Purpose}
+This document aims to give to the developer team more technical details about the implementation of Data4Help, AutomatedSOS and Track4Run identifying the high level architecture, the design patterns used and the plans that will guide the development of the code.
 
 \subsection{Scope}
 
@@ -74,6 +75,31 @@
 \clearpage
 
 \subsection{Component View}
+
+Services:\newline
+
+\begin{enumerate}
+    %Data4Help
+    \item RegistrationAndLoginService
+    \item DataReceiveService %Raccoglie i dati in entrata (Specifici in ogni caso)
+    \item DataDeliveryService %Consegna i dati alle terze parti, in forma anonima e non
+    \item DataRequestService %Riceve le richieste e le smista in base al tipo ai due servizi scritti sotto
+    \item IndividualPermissionService %gestisce le individual
+    \item AnonymousPermissionService %gestisce le  anonime
+    \item IndividualDataService %Accede al db e elabora i dati per mandarli in uscita
+    \item AnonymousDataService %Accede al db e elabora i dati per mandarli in uscita
+    
+    %AutomatedSOS
+    \item MonitorStatusService
+    \item EmergencyService
+    
+    %Track4Run
+    \item RunCreationService %creazione corsa
+    \item RunManagementService %Gestione pre corsa(Aggiunta partecipanti)
+    \item RunTrackingService %Gestione durante la corsa
+    \item RunWatchService %Gestione spettatori durante la corsa
+    
+\end{enumerate}
 
 \subsection{Deployment View}
 \clearpage
