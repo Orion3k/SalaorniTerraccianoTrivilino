@@ -116,6 +116,158 @@ Services:\newline
 
 \section{Requirements Traceability}
 
+\begin{enumerate}[label*=\bf{R.\arabic*}]
+
+\item - People can create a user account selecting username, password,
+giving personal information (age, address,gender) and allow to
+share their anonymized data.
+
+\begin{itemize}
+\item RegistrationAndLoginService
+\end{itemize}
+
+\item - It is possible to create a third party account selecting username
+and password and giving the company main information.
+
+\begin{itemize}
+\item RegistrationAndLoginService
+\end{itemize}
+
+\item - Data4Help allows third parties to request anonymized data acquired
+from a filtered group of users (by age, gender, address, etc.).
+
+\begin{itemize}
+\item DataRequestService
+\end{itemize}
+
+\item Data4Help collects data from registered users and gives access to
+third parties only if the number of individuals whose data satisfy the
+request is higher than 1000.
+
+\begin{itemize}
+\item DataReceiveService
+\item AnonymousPermissionService
+\item AnonymousDataService
+\end{itemize}
+
+\item - Data4Help allows third parties to join the subscription service for an
+indeterminate period and then, in case, unsubscribe from that.
+
+\begin{itemize}
+\item DataRequestService
+\end{itemize}
+
+\item - Data4Help provides new data, checking each time if groups data satisfy the given constraint (number of individuals not lower than a
+thousand).
+
+\begin{itemize}
+\item AnonymousPermissionService
+\item AnonymousDataService
+\end{itemize}
+
+\item - Data4Help keeps track of the associations between third parties subscriptions and the required group data.
+
+\begin{itemize}
+\item AnonymousPermissionService
+\end{itemize}
+
+\item - Data4Help allows third parties to require specific person’s data.
+
+\begin{itemize}
+\item DataRequestService
+\end{itemize}
+
+\item - Data4Help forwards requests from third parties to the demanded
+users which can accept or refuse to share their own personal data.
+
+\begin{itemize}
+\item DataRequestService
+\end{itemize}
+
+\item - Data4Help keeps track of the connections between a specific user and
+the third parties which can access to his/her data.
+
+\begin{itemize}
+\item IndividualPermissionService
+\end{itemize}
+
+\item - Data4Help allows third parties to have access to demanded users’
+data each time they need them.
+
+\begin{itemize}
+\item IndividualPermissionService
+\item IndividualDataService
+\end{itemize}
+
+\item - Users’ health and position information received by Data4Help are
+analyzed and compared with the threshold values.
+
+\begin{itemize}
+\item MonitorStatusService
+\end{itemize}
+
+\item - In case of emergency (the health status values overcome the threshold) a request for an ambulance is sent to the ambulance dispatcher
+in 5 seconds, containing the user’s information.
+
+\begin{itemize}
+\item EmergencyService
+\end{itemize}
+
+\item - Users select the day, the hour at which the run begins, the starting
+point, the ending point and the path for the run.
+
+\begin{itemize}
+\item RunCreationService
+\end{itemize}
+
+\item - The run event is stored in the system in order to be managed during
+its lifecycle.
+
+\begin{itemize}
+\item RunCreationService
+\end{itemize}
+
+\item - Users can browse among the available runs and see their information.
+
+\begin{itemize}
+\item RunManagementService
+\end{itemize}
+
+\item - Users can choose a run and register to it as a runners.
+
+\begin{itemize}
+\item RunManagementService
+\end{itemize}
+
+\item - The system saves the enrolled users as runners and keeps track of the
+association with the run event.
+
+\begin{itemize}
+\item RunManagementService
+\end{itemize}
+
+\item - The system keeps track of all the enrolled runners’ position during
+the run.
+
+\begin{itemize}
+\item RunTrackingService
+\end{itemize}
+
+\item - Users who require to watch a run are saved as spectators to the run
+event.
+
+\begin{itemize}
+\item RunManagementService
+\end{itemize}
+
+\item - Track4Run offers the possibility to see the run live through a map.
+
+\begin{itemize}
+\item RunWatchService
+\end{itemize}
+
+\end{enumerate}
+
 \section{Implementation, Integration and Test Plan}
 
 \section{Effort Spent}
