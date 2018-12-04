@@ -12,8 +12,9 @@
 \usepackage{makecell}
 \graphicspath{{./images/}}
 \usepackage{tabularx}
+\usepackage{hyperref}
 %\usepackage{geometry} 
-%\geometry{a4paper,top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,% heightrounded,bindingoffset=5mm}
+%\geometry{a4paper,top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,heightrounded,bindingoffset=5mm}
 
 \begin{document}
 
@@ -131,15 +132,14 @@ The document consists of five sections:
 \clearpage
 
 \subsection{Component View}
-
-Services:\newline
-
+Services:
 \begin{enumerate}
     %Data4Help
-    \item RegistrationAndLoginService
-    \item DataReceiveService %Raccoglie i dati in entrata (Specifici in ogni caso)
-    \item DataDeliveryService %Consegna i dati alle terze parti, in forma anonima e non
-    \item DataRequestService %Riceve le richieste e le smista in base al tipo ai due servizi scritti sotto
+    \item RegistrationService
+    \item LoginService
+    \item PermissionRequestService %Riceve le richieste di permessi e le smista in base al tipo ai due servizi scritti sotto
+    \item AnonymousPermissionMaker
+    \item IndividualPermissionMaker
     \item IndividualPermissionService %gestisce le individual
     \item AnonymousPermissionService %gestisce le  anonime
     \item IndividualDataService %Accede al db e elabora i dati per mandarli in uscita
@@ -179,14 +179,14 @@ giving personal information (age, address,gender) and allow to
 share their anonymized data.
 
 \begin{itemize}
-\item RegistrationAndLoginService
+\item RegistrationService
 \end{itemize}
 
 \item - It is possible to create a third party account selecting username
 and password and giving the company main information.
 
 \begin{itemize}
-\item RegistrationAndLoginService
+\item LoginService
 \end{itemize}
 
 \item - Data4Help allows third parties to request anonymized data acquired
