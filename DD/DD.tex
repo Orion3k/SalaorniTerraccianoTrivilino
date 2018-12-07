@@ -162,6 +162,8 @@ The Deployment diagram focuses on how the software is deployed to the target nod
 
 Data4Help \newline
 
+Sensor Data Collector is not a proprietary software, it is produced by the smart devices manufacturer.
+
 For Data4Help the main artifact that will be produced is the "Data4Help Data Collector daemon" which takes care of collecting the data from the smart devices and to send them to the Data4Help Server. We have considered smartphones and the smartwatches as smart devices for tracking the position and the health status. On these devices the Data4Help daemon that will collect the data will be installed. This daemon is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. We made this choice because we think that the service offered by Data4Help is useful only when a third party application requires the user's data, otherwise is not reasonable to think that a user will install only the daemon for sharing his/her own data.
 
 
