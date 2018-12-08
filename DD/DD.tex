@@ -178,7 +178,7 @@ The Deployment diagram focuses on how the software is deployed to the target nod
 For convenience this section is split in three parts, one for each software product.
 
 \paragraph{Data4Help}
-This section is devoted to Data4Help analysis. First of all, the Data4Help Data Collector Process which is the software components that collects the data from the smart devices is installed on the user's smartphone. In this node there is a composition relation with a generic Third Party application that uses the service provided by Data4Help because in order to use the API for collecting data. The artifact, actually, is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires the user's data, otherwise is not reasonable to think that a user will install only the Process for sharing his/her own data.
+This section is devoted to Data4Help analysis. First of all, the Data4Help Data Collector Process which is the software components that collects the data from the smart devices is installed on the user's smartphone. In this node there is a composition relation with a generic Third Party application that uses the service provided by Data4Help in order to use the API for collecting data. The artifact, actually, is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires the user's data, otherwise is not reasonable to think that a user will install only the Process for sharing his/her own data.
 Another aspect that needs to be clarified is that the Sensor Data Collector artifact is an ad-hoc software developed by the smart device manufacturer and not by TrackMe so it has been added for better understand the environment in which the Process on the client side will operate.
 It is also available a web interface for Data4Help in order to manage credentials and, for what concerns the third parties, ask for user's data.
 The server side of the application contains the business logic, such as the permissions management and the data anonymizing process, and it is deployed to the Data4Help Server component which also interacts with a dedicated database.
@@ -205,7 +205,17 @@ In fact this nodes are:
 \clearpage
 
 \subsection{Runtime View}
-SEQUENCE DIAGRAM: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as containers for different data type (i.e. retrieving a user tuple from the database).
+Before starting the runtime analysis there a note that has to be clarified: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as wrappers for different data type (i.e. retrieving a user tuple from the database).
+
+\subsubsection{AutomatedSOS - Alert Emergency Status}
+The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application
+
+\subsubsection{Track4Run - Create and enroll in a run}
+The creation of a run start with a specific request sent from the mobile application in which are specified the user, the startind and ending point, the date and the hour at which the run will start.
+Concerning the enrollment the user will search from the mobile application through the list of available run the one in which he/she wants to enroll. Thus the user is added to the runner of the event and will receive a confirmation message.
+
+\subsubsection{Track4Run - Watch a run}
+When a user wants to watch a run first of all he/she send a request to the Track4Run Server using the Client Interface, selects the run from a list obtained applying some filters (i.e. the city of the event) and then contact the Run Watch Service. This component contacts the Run Tracking Service, retrieves the position of the runners and it sends the data to the smartphone. It is also possible to see the ranking of the run in real time contacting directly the Run Tracking service.
 
 \subsubsection{Data4Help - Third Party requires the permission to access to a specific user data}
 This sequence diagram shows the case in which a third party requires to access to specific user data and how the system manage the permission.
@@ -234,6 +244,11 @@ Then the data is sent to the third party periodically as already described in th
 \subsection{Component Interfaces}
 
 \subsection{Selected Architectural Styles and Patterns}
+\begin{itemize}
+    \item Visitor pattern
+    \item Command pattern
+    \item Thick Client configuration
+\end{itemize}
 
 \subsection{Other Design Decision}
 
@@ -262,7 +277,7 @@ and password and giving the company main information.
 from a filtered group of users (by age, gender, address, etc.).
 
 \begin{itemize}
-\item DataRequestService
+\item PermissionRequestService
 \end{itemize}
 
 \item Data4Help collects data from registered users and gives access to
