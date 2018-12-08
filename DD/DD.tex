@@ -253,14 +253,14 @@ Then the data is sent to the third party periodically as already described in th
 \subsubsection{Design Pattern}
 
 \begin{itemize}
-    \item \paragraph{Layer Pattern}
+    \item \textbf{Layer Pattern}
      Data4Help, AutomatedSOS and Track4Run are structured in layers, the functions are decomposed in group of subtasks: presentation layer, application layer, data (persistence) layer.
      
-    \item \paragraph{Client-Server Pattern} The three services are based on the Server-Client pattern. Data4Help and also AutomatedSOS and Track4Run, are composed by a server that computes the main functions, otherwise the client has the function to let the user interface to the services.
+    \item \textbf{Client-Server Pattern} The three services are based on the Server-Client pattern. Data4Help and also AutomatedSOS and Track4Run, are composed by a server that computes the main functions, otherwise the client has the function to let the user interface to the services.
     
-    \item \paragraph{Model-View-Controller Pattern} To guarantee better modularity all the services are based on the MVC pattern, the application is divided in three parts: Model, View, Controller. The Model lies in the servers and performs the application and persistence tasks, it is managed by the controller that lies both in server and in the clients. Finally the View, that performs the interface through which the users access and control the services, lies on the clients. This pattern allows to reduce coupling among the core functions of the services and the interface.
+    \item \textbf{Model-View-Controller Pattern} To guarantee better modularity all the services are based on the MVC pattern, the application is divided in three parts: Model, View, Controller. The Model lies in the servers and performs the application and persistence tasks, it is managed by the controller that lies both in server and in the clients. Finally the View, that performs the interface through which the users access and control the services, lies on the clients. This pattern allows to reduce coupling among the core functions of the services and the interface.
     
-    \item \paragraph{Facade Pattern} In order to make complex subsystems easier to use and to reducing the dependencies among them, facade pattern is used in all of the three service offered by TrackMe. The main systems are divided into smaller components, they communicate with each others through interfaces. Thanks to this solution the single components do not have to touch the internal state neither to know the internal implementation of other parts.
+    \item \textbf{Facade Pattern} In order to make complex subsystems easier to use and to reducing the dependencies among them, facade pattern is used in all of the three service offered by TrackMe. The main systems are divided into smaller components, they communicate with each others through interfaces. Thanks to this solution the single components do not have to touch the internal state neither to know the internal implementation of other parts.
     
 \end{itemize}
 
@@ -291,7 +291,7 @@ and password and giving the company main information.
 from a filtered group of users (by age, gender, address, etc.).
 
 \begin{itemize}
-\item PermissionRequestService
+\item RequestHandlerService
 \end{itemize}
 
 \item Data4Help collects data from registered users and gives access to
@@ -299,7 +299,8 @@ third parties only if the number of individuals whose data satisfy the
 request is higher than 1000.
 
 \begin{itemize}
-\item DataReceiveService
+\item RequestHandlerService
+\item AnonymousPermissionMaker
 \item AnonymousPermissionService
 \item AnonymousDataService
 \end{itemize}
@@ -308,14 +309,15 @@ request is higher than 1000.
 indeterminate period and then, in case, unsubscribe from that.
 
 \begin{itemize}
-\item DataRequestService
+\item RequestHandlerService
+\item AnonymousPermissionMaker
+\item AnonymousPermissionService
 \end{itemize}
 
 \item - Data4Help provides new data, checking each time if groups data satisfy the given constraint (number of individuals not lower than a
 thousand).
 
 \begin{itemize}
-\item AnonymousPermissionService
 \item AnonymousDataService
 \end{itemize}
 
@@ -328,57 +330,53 @@ thousand).
 \item - Data4Help allows third parties to require specific person’s data.
 
 \begin{itemize}
-\item DataRequestService
+\item RequestHandlerService
 \end{itemize}
 
-\item - Data4Help forwards requests from third parties to the demanded
-users which can accept or refuse to share their own personal data.
+\item - Data4Help forwards requests from third parties to the demanded users which can accept or refuse to share their own personal data.
 
 \begin{itemize}
-\item DataRequestService
+\item IndividualPermissionMaker
 \end{itemize}
 
-\item - Data4Help keeps track of the connections between a specific user and
-the third parties which can access to his/her data.
+\item - Data4Help keeps track of the connections between a specific user and the third parties which can access to his/her data.
 
 \begin{itemize}
-\item IndividualPermissionService
-\end{itemize}
-
-\item - Data4Help allows third parties to have access to demanded users’
-data each time they need them.
-
-\begin{itemize}
+\item RequestHandlerService
 \item IndividualPermissionService
 \item IndividualDataService
 \end{itemize}
 
-\item - Users’ health and position information received by Data4Help are
-analyzed and compared with the threshold values.
+\item - Data4Help allows third parties to have access to demanded users’ data each time they need them.
+
+\begin{itemize}
+\item RequestHandlerService
+\item IndividualPermissionService
+\item IndividualDataService
+\end{itemize}
+
+\item - Users’ health and position information received from Data4Help data collector process are analyzed and compared with the threshold values.
 
 \begin{itemize}
 \item MonitorStatusService
 \end{itemize}
 
-\item - In case of emergency (the health status values overcome the threshold) a request for an ambulance is sent to the ambulance dispatcher
-in 5 seconds, containing the user’s information.
+\item - In case of emergency (the health status values overcome the threshold) a request for an ambulance is sent to the ambulance dispatcher in 5 seconds, containing the user’s information.
 
 \begin{itemize}
 \item EmergencyService
 \end{itemize}
 
-\item - Users select the day, the hour at which the run begins, the starting
-point, the ending point and the path for the run.
+\item - Users select the day, the hour at which the run begins, the starting point, the ending point and the path for the run.
 
 \begin{itemize}
 \item RunCreationService
 \end{itemize}
 
-\item - The run event is stored in the system in order to be managed during
-its lifecycle.
+\item - The run event is stored in the system in order to be managed during its lifecycle.
 
 \begin{itemize}
-\item RunCreationService
+\item RunManagementService
 \end{itemize}
 
 \item - Users can browse among the available runs and see their information.
@@ -393,31 +391,29 @@ its lifecycle.
 \item RunManagementService
 \end{itemize}
 
-\item - The system saves the enrolled users as runners and keeps track of the
-association with the run event.
+\item - The system saves the enrolled users as runners and keeps track of the association with the run event.
 
 \begin{itemize}
 \item RunManagementService
 \end{itemize}
 
-\item - The system keeps track of all the enrolled runners’ position during
-the run.
+\item - The system keeps track of all the enrolled runners’ position during the run.
 
 \begin{itemize}
 \item RunTrackingService
 \end{itemize}
 
-\item - Users who require to watch a run are saved as spectators to the run
-event.
+\item - Users who require to watch a run are saved as spectators to the run event.
 
 \begin{itemize}
-\item RunManagementService
+\item RunWatchService
 \end{itemize}
 
 \item - Track4Run offers the possibility to see the run live through a map.
 
 \begin{itemize}
 \item RunWatchService
+\item RunTrackingService
 \end{itemize}
 
 \end{enumerate}
