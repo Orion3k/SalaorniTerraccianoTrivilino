@@ -160,11 +160,19 @@ Services:
 \subsection{Deployment View}
 The Deployment diagram focuses on how the software is deployed to the target nodes.
 
-Data4Help \newline
+For convenience this section is split in three parts, one for each software product.
 
-Sensor Data Collector is not a proprietary software, it is produced by the smart devices manufacturer.
+\paragraph{Data4Help}
+This section is devoted to Data4Help analysis. First of all, the Data4Help Data Collector Process which is the software components that collects the data from the smart devices is installed on the user's smartphone. In this node there is a composition relation with a generic Third Party application that uses the service provided by Data4Help because in order to use the API for collecting data. The artifact, actually, is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires the user's data, otherwise is not reasonable to think that a user will install only the Process for sharing his/her own data.
+Another aspect that needs to be clarified is that the Sensor Data Collector artifact is an ad-hoc software developed by the smart device manufacturer and not by TrackMe so it has been added for better understand the environment in which the Process on the client side will operate.
+It is also available a web interface for Data4Help in order to manage credentials and, for what concerns the third parties, ask for user's data.
+The server side of the application contains the business logic, such as the permissions management and the data anonymizing process, and it is deployed to the Data4Help Server component which also interacts with a dedicated database.
 
-For Data4Help the main artifact that will be produced is the "Data4Help Data Collector daemon" which takes care of collecting the data from the smart devices and to send them to the Data4Help Server. We have considered smartphones and the smartwatches as smart devices for tracking the position and the health status. On these devices the Data4Help daemon that will collect the data will be installed. This daemon is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. We made this choice because we think that the service offered by Data4Help is useful only when a third party application requires the user's data, otherwise is not reasonable to think that a user will install only the daemon for sharing his/her own data.
+\paragraph{AutomatedSOS}
+AutomatedSOS is designed as it is a third party application in order to reuse the same software stack used in Data4Help. Since AutomatedSOS is built on top of Data4Help, is necessary deploy the Data Collector Process in the user's smartphone. The user can also install an additional app on his/her smartwatch to see the health status in real time. The artifact deployed on the smartphone calculates in background if the health parameters are acceptable with respect to the threshold values. On the server side the AutomatedSOS server handles the emergency message sent by the smartphone and it notifies the Ambulance Dispatcher. Another functionality implemented on the server is the computation of the threshold value for a single user which will be sent to the smartphone application.
+
+\paragraph{Track4Run}
+Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerations actuall hold for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. It is also responsible for retrieving the data from the external map service (in this case Google Maps) and to mirror the major informations like the path during a run on the smartwatch app. Ther server app handles the runs management, the request of the spectator giving them the updated runner's position and all the routines which preceeds the start of the run event.
 
 
 
@@ -178,10 +186,6 @@ In fact this nodes are:
     \item Data4Help Server
     \item Database
 \end{itemize}
-
-
-Smartwatch focus on the existence of the data4help daemon that collects data. 
-in smartphone all the applications considered lays upon that daemon which permits the communication of data with the server.
 
 \clearpage
 
