@@ -125,6 +125,21 @@ The document consists of five sections:
 
 \section{Architectural Design}
 
+\paragraph{Data4Help}
+
+\begin{itemize}
+    \item \textbf{Presentation Layer}
+    
+    \item \textbf{Business Logic Layer} This layer is made up by the web app interface 
+    
+    \item \textbf{Data Layer}
+    
+\end{itemize}
+
+\paragraph{AutomatedSOS}
+
+\paragraph{Track4Run}
+
 \subsection{Overview}
 
 \subsection{High-level Architecture}
@@ -191,6 +206,30 @@ In fact this nodes are:
 
 \subsection{Runtime View}
 SEQUENCE DIAGRAM: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as containers for different data type (i.e. retrieving a user tuple from the database).
+
+\subsubsection{Data4Help - Third Party requires the permission to access to a specific user data}
+This sequence diagram shows the case in which a third party requires to access to specific user data and how the system manage the permission.
+The third party, through the web interface or through its app, requires for the permission, indicating the users involved. A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the individual permission in the IndividualPermissionMaker. This service shall forward the request that has to be accepted or refused from the user and receives the response. If the user allows to acquire his data, the permission is stored in the IndividualPermissionService and finally the Third Party is notified that the request is accepted.
+On the contrary, if the user refuses to share his data it is not stored any permission in the system and the third party is notified that the request is not accepted.
+
+\subsubsection{Data4Help - Third Party requires to acquire some individual data}
+This sequence diagram shows the case in which a third party requires to some individual user's data.
+The third party, through the web interface or through its app, requires for the data, indicating the user. A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and check in the IndividualPermissionService if the related permission already exists.
+If the permission does not exist the process to create a new permission is invoked.
+Otherwise if the permission already exists, the RequestHandlerService invokes the IndividualPermissionService to fetch and send the data and finally the IndividualDataService sends to the Third Party the required data.
+
+\subsubsection{Data4Help - Third Party requires for anonymazed data}
+This sequence diagram shows the case in which a third party requires to some anonymazed data from a group of target users.
+The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users.
+A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker.
+The AnonymousPermissionMaker then requires the data for the "one-shot" request to the AnonymousDataService that check if the data can be anonymazed or not, if it is possible the data is sent to to the third party. Otherwise the third party is notified that it is not possible to share data and guarantee the user anonymity.
+
+\subsubsection{Data4Help - Third party to subscribe for anonymazed data}
+This sequence diagram shows the case in which a third party requires to some anonymazed data from a group of target users.
+The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users.
+A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker.
+the AnonymousPermissionMaker invokes the AnonymousPermissionService to store the subscription permission.
+Then the data is sent to the third party periodically as already described in the anonymous data request until the third party unsubscribes. 
 
 \subsection{Component Interfaces}
 
