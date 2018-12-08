@@ -250,6 +250,20 @@ Then the data is sent to the third party periodically as already described in th
     \item Thick Client configuration
 \end{itemize}
 
+\subsubsection{Design Pattern}
+
+\begin{itemize}
+    \item \paragraph{Layer Pattern}
+     Data4Help, AutomatedSOS and Track4Run are structured in layers, the functions are decomposed in group of subtasks: presentation layer, application layer, data (persistence) layer.
+     
+    \item \paragraph{Client-Server Pattern} The three services are based on the Server-Client pattern. Data4Help and also AutomatedSOS and Track4Run, are composed by a server that computes the main functions, otherwise the client has the function to let the user interface to the services.
+    
+    \item \paragraph{Model-View-Controller Pattern} To guarantee better modularity all the services are based on the MVC pattern, the application is divided in three parts: Model, View, Controller. The Model lies in the servers and performs the application and persistence tasks, it is managed by the controller that lies both in server and in the clients. Finally the View, that performs the interface through which the users access and control the services, lies on the clients. This pattern allows to reduce coupling among the core functions of the services and the interface.
+    
+    \item \paragraph{Facade Pattern} In order to make complex subsystems easier to use and to reducing the dependencies among them, facade pattern is used in all of the three service offered by TrackMe. The main systems are divided into smaller components, they communicate with each others through interfaces. Thanks to this solution the single components do not have to touch the internal state neither to know the internal implementation of other parts.
+    
+\end{itemize}
+
 \subsection{Other Design Decision}
 
 \section{User Interface Design}
