@@ -235,16 +235,6 @@ In fact this nodes are:
 \subsection{Runtime View}
 Before starting the runtime analysis there a note that has to be clarified: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as wrappers for different data type (i.e. retrieving a user tuple from the database).
 
-\subsubsection{AutomatedSOS - Alert Emergency Status}
-The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application
-
-\subsubsection{Track4Run - Create and enroll in a run}
-The creation of a run start with a specific request sent from the mobile application in which are specified the user, the startind and ending point, the date and the hour at which the run will start.
-Concerning the enrollment the user will search from the mobile application through the list of available run the one in which he/she wants to enroll. Thus the user is added to the runner of the event and will receive a confirmation message.
-
-\subsubsection{Track4Run - Watch a run}
-When a user wants to watch a run first of all he/she send a request to the Track4Run Server using the Client Interface, selects the run from a list obtained applying some filters (i.e. the city of the event) and then contact the Run Watch Service. This component contacts the Run Tracking Service, retrieves the position of the runners and it sends the data to the smartphone. It is also possible to see the ranking of the run in real time contacting directly the Run Tracking service.
-
 \subsubsection{Data4Help - Third Party requires the permission to access to a specific user data}
 This sequence diagram shows the case in which a third party requires to access to specific user data and how the system manage the permission.
 The third party, through the web interface or through its app, requires for the permission, indicating the users involved. A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the individual permission in the IndividualPermissionMaker. This service shall forward the request that has to be accepted or refused from the user and receives the response. If the user allows to acquire his data, the permission is stored in the IndividualPermissionService and finally the Third Party is notified that the request is accepted.
@@ -269,14 +259,28 @@ A permission Request is sent to the Data4Help Server, where the RequestHandlerSe
 the AnonymousPermissionMaker invokes the AnonymousPermissionService to store the subscription permission.
 Then the data is sent to the third party periodically as already described in the anonymous data request until the third party unsubscribes. 
 
+\subsubsection{AutomatedSOS - Alert Emergency Status}
+The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application
+
+\subsubsection{Track4Run - Create and enroll in a run}
+The creation of a run start with a specific request sent from the mobile application in which are specified the user, the startind and ending point, the date and the hour at which the run will start.
+Concerning the enrollment the user will search from the mobile application through the list of available run the one in which he/she wants to enroll. Thus the user is added to the runner of the event and will receive a confirmation message.
+
+\subsubsection{Track4Run - Watch a run}
+When a user wants to watch a run first of all he/she send a request to the Track4Run Server using the Client Interface, selects the run from a list obtained applying some filters (i.e. the city of the event) and then contact the Run Watch Service. This component contacts the Run Tracking Service, retrieves the position of the runners and it sends the data to the smartphone. It is also possible to see the ranking of the run in real time contacting directly the Run Tracking service.
+
 \subsection{Component Interfaces}
 
 \subsection{Selected Architectural Styles and Patterns}
-\begin{itemize}
-    \item Visitor pattern
-    \item Command pattern
-    \item Thick Client configuration
-\end{itemize}
+
+\subsubsection{Architectural styles}
+The architecture of the three applications offered by TrackMe is very similar.
+Concerning Data4Help and Track4Run the number of tier used is three: the client, the server and the database which takes care about the presentation, the application and the data layers.
+Since AutomatedSOS retrieves the necessary data from Data4Help and it does not have other complex data (i.e. the Run events in Track4Run) it is reasonable to delete the database for this software.
+Regarding the data layer, it is better to keep the data storage inside the company instead of giving this layer in outsourcing, in order to safeguard the user's information due to their confidentiality. However this layer can be easily extended because of the use of interface with the database thus, if the usage of the application grows, it would be easily scalable. 
+Concerning the client solution, while Data4Help and Track4Run adopt a thin configuration, AutomatedSOS uses a thick one because it encapsulates a part of the application logic: the comparison of the health status with the threshold values.
+This choice is guided by the fact that the software must be reactive (due to the time constraint) so, while in the server the new threshold values are periodically calculated for each user (the threshold depends on the specific user health status), the comparison must be done as soon as possible, therefore on the client side.
+
 
 \subsubsection{Design Pattern}
 
