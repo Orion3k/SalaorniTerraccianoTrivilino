@@ -153,7 +153,7 @@ Here we have two specific schemata, one that describes Data4Help composition and
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{architecturalDesign-data4help}
-    \caption{Data4Help system and its interaction with a generic third party}
+    \caption{Data4Help system and its interaction with a generic third party.}
     \label{fig:my_label}
 \end{figure}
 
@@ -174,36 +174,62 @@ Finally, in Track4Run, it handles the different runs and allows to runners and s
 \clearpage
 
 \subsection{Component View}
-Services:
-\begin{enumerate}
+In this section the architecture is analyzed in a more detailed way, going deeper in the composition of the software structure and emphasizing the various typologies of service which make up the presentation and application logic layers.\\ \\
+The main services of Data4Help are:
+\begin{itemize}
     %Data4Help
-    \item RegistrationService
-    \item LoginService
-    \item PermissionRequestService %Riceve le richieste di permessi e le smista in base al tipo ai due servizi scritti sotto
-    \item AnonymousPermissionMaker
-    \item IndividualPermissionMaker
-    \item IndividualPermissionService %gestisce le individual
-    \item AnonymousPermissionService %gestisce le  anonime
-    \item IndividualDataService %Accede al db e elabora i dati per mandarli in uscita
-    \item AnonymousDataService %Accede al db e elabora i dati per mandarli in uscita
-    
+    \item \textbf{RegistrationService:} handles the user's sign up, whether companies or individuals.
+    \item \textbf{LoginService:} manages login and logout routines, available to users already registered.
+    \item \textbf{RequestHandlerService:} sorts the requests depending on what they ask for, permissions or data (in this second case does already exists a permission that is a subscription or an individual one).
+    \item \textbf{DataHandlerService:} interacts with the Data Collector API installed in third parties' applications and communicates with the database.
+    \item \textbf{AnonymousPermissionMaker:} creates new anonymous permission and handles unsubscription request.
+    \item \textbf{IndividualPermissionMaker:}
+    \item \textbf{AnonymousPermissionService:} %gestisce le  anonime
+    \item \textbf{IndividualPermissionService:} %gestisce le individual
+    \item \textbf{IndividualDataService:} %Accede al db e elabora i dati per mandarli in uscita
+    \item \textbf{AnonymousDataService:} %Accede al db e elabora i dati per mandarli in uscita
+\end{itemize}
+
+\begin{sidewaysfigure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Component-Data4Help}
+    \caption{Data4Help component view.}
+    \label{fig:my_label}
+\end{sidewaysfigure}
+\clearpage
+
+\begin{itemize}
     %AutomatedSOS
-    \item MonitorStatusService
-    \item LearnThresholdsService
-    \item EmergencyService
-    
+    \item \textbf{MonitorStatusService:}
+    \item \textbf{LearnThresholdsService:}
+    \item \textbf{EmergencyService:}
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Component-AutomatedSOS}
+    \caption{AutomatedSOS component view.}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{itemize}    
     %Track4Run
-    \item RunCreationService %creazione corsa
-    \item RunManagementService %Gestione pre corsa(Aggiunta partecipanti)
-    \item RunTrackingService %Gestione durante la corsa
-    \item RunWatchService %Gestione spettatori durante la corsa
-    
-\end{enumerate}
+    \item \textbf{RunCreationService:} %creazione corsa
+    \item \textbf{RunManagementService:} %Gestione pre corsa(Aggiunta partecipanti)
+    \item \textbf{RunTrackingService:} %Gestione durante la corsa
+    \item \textbf{RunWatchService:} %Gestione spettatori durante la corsa
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Component-Track4Run}
+    \caption{Track4Run component view.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
 
 \subsection{Deployment View}
-The Deployment diagram focuses on how the software is deployed to the target nodes.
-
-For convenience this section is split in three parts, one for each software product.
+The Deployment diagram focuses on how the software is deployed to the target nodes. For convenience this section is split in three parts, one for each software product.
 
 \paragraph{Data4Help}
 This section is devoted to Data4Help analysis. First of all, the Data4Help Data Collector Process which is the software components that collects the data from the smart devices is installed on the user's smartphone. In this node there is a composition relation with a generic Third Party application that uses the service provided by Data4Help in order to use the API for collecting data. The artifact, actually, is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires the user's data, otherwise is not reasonable to think that a user will install only the Process for sharing his/her own data.
@@ -216,20 +242,6 @@ AutomatedSOS is designed as it is a third party application in order to reuse th
 
 \paragraph{Track4Run}
 Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerations actuall hold for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. It is also responsible for retrieving the data from the external map service (in this case Google Maps) and to mirror the major informations like the path during a run on the smartwatch app. Ther server app handles the runs management, the request of the spectator giving them the updated runner's position and all the routines which preceeds the start of the run event.
-
-
-
-In fact this nodes are:
-
-
-\begin{itemize}
-    \item Smart device: 
-    \item Website:
-    \item Third Party server:
-    \item Data4Help Server
-    \item Database
-\end{itemize}
-
 \clearpage
 
 \subsection{Runtime View}
