@@ -12,35 +12,43 @@
 \usepackage{makecell}
 \graphicspath{{./images/}}
 \usepackage{tabularx}
+\usepackage{hyperref}
 %\usepackage{geometry} 
 %\geometry{a4paper,top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,% heightrounded,bindingoffset=5mm}
 
 \begin{document}
 
-\author{Manuel Trivilino, Davide Salaorni, Luca Terracciano}
-
-\title{\Large \textbf{Data4Help RASD}\\
-\textbf{Requirements Analysis and \\Specification Document}
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=270pt]{data4helpblu}
-        \label{fig:my_label}
-    \end{figure}
-    \vspace{-2.4cm}
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=200pt]{AutomatedSOSlogo.png}
-        \label{fig:my_label}
-    \end{figure}
-    \vspace{-2cm}
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=150pt]{Track4Runlogo}
-        \label{fig:my_label}
-\end{figure}
-}
-
+\title{\includegraphics[width=150pt]{logo_polimi}\\ \vspace{1.2cm}
+\huge \textbf{Requirement Analysis and Specification Document}}
+\date{}
 \maketitle
+
+\vspace{-2cm}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=275pt]{data4helpblu}
+    \label{fig:my_label_1}
+\end{figure}
+\vspace{-2.4cm}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=200pt]{AutomatedSOSlogo.png}
+    \label{fig:my_label_2}
+\end{figure}
+\vspace{-2cm}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=150pt]{Track4Runlogo.png}
+    \label{fig:my_label_3}
+\end{figure}
+
+\author{\centerline{\textit{Manuel Trivilino, Davide Salaorni, Luca Terracciano}}}
+
+\vfill
+\centerline{Document version: 2.0}
+\date{\centerline{December 10, 2018}}
+
 \newpage
 
 \tableofcontents
@@ -50,37 +58,29 @@
 
 \subsection{Purpose}
 The purpose of this document is to describe the software-based solutions that TrackMe wants to offer to its customers. First of all, the system is analyzed in terms of description of the problem and analysis of goals, requirements and constraints. After that, a solution is modeled in terms of software and hardware constraints paying attention also to some implementation details. This document is addressed to the developers who will implement this solution.
+\vspace{.5cm}
 
 \subsection{Scope}
-
 \subsubsection{Description of the given problem}
 
-TrackMe is a company that develops software-based services for third parties and for consumers. The main service is called Data4Help.
- Data4Help is a service that allows third parties to monitor the location and the health status of individual, it handles a policy of permissions for each user and collects individual’s data from their personal devices.
+\textbf{TrackMe} is a company that develops software-based services for third parties and for consumers. The main service is called Data4Help. \\
+\textbf{Data4Help} is a service that allows third parties to monitor the location and the health status of individual, it handles a policy of permissions for each user and collects individual’s data from their personal devices.
 The service supports the registration of individuals who, by registering, agree that TrackMe acquires their data. After registration, these third parties can request:
 
 \begin{itemize}
     \item Access to the data of some specific individuals (we can assume, for instance, that they know an 
-    individual by his/her social security number or fiscal code in Italy). In this case, TrackMe passes 
-    the request to the specific individuals who can accept or refuse it.
+    individual by his/her social security number or fiscal code in Italy). In this case, TrackMe passes the request to the specific individuals who can accept or refuse it.
     
-    \item Access to anonymized data of groups of individuals (for instance, all those living in a certain 
-    geographical area, all those of a specific age range, etc.). These requests are handled directly 
-    by TrackMe that approves them if it is able to properly anonymize the requested data. For 
-    instance, if the third party is asking for data about 10-year-old children living in a certain street 
-    in Milano and the number of these children is two, then the third party could be able to derive 
-    their identity simply having people monitoring the residents of the street between 8.00 and 
-    9.00 when kids go to school. Then, to avoid this risk and the possibility of a misuse of data,
-    TrackMe will not accept the request. For simplicity, we assume that TrackMe will accept any 
-    request for which the number of individuals whose data satisfy the request is higher than 
-    1000.
+    \item Access to anonymized data of groups of individuals (for instance, all those living in a certain geographical area, all those of a specific age range, etc.). These requests are handled directly by Data4Help that approves them if it is able to properly anonymize the requested data.\\ 
+    For instance, if the third party is asking for data about 10-year-old children living in a certain street in Milano and the number of these children is two, then the third party could be able to derive their identity simply having people monitoring the residents of the street between 8.00 and 9.00 when kids go to school. Then, to avoid this risk and the possibility of a misuse of data, Data4Help will not accept the request. \\ 
+    For simplicity, we assume that Data4Help will accept any request for which the number of individuals whose data satisfy the request is higher than 1000.
 \end{itemize}
-
-As soon as a request for data is approved, TrackMe makes the previously saved data available to the 
-third party. Also, it allows the third party to subscribe to new data and to receive them as soon as 
-they are produced.
-TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
-\clearpage
+As soon as a request for data is approved, TrackMe makes the previously saved data available to the third party. Also, it allows the third party to subscribe to new data and to receive them as soon as they are produced. \\
+TrackMe develops itself two third-party services: AutomatedSOS and Track4Run. \\ \\
+\textbf{AutomatedSOS} is a project created by TrackMe and placed on top of Data4Help, which aims to offer a personalized and non-intrusive SOS service to people that are worried about their own safeness and want to have an health inspector always with them. \\ AutomatedSOS, exploiting data provided from Data4Help, monitors the health status of the subscribed customers and, when such parameters are below certain thresholds, sends to the location of the customer an ambulance, guaranteeing a reaction time of less than 5 seconds from the time the parameters are below the threshold. \\ \\
+\textbf{Track4Run} is another service offered by TrackMe and conceived for athletes participating in a run, which should allow organizers to define the path for the run, competitors to enroll to the run, and spectators to see on a map the position of all runners during the run. \\
+Of course, also in this case, Track4Run will exploit the features offered by Data4Help.
+\vspace{.5cm}
 
 \subsubsection{Goals}
 
@@ -116,32 +116,32 @@ TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.
 
 \subsubsection{Definitions}
     
+\begin{itemize}
+    \item \textit{Customer:} generic person not registered in any of the services provided by TrackMe. 
+    \item \textit{User:} person registered in at least one of the services provided by TrackMe.
+    \item \textit{Third Party:} person or company registered in Data4Help that wants to access to the service in order to acquire data.
+    \item \textit{Individual Data:} data that belong to a specific user, in particular personal information and data acquired from their devices (i.e. location, health status, etc.).
+    \item \textit{Anonymized Data:} aggregated data acquired from a group of users with specific characteristics without keeping track of who they belong to.
+    \item \textit{Anonymized Data Subscription:} request that allows third parties to receive new anonymized data as soon as they are produced.
+    \item \textit{Ambulance Dispatcher:} the contact center that handles the health care service and the ambulance allocation.
+    \item \textit{Google Maps:} web mapping service developed by Google offering satellite imagery, street maps etc.
+    \item \textit{Push Notification Service:} web service that offers a fast and secure channel to notify and exchange messages on the web.
+\end{itemize}
+
+\subsubsection{Acronyms}
+
+\begin{itemize}
+    \item \textit{RASD:} Requirement, Analysis and Specification Document
+    \item \textit{GPS:} Global Position System
+    \item \textit{API:} Application Programming Interface
+\end{itemize}
+
+\subsubsection{Abbreviations}
     \begin{itemize}
-        \item \textit{Customer:} generic person not registered in any of the services provided by TrackMe. 
-        \item \textit{User:} person registered in at least one of the services provided by TrackMe.
-        \item \textit{Third Party:} person or company registered in Data4Help that want to access to the service in order to acquire data.
-        \item \textit{Individual Data:} data that belongs to a specific user: personal information and data acquired from their devices (i.e. location, health status, etc.).
-        \item \textit{Anonymized Data} aggregated data acquired from a group of users with specific characteristics without keeping track of who they belong to.
-        \item \textit{Anonymized Data Subscription} anonymized request that allows third parties to receive new data as soon as they are produced.
-        \item \textit{Ambulance Dispatcher:} the contact center that handles the health care service and the ambulance allocation.
-        \item \textit{Google Maps:} web mapping service developed by Google, it offers satellite imagery, street maps etc.
-        \item \textit{Push Notification Service:} web service that offers a fast and secure channel to notify and exchange messages on the web.
-    \end{itemize}
-    
-    \subsubsection{Acronyms}
-    
-    \begin{itemize}
-        \item \textit{RASD:} Requirement, Analysis and Specification Document
-        \item \textit{GPS:} Global Position System
-        \item \textit{API:} Application Programming Interface
-    \end{itemize}
-    
-    \subsubsection{Abbreviation}
-        \begin{itemize}
-        \item \textit{G.n} Goal number n
-        \item \textit{D.n} Domain assumption number n
-        \item \textit{R.n} Requirement number n
-    \end{itemize}
+    \item \textit{G.n} Goal number n
+    \item \textit{D.n} Domain assumption number n
+    \item \textit{R.n} Requirement number n
+\end{itemize}
 
 \clearpage    
 
@@ -430,7 +430,7 @@ The system is based on a Client-Server architecture, in particular the communica
 The communication is based on: 
 \begin{itemize}
     \item the REST API to make requests
-    \item the AJAX API to transfer data.
+    \item the JSON API to transfer data.
 \end{itemize}
 
 The REST standard is recommended because is largely used on the web from the most of the devices and it guarantees better portability, maintainability and compatibility. \newline
@@ -561,7 +561,7 @@ Arya watches the event until the end, being witness of his brother defeat.
 
     \begin{enumerate}
         \item [D.1] The data collected from the devices (position and health status) are reliable, accurate and in real time.
-        \item [R.12] Users' health and position information received by Data4Help are analyzed and compared with the threshold values.
+        \item [R.12] Users’ health and position information received from Data4Help data collector process are analyzed and compared with the threshold values.
         \item [R.13] In case of emergency (the health status values overcome the threshold) a request for an ambulance is sent to the ambulance dispatcher in 5 seconds, containing the user's information.
         \item [D.3] Ambulance call and information about patients' status and position are correctly dispatched to the ambulance contact center.
     \end{enumerate}

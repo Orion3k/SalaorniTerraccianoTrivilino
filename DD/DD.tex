@@ -18,30 +18,39 @@
 
 \begin{document}
 
-\author{Manuel Trivilino, Davide Salaorni, Luca Terracciano}
+%\author{Manuel Trivilino, Davide Salaorni, Luca Terracciano}
 
-\title{\Large \textbf{Data4Help DD}\\
-\textbf{Design Document}
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=270pt]{data4helpblu}
-        \label{fig:my_label_1}
-    \end{figure}
-    \vspace{-2.4cm}
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=200pt]{AutomatedSOSlogo.png}
-        \label{fig:my_label_2}
-    \end{figure}
-    \vspace{-2cm}
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=150pt]{Track4Runlogo.png}
-        \label{fig:my_label_3}
-\end{figure}
-}
-
+\title{\includegraphics[width=150pt]{logo_polimi}\\ \vspace{1.2cm}
+\huge \textbf{Design Document}}
+\date{}
 \maketitle
+
+\vspace{-2cm}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=275pt]{data4helpblu}
+    \label{fig:my_label_1}
+\end{figure}
+\vspace{-2.4cm}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=200pt]{AutomatedSOSlogo.png}
+    \label{fig:my_label_2}
+\end{figure}
+\vspace{-2cm}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=150pt]{Track4Runlogo.png}
+    \label{fig:my_label_3}
+\end{figure}
+
+\author{\centerline{\textit{Manuel Trivilino, Davide Salaorni, Luca Terracciano}}}
+
+\vfill
+\centerline{Document version: 1.0}
+\date{\centerline{December 10, 2018}}
+
 \newpage
 
 \tableofcontents
@@ -66,8 +75,8 @@ The service supports the registration of individuals who, by registering, agree 
     For instance, if the third party is asking for data about 10-year-old children living in a certain street in Milano and the number of these children is two, then the third party could be able to derive their identity simply having people monitoring the residents of the street between 8.00 and 9.00 when kids go to school. Then, to avoid this risk and the possibility of a misuse of data, Data4Help will not accept the request. \\ 
     For simplicity, we assume that Data4Help will accept any request for which the number of individuals whose data satisfy the request is higher than 1000.
 \end{itemize}
-As soon as a request for data is approved, TrackMe makes the previously saved data available to the third party. Also, it allows the third party to subscribe to new data and to receive them as soon as they are produced. \\
-TrackMe develops itself two third-party services: AutomatedSOS and Track4Run. \\ \\
+As soon as a request for data is approved, TrackMe makes the previously saved data available to the third party. Also, it allows the third party to subscribe to new data and to receive them as soon as they are produced.\\
+TrackMe develops itself two third-party services: AutomatedSOS and Track4Run.\\ \\
 \textbf{AutomatedSOS} is a project created by TrackMe and placed on top of Data4Help, which aims to offer a personalized and non-intrusive SOS service to people that are worried about their own safeness and want to have an health inspector always with them. \\ AutomatedSOS, exploiting data provided from Data4Help, monitors the health status of the subscribed customers and, when such parameters are below certain thresholds, sends to the location of the customer an ambulance, guaranteeing a reaction time of less than 5 seconds from the time the parameters are below the threshold. \\ \\
 \textbf{Track4Run} is another service offered by TrackMe and conceived for athletes participating in a run, which should allow organizers to define the path for the run, competitors to enroll to the run, and spectators to see on a map the position of all runners during the run. \\
 Of course, also in this case, Track4Run will exploit the features offered by Data4Help.
@@ -120,27 +129,22 @@ The document consists of five sections:
     \item \textbf{Requirements Traceability:} this section describes how requirements defined in the RASD are mapped to the design elements shown in this document.
     \item \textbf{Implementation, Integration and Test Plan:} this section explains the order in which has been decided to implement the sub-components of the system and in which has been planned to integrate those sub-components, describing the testing phase for the entire structure.
 \end{enumerate}
-
 \clearpage
 
 \section{Architectural Design}
-
-\paragraph{Data4Help}
-
-\begin{itemize}
-    \item \textbf{Presentation Layer}
-    
-    \item \textbf{Business Logic Layer} This layer is made up by the web app interface 
-    
-    \item \textbf{Data Layer}
-    
-\end{itemize}
-
-\paragraph{AutomatedSOS}
-
-\paragraph{Track4Run}
-
+\vspace{.5cm}
 \subsection{Overview}
+This section gives a detailed view of the physical and logical infrastructure of the system-to-be and it provides a description of the components and interfaces that could be implemented and the relationships among them.\\
+To analyze the Architectural Design has been adopted a top-down approach:\\ \\
+\textbf{Section 2.2} Description of the high-level architecture, centered on the relationships between the \textit{macro-parts} of the system.\\ \\
+\textbf{Section 2.3} Description of more specific components inside the system and illustration of interactions among them.\\ \\
+\textbf{Section 2.4} Description of the a possible deployment of the presented components and physical tiers.\\ \\
+\textbf{Section 2.5} Description of the dynamic behaviour of the complete software and illustration of the key functionalities through specific diagrams.\\ \\
+\textbf{Section 2.6} Description of the interfaces among the various presented components.\\ \\
+\textbf{Section 2.7} Description of the architectural styles, design pattern and paradigms adopted in the design part.\\ \\
+\textbf{Section 2.8} Other design decision not mentioned before.
+\clearpage
+
 
 \subsection{High-level Architecture}
 
@@ -208,7 +212,7 @@ In fact this nodes are:
 Before starting the runtime analysis there a note that has to be clarified: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as wrappers for different data type (i.e. retrieving a user tuple from the database).
 
 \subsubsection{AutomatedSOS - Alert Emergency Status}
-The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. In the view there is a subroutine which is periodically invoked in the client application to request the updated threshold values to the server. After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application.
+The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application
 
 \subsubsection{Track4Run - Create and enroll in a run}
 The creation of a run start with a specific request sent from the mobile application in which are specified the user, the startind and ending point, the date and the hour at which the run will start.
