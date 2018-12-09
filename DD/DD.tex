@@ -147,7 +147,30 @@ To analyze the Architectural Design has been adopted a top-down approach:\\ \\
 
 
 \subsection{High-level Architecture}
+The architectural design of the application must respect a particular flow which involved the main high-level components of the system.\\
+Here we have two specific schemata, one that describes Data4Help composition and the other based on AutomatedSOS and Track4Run structure:
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{architecturalDesign-data4help}
+    \caption{Data4Help system and its interaction with a generic third party}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{architecturalDesign-automated-track}
+    \caption{AutomatedSOS and Track4Run structures communicating with external services.}
+    \label{fig:my_label}
+\end{figure}
+The high-level components presented inside the diagrams are divided in different tiers in order to lighten the application on the user side and, at the same time, have a better control of the application logic and storage layers.\\
+Precisely, the structure is composed by:\\ \\
+\textbf{Presentation Tier:} this is the user interface layer which permits the interaction of customers with the service. It consists in a web application for Data4Help, that communicates with users through a web page and specific forms, and in a software for smartwear and smartphone for AutomatedSOS and Track4Run, which need a mobile interface available whenever the user wants.\\ \\
+\textbf{Application Tier:} this is the application logic layer which contains the core of the software, composed by those functionalities and methods that are invoked from the user's interface to get the desired service.\\
+In Data4Help system is the main part, because it performs the task of exchange data with third parties, handle individual and group permissions, save associations between users and third parties.\\
+In AutomatedSOS, the application tier is split among client and server, because a specific function (the control of thresholds) is performed on the client-side, to get a lower response time. Instead, the data manager and the learning algorithm, which keeps in mind the differences between distinct users, is located on the server-side.\\
+Finally, in Track4Run, it handles the different runs and allows to runners and spectators to join a specific event.\\ \\
+\textbf{Data tier:} this is the storage layer, the one in which data are saved and are fetched from. It consists in a database which contains persistent elements and, for this reason, only Data4Help and Track4Run own it. Indeed, AutomatedSOS doesn't need a data tier because gets the data directly from Data4Help.
 \clearpage
 
 \subsection{Component View}
@@ -166,6 +189,7 @@ Services:
     
     %AutomatedSOS
     \item MonitorStatusService
+    \item LearnThresholdsService
     \item EmergencyService
     
     %Track4Run
@@ -269,8 +293,10 @@ Then the data is sent to the third party periodically as already described in th
 \end{itemize}
 
 \subsection{Other Design Decision}
+\clearpage
 
 \section{User Interface Design}
+\clearpage
 
 \section{Requirements Traceability}
 
