@@ -255,19 +255,17 @@ Instead, the second diagram is an anticipation of the section 2.6, in which are 
 \clearpage
 
 \subsection{Deployment View}
-The Deployment diagram focuses on how the software is deployed to the target nodes.
-
-For convenience this section is split in three parts, one for each software product.
+The Deployment diagram focuses on how the software is deployed to the target nodes. For convenience this section is split in three parts, one for each software product.
 
 \paragraph{Data4Help}
 This section is devoted to Data4Help analysis. \\
-First of all, the Data4Help Data Collector Process which is the software components that collects the data from the smart devices is installed on the user's smartphone. \\
-In this node there is a composition relation with a generic Third Party application that uses the service provided by Data4Help in order to use the API for collecting data. \\
-The artifact, actually, is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. \\
-We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires the user's data, otherwise is not reasonable to think that a user will install only the Application for sharing his/her own data. \\
-Another aspect that needs to be clarified is that the Sensor Data Collector artifact is an ad-hoc software developed by the smart device manufacturer and not by TrackMe so it has been added for better understand the environment in which the Process on the client side will operate. \\
+First of all, the Data4Help Data Collector Process, which is the software component that collects data from smart devices, is installed on the user's smartphone. \\
+In this node there is a relation of composition with a generic Third Party application, that exploits the service provided by Data4Help using the API for data collection. \\
+The artifact, actually, is not available in a stand alone version, but it has to be included in the app that will use the Data4Help service. \\
+We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires user's data, otherwise is not reasonable to think that a user will install only the Application for sharing his/her own data. \\
+Another aspect that needs to be clarified is that the Sensor Data Collector artifact is an ad-hoc software developed by the smart device manufacturer and not by TrackMe, so it has been added for better understand the environment in which the process on the client-side will operate. \\
 It is also available a web interface for Data4Help in order to manage credentials and, for what concerns the third parties, ask for user's data. \\
-The server side of the application contains the business logic, such as the permissions management and the data anonymizing process, and it is deployed to the Data4Help Server component which also interacts with a dedicated database.
+The server side of the application contains the business logic, such as the permissions management and the data anonymizing process, and it is deployed on the Data4Help Server component which also interacts with a dedicated database.
 
 \begin{figure}[H]
     \centering
@@ -277,11 +275,11 @@ The server side of the application contains the business logic, such as the perm
 \end{figure}
 
 \paragraph{AutomatedSOS}
-AutomatedSOS is designed as it is a third party application in order to reuse the same software stack used built over Data4Help. \\
-Since AutomatedSOS is built on top of Data4Help, is necessary deploy the Data Collector Process in the user's smartphone. \\
+AutomatedSOS is designed as a third party application in order to reuse the same software stack built over Data4Help. \\
+Since AutomatedSOS is built on top of Data4Help, is necessary to deploy the Data Collector Process in the user's smartphone. \\
 The user can also install an additional app on his/her smartwatch to see the health status in real time. The artifact deployed on the smartphone calculates in background if the health parameters are acceptable with respect to the threshold values.\\
-On the server side the AutomatedSOS server handles the emergency message sent by the smartphone and it notifies the Ambulance Dispatcher. \\
-Another functionality implemented on the server is the computation of the threshold value for a single user which will be sent to the smartphone application.
+On the server-side the AutomatedSOS server handles the emergency message sent by the smartphone and it notifies the Ambulance Dispatcher. \\
+Another functionality implemented on the server is the computation of the threshold values for each distinct user which will be sent to the smartphone application.
 
 \begin{figure}[H]
     \centering
@@ -291,9 +289,9 @@ Another functionality implemented on the server is the computation of the thresh
 \end{figure}
 
 \paragraph{Track4Run}
-Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerations actuall hold for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. \\
-It is also responsible for retrieving the data from the external map service (in this case Google Maps) and to mirror the major informations like the path during a run on the smartwatch app. \\
-The server app handles the runs management, the request of the spectator giving them the updated runner's position and all the routines which preceeds the start of the run event.
+Track4Run is built on top of Data4Help as AutomatedSOS, so previous considerations are valid also for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. \\
+It is also responsible for retrieving data from the external map service (in this case Google Maps) and to mirror the major information, like the path during a run on the smartwatch app. \\
+The server app handles the management of the run, the request of the spectator, giving them the updated runner's position, and all the routines which precede the start of the run event.
 
 \begin{figure}[H]
     \centering
@@ -304,12 +302,12 @@ The server app handles the runs management, the request of the spectator giving 
 \clearpage
 
 \subsection{Runtime View}
-Before starting the runtime analysis there a note that has to be clarified: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as wrappers for different data type (i.e. retrieving a user tuple from the database).
+Before the beginning of the runtime analysis, there is a note that has to be clarified: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as wrappers for different data type (i.e. retrieving a user tuple from the database).
 
 \subsubsection{Data4Help - Third Party requires the permission to access to individual user data}
-This sequence diagram shows the case in which a third party requires to access to specific user data and how the system manage the permission. \\
+This sequence diagram shows the case in which a third party requires the access to specific user's data and how the system manage the permission. \\
 The third party, through the web interface or through its app, requires for the permission, indicating the users involved.\\
-A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the individual permission in the IndividualPermissionMaker. This service shall forward the request that has to be accepted or refused from the user and receives the response. If the user allows to acquire his data, the permission is stored in the IndividualPermissionService and finally the Third Party is notified that the request is accepted.\\
+A permission request is sent to the Data4Help Server, where the RequestHandlerService manages it and invokes the creation of the individual permission in the IndividualPermissionMaker. This service shall forward the request, that has to be accepted or refused from the user, and receives the response. If the user allows to share his data, the permission is stored in the IndividualPermissionService and finally the Third Party is notified that the request is accepted.\\
 On the contrary, if the user refuses to share his data it is not stored any permission in the system and the third party is notified that the request is not accepted.
 
 \begin{figure}[H]
@@ -349,11 +347,11 @@ The AnonymousPermissionMaker then requires the data for the "one-shot" request t
 \clearpage
 
 \subsubsection{Data4Help - Third party subscribes to anonymized data}
-This sequence diagram shows the case in which a third party requires to some anonymized data from a group of target users. \\
+This sequence diagram shows the case in which a third party requires some anonymized data from a group of target users. \\
 The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users. \\
-A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker. \\
-the AnonymousPermissionMaker invokes the AnonymousPermissionService to store the subscription permission. \\
-Then the data is sent to the third party periodically as already described in the anonymous data request until the third party unsubscribes. 
+A permission request is sent to the Data4Help Server, where the RequestHandlerService manages it and invokes the creation of the anonymous permission in the AnonymousPermissionMaker. \\
+Then, the AnonymousPermissionMaker invokes the AnonymousPermissionService to store the subscription permission.\\
+Data are sent to the third party, as already described in the anonymous data request, periodically, until the third party unsubscribes. 
 
 \begin{figure}[H]
     \centering
@@ -366,7 +364,8 @@ Then the data is sent to the third party periodically as already described in th
 \subsubsection{AutomatedSOS - Alert Emergency Status}
 The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. \\
 After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. \\
-A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application
+A notification is sent periodically until the receipt of the ack from the Emergency Service and, after that, the user is informed that an ambulance has been called.\\
+Otherwise, if the user is not in danger, the health status is regularly showed in the application.
 
 \begin{figure}[H]
     \centering
@@ -377,9 +376,9 @@ A notification is sent while an ack is not received from the Emergency Service a
 \clearpage
 
 \subsubsection{Track4Run - Create and enroll in a run}
-The creation of a run start with a specific request sent from the mobile application in which are specified the user, the startind and ending point, the date and the hour at which the run will start. \\
-Concerning the enrollment the user will search from the mobile application through the list of available run the one in which he/she wants to enroll. \\
-Thus the user is added to the runner of the event and will receive a confirmation message.
+The creation of a run start with a specific request sent from the mobile application in which are specified the user, the starting and ending point, the date and the hour at which the run will start. \\
+Concerning the enrollment, the user will search from the mobile application through the list of available runs the one in which he/she wants to enroll. \\
+Thus, the user is added to the runner of the event and will receive a confirmation message.
 
 \begin{figure}[H]
     \centering
@@ -390,8 +389,8 @@ Thus the user is added to the runner of the event and will receive a confirmatio
 \clearpage
 
 \subsubsection{Track4Run - Watch a run}
-When a user wants to watch a run first of all he/she send a request to the Track4Run Server using the Client Interface, selects the run from a list obtained applying some filters (i.e. the city of the event) and then contact the Run Watch Service. \\
-This component contacts the Run Tracking Service, retrieves the position of the runners and it sends the data to the smartphone. \\
+When a user wants to watch a run first of all he/she sends a request to the Track4Run Server using the Client Interface, selects the run from the list obtained applying some filters (i.e. the city of the event) and then contact the Run Watch Service. \\
+This component communicates with the Run Tracking Service, retrieves the position of the runners and it sends the data to the smartphone. \\
 It is also possible to see the ranking of the run in real time contacting directly the Run Tracking service.
 
 \begin{figure}[H]
@@ -417,12 +416,13 @@ Here the complete diagram which shows all the interactions between the interface
 \subsection{Selected Architectural Styles and Patterns}
 
 \subsubsection{Architectural styles}
-The architecture of the three applications offered by TrackMe is very similar.
+The architecture of the three applications offered by TrackMe is very similar.\\
 Concerning Data4Help and Track4Run the number of tier used is three: the client, the server and the database which takes care about the presentation, the application and the data layers. \\
 Since AutomatedSOS retrieves the necessary data from Data4Help and it does not have other complex data (i.e. the Run events in Track4Run) it is reasonable to delete the database for this software. \\
 Regarding the data layer, it is better to keep the data storage inside the company instead of giving this layer in outsourcing, in order to safeguard the user's information due to their confidentiality. However this layer can be easily extended because of the use of interface with the database thus, if the usage of the application grows, it would be easily scalable. \\
 Concerning the client solution, while Data4Help and Track4Run adopt a thin configuration, AutomatedSOS uses a thick one because it encapsulates a part of the application logic: the comparison of the health status with the threshold values.\\
-This choice is guided by the fact that the software must be reactive (due to the time constraint) so, while in the server the new threshold values are periodically calculated for each user (the threshold depends on the specific user health status), the comparison must be done as soon as possible, therefore on the client side.
+This choice is guided by the fact that the software must be reactive (due to the time constraint) so, while in the server the new threshold values are periodically calculated for each user (the threshold depends on the specific user health status), the comparison must be done as soon as possible, therefore on the client side. \\ \\
+The following schemata represent the different architectural styles adopted respectively for Data4Help, AutomatedSOS and Track4Run and illustrate the layer division:
 
 \begin{figure}[H]
     \centering
@@ -715,9 +715,10 @@ The integration testing for Data4Help ha to be executed between the following co
     \item Between the internal Application Server components
 \end{itemize}
 
-\noindent As mentioned before the integration testing is based on the bottom-up approach. For this reason the testing starts from the integration test of the application components with the database, that is the first component developed in the implementation plan.
-In fact the testing phase can start as soon as the component of a specific level or also a single function is completed and proceeding incrementally to the testing of the upper components integration, also thanks to the use of drivers.
-After the integration with the database, the testing can proceed with the model services which manage the permissions, anonymous and individual one, and then with the service that handle the data and permission request. Finally the intgration between the client and the server are tested: the server with the Data Collector to take data from the devices and the server with the web page.
+\noindent As mentioned before, the integration testing is based on the bottom-up approach. For this reason the testing starts from the integration test of the application components with the database, that is the first component developed in the implementation plan.\\
+In fact, the testing phase can start as soon as the component of a specific level, or also a single function, is completed and proceeds incrementally in order to test the integration with upper components, also using specific drivers.\\
+After the integration with the database, the testing can proceed with the model services, that manage the permissions, both anonymous and individual, and then with the service that handle the data and permission request.\\ 
+Finally, are tested the integration between the client and the server : the server with the Data Collector to take data from the devices and the server with the web page.
 \newline \newline This is the order in which the integration test for Data4Help should be carried on:
 
 
@@ -747,7 +748,7 @@ The integration testing for AutomatedSOS have to be executed between the followi
     \item Mobile App with Data4Help Data Collector
 \end{itemize}
 
-\noindent Also for AutomatedSOS the integration testing starts from the main server services. At first is tested the integration between the server and Data4Help, then the one between the server and the ambulance dispatcher service.
+\noindent Also for AutomatedSOS the integration testing starts from the main server services. At first is tested the integration between the server and Data4Help, then the one between the server and the ambulance dispatcher service.\\
 Finally the integration between the client and the server, especially between the MonitorStatusService (client) and the EmergencyStatusService (server) and between the MoitorStatusService and the Data4Help Data Collector (Data4Help API).
 \newline\newline This is the order in which the integration test for AutomatedSOS should be done:
 
@@ -770,7 +771,7 @@ The integration testing for Track4Run have to be executed between the following 
     \item Between the internal Application Server components
 \end{itemize}
 
-\noindent Following the implementation plan, the first component to be tested is the database and its integration with the several application server services, then the integration between the server and Data4Help and the external services.
+\noindent Following the implementation plan, the first component to be tested is the database and its integration with the several application server services, then the integration between the server and Data4Help and the external services.\\
 Finally, once the client app is implemented, the testing can proceed with the integration between Mobile app and Data4Help Data Collector and Mobile app and application server.
 \newline\newline This is the order in which the integration test for Track4Run should be done:
 
