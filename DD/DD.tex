@@ -150,6 +150,7 @@ To analyze the Architectural Design has been adopted a top-down approach:\\ \\
 The architectural design of the application must respect a particular flow which involved the main high-level components of the system.\\
 Here we have two specific schemata, one that describes Data4Help composition and the other based on AutomatedSOS and Track4Run structure:
 
+\vspace{1cm}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{architecturalDesign-data4help}
@@ -174,31 +175,83 @@ Finally, in Track4Run, it handles the different runs and allows to runners and s
 \clearpage
 
 \subsection{Component View}
-Services:
-\begin{enumerate}
+In this section the architecture is analyzed in a more detailed way, going deeper in the composition of the software structure and emphasizing the various typologies of service which make up the presentation and application logic layers.\\ \\
+The main services of Data4Help are:
+\begin{itemize}
     %Data4Help
-    \item RegistrationService
-    \item LoginService
-    \item PermissionRequestService %Riceve le richieste di permessi e le smista in base al tipo ai due servizi scritti sotto
-    \item AnonymousPermissionMaker
-    \item IndividualPermissionMaker
-    \item IndividualPermissionService %gestisce le individual
-    \item AnonymousPermissionService %gestisce le  anonime
-    \item IndividualDataService %Accede al db e elabora i dati per mandarli in uscita
-    \item AnonymousDataService %Accede al db e elabora i dati per mandarli in uscita
-    
+    \item \textbf{RegistrationService:} handles the user's sign up, whether companies or individuals.
+    \item \textbf{LoginService:} manages login and logout routines, available to users already registered.
+    \item \textbf{RequestHandlerService:} sorts the requests depending on what they ask for, permissions or data (in this second case does already exists a permission that is a subscription or an individual one).
+    \item \textbf{DataHandlerService:} interacts with the Data Collector API installed in third parties' applications and communicates with the database.
+    \item \textbf{AnonymousPermissionMaker:} creates new anonymous permissions and handles requests for unsubscribe.
+    \item \textbf{IndividualPermissionMaker:} creates new individual permissions and forwards requests to users which have to give the consensus.
+    \item \textbf{AnonymousPermissionService:} handles subscription and sends requests of data to the interface communicating with the database.
+    \item \textbf{IndividualPermissionService:}  handles individual permission and sends requests of data to the interface communicating with the database.
+    \item \textbf{IndividualDataService:} communicates with the database to respond to individual data requests.
+    \item \textbf{AnonymousDataService:} communicates with the database to respond to group data requests and controls if they can be anonymized.
+\end{itemize}
+
+\begin{sidewaysfigure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{ComponentData4Help}
+    \caption{Data4Help component view.}
+    \label{fig:my_label}
+\end{sidewaysfigure}
+\clearpage
+
+\noindent The most important services of AutomateSOS are:
+\begin{itemize}    
     %AutomatedSOS
-    \item MonitorStatusService
-    \item LearnThresholdsService
-    \item EmergencyService
-    
+    \item \textbf{MonitorStatusService:} checks user's health status (on the client).
+    \item \textbf{LearnThresholdsService:} gets user's data from Data4Help server and calculates specific user's thresholds.
+    \item \textbf{EmergencyService:} notifies the ambulance dispatcher if the health status is below the thresholds.
+\end{itemize}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{ComponentAutomatedSOS}
+    \caption{AutomatedSOS component view.}
+    \label{fig:my_label}
+\end{figure}
+
+\vspace{.5cm}
+\noindent The principal services of Track4Run are:
+\begin{itemize}    
     %Track4Run
-    \item RunCreationService %creazione corsa
-    \item RunManagementService %Gestione pre corsa(Aggiunta partecipanti)
-    \item RunTrackingService %Gestione durante la corsa
-    \item RunWatchService %Gestione spettatori durante la corsa
-    
-\end{enumerate}
+    \item \textbf{RunCreationService:} allows organizers to create a run event.
+    \item \textbf{RunManagementService:} manages a specific run event, adding and removing participants and editing the path.
+    \item \textbf{RunTrackingService:} obtains runners' positions during a run event.
+    \item \textbf{RunWatchService:} handles the spectators and updates views during a run event.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Component-Track4Run}
+    \caption{Track4Run component view.}
+    \label{fig:my_label}
+\end{figure}
+
+\vspace{.5cm}
+\noindent The previous schemata represent the implementation of the interfaces containing those methods which allow to access to listed services. The \textit{Router} has the duty to sort requests and messages which arrive to the server port. It is a generic interface and it doesn't assume a specific aspect because it could work like a middleware or be a simply interfaces built on top a socket communication. This decision is purely an implementation detail.\\ \\ \\
+The following two diagrams illustrate the relationships inside the application logic of the entire system, considering also AutomatedSOS and Track4Run services, and give a more precise idea of the involved classes and interfaces from which are used.\\
+The first diagram is simply a class diagram, generated from the one illustrated in the RASD and enriched with more precise classes and concepts, useful to split some specific components and favor cohesion inside the system.\\
+Instead, the second diagram is an anticipation of the section 2.6, in which are explained the component interfaces. Indeed, the schema shows the \textit{use} relationships between the service interfaces and the main classes of the system. It also permits to have a clearer hint about the complete system and it can be useful to better understand the runtime views.  
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=\linewidth]{classDiagram}
+    \caption{UML Class Diagram of the whole system.}
+    \label{fig:my_label}
+\end{sidewaysfigure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, height=\textheight]{ClassDiagramTotal}
+    \caption{UML Class Diagram of the whole system.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
 
 \subsection{Deployment View}
 The Deployment diagram focuses on how the software is deployed to the target nodes.
@@ -211,65 +264,138 @@ Another aspect that needs to be clarified is that the Sensor Data Collector arti
 It is also available a web interface for Data4Help in order to manage credentials and, for what concerns the third parties, ask for user's data.
 The server side of the application contains the business logic, such as the permissions management and the data anonymizing process, and it is deployed to the Data4Help Server component which also interacts with a dedicated database.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{deploymentDiagram-Data4Help}
+    \caption{Deployment Diagram of Data4Help system.}
+    \label{fig:my_label}
+\end{figure}
+
 \paragraph{AutomatedSOS}
 AutomatedSOS is designed as it is a third party application in order to reuse the same software stack used in Data4Help. Since AutomatedSOS is built on top of Data4Help, is necessary deploy the Data Collector Process in the user's smartphone. The user can also install an additional app on his/her smartwatch to see the health status in real time. The artifact deployed on the smartphone calculates in background if the health parameters are acceptable with respect to the threshold values. On the server side the AutomatedSOS server handles the emergency message sent by the smartphone and it notifies the Ambulance Dispatcher. Another functionality implemented on the server is the computation of the threshold value for a single user which will be sent to the smartphone application.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{deploymentDiagram-AutomatedSOS}
+    \caption{Deployment Diagram of AutomatedSOS system.}
+    \label{fig:my_label}
+\end{figure}
 
 \paragraph{Track4Run}
 Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerations actuall hold for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. It is also responsible for retrieving the data from the external map service (in this case Google Maps) and to mirror the major informations like the path during a run on the smartwatch app. Ther server app handles the runs management, the request of the spectator giving them the updated runner's position and all the routines which preceeds the start of the run event.
 
-
-
-In fact this nodes are:
-
-
-\begin{itemize}
-    \item Smart device: 
-    \item Website:
-    \item Third Party server:
-    \item Data4Help Server
-    \item Database
-\end{itemize}
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{deploymentDiagram-Track4Run}
+    \caption{Deployment Diagram of Track4Run system.}
+    \label{fig:my_label}
+\end{figure}
 \clearpage
 
 \subsection{Runtime View}
 Before starting the runtime analysis there a note that has to be clarified: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as wrappers for different data type (i.e. retrieving a user tuple from the database).
 
-\subsubsection{Data4Help - Third Party requires the permission to access to a specific user data}
+\subsubsection{Data4Help - Third Party requires the permission to access to individual user data}
 This sequence diagram shows the case in which a third party requires to access to specific user data and how the system manage the permission.
 The third party, through the web interface or through its app, requires for the permission, indicating the users involved. A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the individual permission in the IndividualPermissionMaker. This service shall forward the request that has to be accepted or refused from the user and receives the response. If the user allows to acquire his data, the permission is stored in the IndividualPermissionService and finally the Third Party is notified that the request is accepted.
 On the contrary, if the user refuses to share his data it is not stored any permission in the system and the third party is notified that the request is not accepted.
 
-\subsubsection{Data4Help - Third Party requires to acquire some individual data}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{SequenceDiagram-RequestForUserIndividualPermission}
+    \caption{Sequence Diagram showing the runtime flow.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\subsubsection{Data4Help - Third Party acquire individual user data}
 This sequence diagram shows the case in which a third party requires to some individual user's data.
 The third party, through the web interface or through its app, requires for the data, indicating the user. A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and check in the IndividualPermissionService if the related permission already exists.
 If the permission does not exist the process to create a new permission is invoked.
 Otherwise if the permission already exists, the RequestHandlerService invokes the IndividualPermissionService to fetch and send the data and finally the IndividualDataService sends to the Third Party the required data.
 
-\subsubsection{Data4Help - Third Party requires for anonymazed data}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{SequenceDiagram-RequestForSpecificUserData}
+    \caption{Sequence Diagram showing the runtime flow.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\subsubsection{Data4Help - Third Party requires anonymized group data}
 This sequence diagram shows the case in which a third party requires to some anonymazed data from a group of target users.
 The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users.
 A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker.
 The AnonymousPermissionMaker then requires the data for the "one-shot" request to the AnonymousDataService that check if the data can be anonymazed or not, if it is possible the data is sent to to the third party. Otherwise the third party is notified that it is not possible to share data and guarantee the user anonymity.
 
-\subsubsection{Data4Help - Third party to subscribe for anonymazed data}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, height=\textheight]{SequenceDiagram-RequestForAnonymizedData}
+    \caption{Sequence Diagram showing the runtime flow.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
+\subsubsection{Data4Help - Third party subscribes to anonymized data}
 This sequence diagram shows the case in which a third party requires to some anonymazed data from a group of target users.
 The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users.
 A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker.
 the AnonymousPermissionMaker invokes the AnonymousPermissionService to store the subscription permission.
 Then the data is sent to the third party periodically as already described in the anonymous data request until the third party unsubscribes. 
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{SequenceDiagram-RequestForSubscription}
+    \caption{Sequence Diagram showing the runtime flow.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
 \subsubsection{AutomatedSOS - Alert Emergency Status}
 The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{SequenceDiagram-AlertEmergencyStatus}
+    \caption{Sequence Diagram showing the runtime flow.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
 
 \subsubsection{Track4Run - Create and enroll in a run}
 The creation of a run start with a specific request sent from the mobile application in which are specified the user, the startind and ending point, the date and the hour at which the run will start.
 Concerning the enrollment the user will search from the mobile application through the list of available run the one in which he/she wants to enroll. Thus the user is added to the runner of the event and will receive a confirmation message.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{SequenceDiagram-CreateAndEnrollToARunEvent}
+    \caption{Sequence Diagram showing the runtime flow.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
 \subsubsection{Track4Run - Watch a run}
 When a user wants to watch a run first of all he/she send a request to the Track4Run Server using the Client Interface, selects the run from a list obtained applying some filters (i.e. the city of the event) and then contact the Run Watch Service. This component contacts the Run Tracking Service, retrieves the position of the runners and it sends the data to the smartphone. It is also possible to see the ranking of the run in real time contacting directly the Run Tracking service.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{SequenceDiagram-SpectateARunEvent}
+    \caption{Sequence Diagram showing the runtime flow.}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
+
 \subsection{Component Interfaces}
+This section includes further details on the interfaces between different components of the system. Their structure has been thought to hide the large amount of operations which some calls require and to maintain a good level of cohesion due to the accurate split of functionalities.\\
+Here the complete diagram which shows all the interactions between the interfaces and the correct flow of each service.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{ComponentInterfaces}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+\clearpage
 
 \subsection{Selected Architectural Styles and Patterns}
 
@@ -313,6 +439,8 @@ One of these could be Apache Flink which is a distributed stream and batch data 
 \clearpage
 
 \section{User Interface Design}
+The user interface design has been already illustrated in the RASD in section 3.1.1 where have been presented the main mock-ups of the applications.\\
+Since weren't done relevant modifications on the typology and the presentation of the interfaces, each link with the application view refers to those mock-ups. 
 \clearpage
 
 \section{Requirements Traceability}
