@@ -233,7 +233,8 @@ The main services of Data4Help are:
 \end{figure}
 
 \vspace{.5cm}
-\noindent The previous schemata represent the implementation of the interfaces containing those methods which allow to access to listed services. The \textit{Router} has the duty to sort requests and messages which arrive to the server port. It is a generic interface and it doesn't assume a specific aspect because it could work like a middleware or be a simply interfaces built on top a socket communication. This decision is purely an implementation detail.\\ \\ \\
+\noindent The previous schemata represent the implementation of the interfaces containing those methods which allow to access to listed services. \\ 
+The \textit{Router} has the duty to sort requests and messages which arrive to the server port. It is a generic interface and it doesn't assume a specific aspect because it could work like a middleware or be a simply interfaces built on top a socket communication. This decision is purely an implementation detail.\\ \\ \\
 The following two diagrams illustrate the relationships inside the application logic of the entire system, considering also AutomatedSOS and Track4Run services, and give a more precise idea of the involved classes and interfaces from which are used.\\
 The first diagram is simply a class diagram, generated from the one illustrated in the RASD and enriched with more precise classes and concepts, useful to split some specific components and favor cohesion inside the system.\\
 Instead, the second diagram is an anticipation of the section 2.6, in which are explained the component interfaces. Indeed, the schema shows the \textit{use} relationships between the service interfaces and the main classes of the system. It also permits to have a clearer hint about the complete system and it can be useful to better understand the runtime views.  
@@ -259,9 +260,13 @@ The Deployment diagram focuses on how the software is deployed to the target nod
 For convenience this section is split in three parts, one for each software product.
 
 \paragraph{Data4Help}
-This section is devoted to Data4Help analysis. First of all, the Data4Help Data Collector Process which is the software components that collects the data from the smart devices is installed on the user's smartphone. In this node there is a composition relation with a generic Third Party application that uses the service provided by Data4Help in order to use the API for collecting data. The artifact, actually, is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires the user's data, otherwise is not reasonable to think that a user will install only the Process for sharing his/her own data.
-Another aspect that needs to be clarified is that the Sensor Data Collector artifact is an ad-hoc software developed by the smart device manufacturer and not by TrackMe so it has been added for better understand the environment in which the Process on the client side will operate.
-It is also available a web interface for Data4Help in order to manage credentials and, for what concerns the third parties, ask for user's data.
+This section is devoted to Data4Help analysis. \\
+First of all, the Data4Help Data Collector Process which is the software components that collects the data from the smart devices is installed on the user's smartphone. \\
+In this node there is a composition relation with a generic Third Party application that uses the service provided by Data4Help in order to use the API for collecting data. \\
+The artifact, actually, is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. \\
+We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires the user's data, otherwise is not reasonable to think that a user will install only the Application for sharing his/her own data. \\
+Another aspect that needs to be clarified is that the Sensor Data Collector artifact is an ad-hoc software developed by the smart device manufacturer and not by TrackMe so it has been added for better understand the environment in which the Process on the client side will operate. \\
+It is also available a web interface for Data4Help in order to manage credentials and, for what concerns the third parties, ask for user's data. \\
 The server side of the application contains the business logic, such as the permissions management and the data anonymizing process, and it is deployed to the Data4Help Server component which also interacts with a dedicated database.
 
 \begin{figure}[H]
@@ -272,7 +277,11 @@ The server side of the application contains the business logic, such as the perm
 \end{figure}
 
 \paragraph{AutomatedSOS}
-AutomatedSOS is designed as it is a third party application in order to reuse the same software stack used in Data4Help. Since AutomatedSOS is built on top of Data4Help, is necessary deploy the Data Collector Process in the user's smartphone. The user can also install an additional app on his/her smartwatch to see the health status in real time. The artifact deployed on the smartphone calculates in background if the health parameters are acceptable with respect to the threshold values. On the server side the AutomatedSOS server handles the emergency message sent by the smartphone and it notifies the Ambulance Dispatcher. Another functionality implemented on the server is the computation of the threshold value for a single user which will be sent to the smartphone application.
+AutomatedSOS is designed as it is a third party application in order to reuse the same software stack used built over Data4Help. \\
+Since AutomatedSOS is built on top of Data4Help, is necessary deploy the Data Collector Process in the user's smartphone. \\
+The user can also install an additional app on his/her smartwatch to see the health status in real time. The artifact deployed on the smartphone calculates in background if the health parameters are acceptable with respect to the threshold values.\\
+On the server side the AutomatedSOS server handles the emergency message sent by the smartphone and it notifies the Ambulance Dispatcher. \\
+Another functionality implemented on the server is the computation of the threshold value for a single user which will be sent to the smartphone application.
 
 \begin{figure}[H]
     \centering
@@ -282,7 +291,9 @@ AutomatedSOS is designed as it is a third party application in order to reuse th
 \end{figure}
 
 \paragraph{Track4Run}
-Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerations actuall hold for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. It is also responsible for retrieving the data from the external map service (in this case Google Maps) and to mirror the major informations like the path during a run on the smartwatch app. Ther server app handles the runs management, the request of the spectator giving them the updated runner's position and all the routines which preceeds the start of the run event.
+Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerations actuall hold for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. \\
+It is also responsible for retrieving the data from the external map service (in this case Google Maps) and to mirror the major informations like the path during a run on the smartwatch app. \\
+The server app handles the runs management, the request of the spectator giving them the updated runner's position and all the routines which preceeds the start of the run event.
 
 \begin{figure}[H]
     \centering
@@ -296,8 +307,9 @@ Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerat
 Before starting the runtime analysis there a note that has to be clarified: not all the message types that appear in the sequence diagrams are represented in the class diagram because they are used as wrappers for different data type (i.e. retrieving a user tuple from the database).
 
 \subsubsection{Data4Help - Third Party requires the permission to access to individual user data}
-This sequence diagram shows the case in which a third party requires to access to specific user data and how the system manage the permission.
-The third party, through the web interface or through its app, requires for the permission, indicating the users involved. A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the individual permission in the IndividualPermissionMaker. This service shall forward the request that has to be accepted or refused from the user and receives the response. If the user allows to acquire his data, the permission is stored in the IndividualPermissionService and finally the Third Party is notified that the request is accepted.
+This sequence diagram shows the case in which a third party requires to access to specific user data and how the system manage the permission. \\
+The third party, through the web interface or through its app, requires for the permission, indicating the users involved.\\
+A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the individual permission in the IndividualPermissionMaker. This service shall forward the request that has to be accepted or refused from the user and receives the response. If the user allows to acquire his data, the permission is stored in the IndividualPermissionService and finally the Third Party is notified that the request is accepted.\\
 On the contrary, if the user refuses to share his data it is not stored any permission in the system and the third party is notified that the request is not accepted.
 
 \begin{figure}[H]
@@ -309,10 +321,10 @@ On the contrary, if the user refuses to share his data it is not stored any perm
 \clearpage
 
 \subsubsection{Data4Help - Third Party acquire individual user data}
-This sequence diagram shows the case in which a third party requires to some individual user's data.
-The third party, through the web interface or through its app, requires for the data, indicating the user. A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and check in the IndividualPermissionService if the related permission already exists.
-If the permission does not exist the process to create a new permission is invoked.
-Otherwise if the permission already exists, the RequestHandlerService invokes the IndividualPermissionService to fetch and send the data and finally the IndividualDataService sends to the Third Party the required data.
+This sequence diagram shows the case in which a third party requires to some individual user's data. \\
+The third party, through the web interface or through its app, requires for the data, indicating the user. \\
+A data request is sent to the Data4Help Server, where the RequestHandlerService manage it and check in the IndividualPermissionService if the related permission already exists. \\
+If the permission does not exist the process to create a new permission is invoked (see previous sequence diagram). Otherwise if the permission already exists, the RequestHandlerService invokes the IndividualPermissionService to fetch and send the data and finally the IndividualDataService sends to the Third Party the required data.
 
 \begin{figure}[H]
     \centering
@@ -323,10 +335,10 @@ Otherwise if the permission already exists, the RequestHandlerService invokes th
 \clearpage
 
 \subsubsection{Data4Help - Third Party requires anonymized group data}
-This sequence diagram shows the case in which a third party requires to some anonymazed data from a group of target users.
-The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users.
-A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker.
-The AnonymousPermissionMaker then requires the data for the "one-shot" request to the AnonymousDataService that check if the data can be anonymazed or not, if it is possible the data is sent to to the third party. Otherwise the third party is notified that it is not possible to share data and guarantee the user anonymity.
+This sequence diagram shows the case in which a third party requires to some anonymized data from a group of target users. \\
+The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users. \\
+A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker. \\
+The AnonymousPermissionMaker then requires the data for the "one-shot" request to the AnonymousDataService that check if the data can be anonymized or not, if it is possible the data is sent to to the third party. Otherwise the third party is notified that it is not possible to share data and guarantee the user anonymity.
 
 \begin{figure}[H]
     \centering
@@ -337,10 +349,10 @@ The AnonymousPermissionMaker then requires the data for the "one-shot" request t
 \clearpage
 
 \subsubsection{Data4Help - Third party subscribes to anonymized data}
-This sequence diagram shows the case in which a third party requires to some anonymazed data from a group of target users.
-The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users.
-A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker.
-the AnonymousPermissionMaker invokes the AnonymousPermissionService to store the subscription permission.
+This sequence diagram shows the case in which a third party requires to some anonymized data from a group of target users. \\
+The third party, through the web interface or through its app, requires for the data, indicating the filters and the target to group the users. \\
+A permission Request is sent to the Data4Help Server, where the RequestHandlerService manage it and invoke the creation of the anonymous permission in the AnonymousPermissionMaker. \\
+the AnonymousPermissionMaker invokes the AnonymousPermissionService to store the subscription permission. \\
 Then the data is sent to the third party periodically as already described in the anonymous data request until the third party unsubscribes. 
 
 \begin{figure}[H]
@@ -352,7 +364,9 @@ Then the data is sent to the third party periodically as already described in th
 \clearpage
 
 \subsubsection{AutomatedSOS - Alert Emergency Status}
-The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application
+The diagram shows the routine executed by AutomatedSOS when a user enters in the emergency status. \\
+After the request of the user health status to the Data4Help Data Collector Process the application compares them with their threshold values and, once it has verified that the safety constraint is not respected, contacts the Emergency Service sending the User and his/her current position. \\
+A notification is sent while an ack is not received from the Emergency Service and, after that, the user is informed that an ambulance has been called. Otherwise if the user is not in danger the health status is regularly showed in the application
 
 \begin{figure}[H]
     \centering
@@ -363,8 +377,9 @@ The diagram shows the routine executed by AutomatedSOS when a user enters in the
 \clearpage
 
 \subsubsection{Track4Run - Create and enroll in a run}
-The creation of a run start with a specific request sent from the mobile application in which are specified the user, the startind and ending point, the date and the hour at which the run will start.
-Concerning the enrollment the user will search from the mobile application through the list of available run the one in which he/she wants to enroll. Thus the user is added to the runner of the event and will receive a confirmation message.
+The creation of a run start with a specific request sent from the mobile application in which are specified the user, the startind and ending point, the date and the hour at which the run will start. \\
+Concerning the enrollment the user will search from the mobile application through the list of available run the one in which he/she wants to enroll. \\
+Thus the user is added to the runner of the event and will receive a confirmation message.
 
 \begin{figure}[H]
     \centering
@@ -375,7 +390,9 @@ Concerning the enrollment the user will search from the mobile application throu
 \clearpage
 
 \subsubsection{Track4Run - Watch a run}
-When a user wants to watch a run first of all he/she send a request to the Track4Run Server using the Client Interface, selects the run from a list obtained applying some filters (i.e. the city of the event) and then contact the Run Watch Service. This component contacts the Run Tracking Service, retrieves the position of the runners and it sends the data to the smartphone. It is also possible to see the ranking of the run in real time contacting directly the Run Tracking service.
+When a user wants to watch a run first of all he/she send a request to the Track4Run Server using the Client Interface, selects the run from a list obtained applying some filters (i.e. the city of the event) and then contact the Run Watch Service. \\
+This component contacts the Run Tracking Service, retrieves the position of the runners and it sends the data to the smartphone. \\
+It is also possible to see the ranking of the run in real time contacting directly the Run Tracking service.
 
 \begin{figure}[H]
     \centering
@@ -401,10 +418,10 @@ Here the complete diagram which shows all the interactions between the interface
 
 \subsubsection{Architectural styles}
 The architecture of the three applications offered by TrackMe is very similar.
-Concerning Data4Help and Track4Run the number of tier used is three: the client, the server and the database which takes care about the presentation, the application and the data layers.
-Since AutomatedSOS retrieves the necessary data from Data4Help and it does not have other complex data (i.e. the Run events in Track4Run) it is reasonable to delete the database for this software.
-Regarding the data layer, it is better to keep the data storage inside the company instead of giving this layer in outsourcing, in order to safeguard the user's information due to their confidentiality. However this layer can be easily extended because of the use of interface with the database thus, if the usage of the application grows, it would be easily scalable. 
-Concerning the client solution, while Data4Help and Track4Run adopt a thin configuration, AutomatedSOS uses a thick one because it encapsulates a part of the application logic: the comparison of the health status with the threshold values.
+Concerning Data4Help and Track4Run the number of tier used is three: the client, the server and the database which takes care about the presentation, the application and the data layers. \\
+Since AutomatedSOS retrieves the necessary data from Data4Help and it does not have other complex data (i.e. the Run events in Track4Run) it is reasonable to delete the database for this software. \\
+Regarding the data layer, it is better to keep the data storage inside the company instead of giving this layer in outsourcing, in order to safeguard the user's information due to their confidentiality. However this layer can be easily extended because of the use of interface with the database thus, if the usage of the application grows, it would be easily scalable. \\
+Concerning the client solution, while Data4Help and Track4Run adopt a thin configuration, AutomatedSOS uses a thick one because it encapsulates a part of the application logic: the comparison of the health status with the threshold values.\\
 This choice is guided by the fact that the software must be reactive (due to the time constraint) so, while in the server the new threshold values are periodically calculated for each user (the threshold depends on the specific user health status), the comparison must be done as soon as possible, therefore on the client side.
 
 
@@ -416,25 +433,28 @@ This choice is guided by the fact that the software must be reactive (due to the
      
     \item \textbf{Client-Server Pattern:} The three services are based on the Server-Client pattern. Data4Help and also AutomatedSOS and Track4Run, are composed by a server that computes the main functions, otherwise the client has the function to let the user interface to the services.
     
-    \item \textbf{Model-View-Controller Pattern:} To guarantee better modularity all the services are based on the MVC pattern, the application is divided in three parts: Model, View, Controller. The Model lies in the servers and performs the application and persistence tasks, it is managed by the controller that lies both in server and in the clients. Finally the View, that performs the interface through which the users access and control the services, lies on the clients. This pattern allows to reduce coupling among the core functions of the services and the interface.
+    \item \textbf{Model-View-Controller Pattern:} To guarantee better modularity all the services are based on the MVC pattern, the application is divided in three parts: Model, View, Controller. \\ 
+    The Model lies in the servers and performs the application and persistence tasks, it is managed by the controller that lies both in server and in the clients. \\
+    Finally the View, that performs the interface through which the users access and control the services, lies on the clients. This pattern allows to reduce coupling among the core functions of the services and the interface.
     
-    \item \textbf{Facade Pattern:} In order to make complex subsystems easier to use and to reducing the dependencies among them, facade pattern is used in all of the three service offered by TrackMe. The main systems are divided into smaller components, they communicate with each others through interfaces. Thanks to this solution the single components do not have to touch the internal state neither to know the internal implementation of other parts.
+    \item \textbf{Facade Pattern:} In order to make complex subsystems easier to use and to reducing the dependencies among them, facade pattern is used in all of the three service offered by TrackMe. \\
+    The main systems are divided into smaller components, they communicate with each others through interfaces. Thanks to this solution the single components do not have to touch the internal state neither to know the internal implementation of other parts.
     
 \end{itemize}
 
 \subsection{Other Design Decision}
-There are some design decisions that are not treated in detail in the document. 
-First of all, concerning the communication between the server and the clients, there are several ways to do it. 
-Initially, while the application dimension is quite small, the communication part can be handled using the sockets and then, once the application grows, a middleware can be used to hide some complexity factors (i.e. see Java RMI).
-In fact, while the application grows, is necessary to introduce more endpoints and distribute them in order to balance all the requests that has to be handled.
-Another question that needs a note is derived by the choice of the communication type to adopt.
+There are some design decisions that are not treated in detail in the document. \\
+First of all, concerning the communication between the server and the clients, there are several ways to do it. \\
+Initially, while the application dimension is quite small, the communication part can be handled using the sockets and then, once the application grows, a middleware can be used to hide some complexity factors (i.e. see Java RMI).\\
+In fact, while the application grows, is necessary to introduce more endpoints and distribute them in order to balance all the requests that has to be handled.\\
+Another question that needs a note is derived by the choice of the communication type to adopt.\\
 An intuitive option is to use a message-based communication model.
-This decision is primarly supported by the adoption of the Visitor design pattern. 
+This decision is primarly supported by the adoption of the Visitor design pattern. \\
 In fact, the use of specific classes of messages offers to the developers the possibility to divide the various messages handling methods and it also relieves the dimension of all the classes which unpack the messages. 
 This can be done encapsulating some methods in the message itself.
-
-Regarding the database technology adopted, there is a huge variety of solutions.
-One peculiar option is to use, instead of a traditional database solution, a middleware that manages data in an efficient way.
+\\ 
+Regarding the database technology adopted, there is a huge variety of solutions.\\
+One peculiar option is to use, instead of a traditional database solution, a middleware that manages data in an efficient way.\\
 One of these could be Apache Flink which is a distributed stream and batch data processing system. This middleware also provides a set of API to enable SQL query and actually transform the distributed application in an efficient query system to retrieve a large amount of data.
 \clearpage
 
