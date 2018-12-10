@@ -153,7 +153,7 @@ Here we have two specific schemata, one that describes Data4Help composition and
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{architecturalDesign-data4help}
-    \caption{Data4Help system and its interaction with a generic third party.}
+    \caption{Data4Help system and its interaction with a generic third party}
     \label{fig:my_label}
 \end{figure}
 
@@ -163,9 +163,7 @@ Here we have two specific schemata, one that describes Data4Help composition and
     \caption{AutomatedSOS and Track4Run structures communicating with external services.}
     \label{fig:my_label}
 \end{figure}
-\clearpage
-
-\noindent The high-level components presented inside the diagrams are divided in different tiers in order to lighten the application on the user side and, at the same time, have a better control of the application logic and storage layers.\\
+The high-level components presented inside the diagrams are divided in different tiers in order to lighten the application on the user side and, at the same time, have a better control of the application logic and storage layers.\\
 Precisely, the structure is composed by:\\ \\
 \textbf{Presentation Tier:} this is the user interface layer which permits the interaction of customers with the service. It consists in a web application for Data4Help, that communicates with users through a web page and specific forms, and in a software for smartwear and smartphone for AutomatedSOS and Track4Run, which need a mobile interface available whenever the user wants.\\ \\
 \textbf{Application Tier:} this is the application logic layer which contains the core of the software, composed by those functionalities and methods that are invoked from the user's interface to get the desired service.\\
@@ -176,86 +174,36 @@ Finally, in Track4Run, it handles the different runs and allows to runners and s
 \clearpage
 
 \subsection{Component View}
-In this section the architecture is analyzed in a more detailed way, going deeper in the composition of the software structure and emphasizing the various typologies of service which make up the presentation and application logic layers.\\ \\
-The main services of Data4Help are:
-\begin{itemize}
+Services:
+\begin{enumerate}
     %Data4Help
-    \item \textbf{RegistrationService:} handles the user's sign up, whether companies or individuals.
-    \item \textbf{LoginService:} manages login and logout routines, available to users already registered.
-    \item \textbf{RequestHandlerService:} sorts the requests depending on what they ask for, permissions or data (in this second case does already exists a permission that is a subscription or an individual one).
-    \item \textbf{DataHandlerService:} interacts with the Data Collector API installed in third parties' applications and communicates with the database.
-    \item \textbf{AnonymousPermissionMaker:} creates new anonymous permissions and handles requests for unsubscribe.
-    \item \textbf{IndividualPermissionMaker:} creates new individual permissions and forwards requests to users which have to give the consensus.
-    \item \textbf{AnonymousPermissionService:} handles subscription and sends requests of data to the interface communicating with the database.
-    \item \textbf{IndividualPermissionService:}  handles individual permission and sends requests of data to the interface communicating with the database.
-    \item \textbf{IndividualDataService:} communicates with the database to respond to individual data requests.
-    \item \textbf{AnonymousDataService:} communicates with the database to respond to group data requests and controls if they can be anonymized.
-\end{itemize}
-
-\begin{sidewaysfigure}[h!]
-    \centering
-    \includegraphics[width=\linewidth]{ComponentData4Help}
-    \caption{Data4Help component view.}
-    \label{fig:my_label}
-\end{sidewaysfigure}
-\clearpage
-
-\noindent The most important services of AutomateSOS are:
-\begin{itemize}
+    \item RegistrationService
+    \item LoginService
+    \item PermissionRequestService %Riceve le richieste di permessi e le smista in base al tipo ai due servizi scritti sotto
+    \item AnonymousPermissionMaker
+    \item IndividualPermissionMaker
+    \item IndividualPermissionService %gestisce le individual
+    \item AnonymousPermissionService %gestisce le  anonime
+    \item IndividualDataService %Accede al db e elabora i dati per mandarli in uscita
+    \item AnonymousDataService %Accede al db e elabora i dati per mandarli in uscita
+    
     %AutomatedSOS
-    \item \textbf{MonitorStatusService:} checks user's health status (on the client).
-    \item \textbf{LearnThresholdsService:} gets user's data from Data4Help server and calculates specific user's thresholds.
-    \item \textbf{EmergencyService:} notifies the ambulance dispatcher if the health status is below the thresholds.
-\end{itemize}
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{Component-AutomatedSOS}
-    \caption{AutomatedSOS component view.}
-    \label{fig:my_label}
-\end{figure}
-
-\vspace{.5cm}
-\noindent The principal services of Track4Run are:
-\begin{itemize}    
+    \item MonitorStatusService
+    \item LearnThresholdsService
+    \item EmergencyService
+    
     %Track4Run
-    \item \textbf{RunCreationService:} allows organizers to create a run event.
-    \item \textbf{RunManagementService:} manages a specific run event, adding and removing participants and editing the path.
-    \item \textbf{RunTrackingService:} obtains runners' positions during a run event.
-    \item \textbf{RunWatchService:} handles the spectators and updates views during a run event.
-\end{itemize}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{Component-Track4Run}
-    \caption{Track4Run component view.}
-    \label{fig:my_label}
-\end{figure}
-
-\vspace{.5cm}
-\noindent The previous schemata represent the implementation of the interfaces containing those methods which allow to access to listed services. The \textit{Router} has the duty to sort requests and messages which arrive to the server port. It is a generic interface and it doesn't assume a specific aspect because it could work like a middleware or be a simply interfaces built on top a socket communication. This decision is a purely implementation detail.\\ \\ \\
-The following two diagrams illustrate the relationships inside the application logic of the entire system, considering also AutomatedSOS and Track4Run services, and give a more precise idea of the involved classes and interfaces from which are used.
-\clearpage
-
-\begin{sidewaysfigure}
-    \centering
-    \includegraphics[width=\linewidth]{classDiagram}
-    \caption{UML Class Diagram of the whole system.}
-    \label{fig:my_label}
-\end{sidewaysfigure}
-\clearpage
-
-\begin{sidewaysfigure}
-    \centering
-    \includegraphics[width=\linewidth]{ClassDiagramTotal}
-    \caption{UML Class Diagram of the whole system.}
-    \label{fig:my_label}
-\end{sidewaysfigure}
-\clearpage
+    \item RunCreationService %creazione corsa
+    \item RunManagementService %Gestione pre corsa(Aggiunta partecipanti)
+    \item RunTrackingService %Gestione durante la corsa
+    \item RunWatchService %Gestione spettatori durante la corsa
+    
+\end{enumerate}
 
 \subsection{Deployment View}
-The Deployment diagram focuses on how the software is deployed to the target nodes. For convenience this section is split in three parts, one for each software product.
+The Deployment diagram focuses on how the software is deployed to the target nodes.
+
+For convenience this section is split in three parts, one for each software product.
 
 \paragraph{Data4Help}
 This section is devoted to Data4Help analysis. First of all, the Data4Help Data Collector Process which is the software components that collects the data from the smart devices is installed on the user's smartphone. In this node there is a composition relation with a generic Third Party application that uses the service provided by Data4Help in order to use the API for collecting data. The artifact, actually, is not available in a stand alone version but it has to be included in the app that will use the Data4Help service. We made this choice because we think that the service offered by Data4Help is useful only when a third party application (such as AutomatedSOS and Track4Run do) requires the user's data, otherwise is not reasonable to think that a user will install only the Process for sharing his/her own data.
@@ -269,12 +217,19 @@ AutomatedSOS is designed as it is a third party application in order to reuse th
 \paragraph{Track4Run}
 Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerations actuall hold for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. It is also responsible for retrieving the data from the external map service (in this case Google Maps) and to mirror the major informations like the path during a run on the smartwatch app. Ther server app handles the runs management, the request of the spectator giving them the updated runner's position and all the routines which preceeds the start of the run event.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{}
-    \caption{Caption}
-    \label{fig:my_label}
-\end{figure}
+
+
+In fact this nodes are:
+
+
+\begin{itemize}
+    \item Smart device: 
+    \item Website:
+    \item Third Party server:
+    \item Data4Help Server
+    \item Database
+\end{itemize}
+
 \clearpage
 
 \subsection{Runtime View}
@@ -342,6 +297,19 @@ This choice is guided by the fact that the software must be reactive (due to the
 \end{itemize}
 
 \subsection{Other Design Decision}
+There are some design decisions that are not treated in detail in the document. 
+First of all, concerning the communication between the server and the clients, there are several ways to do it. 
+Initially, while the application dimension is quite small, the communication part can be handled using the sockets and then, once the application grows, a middleware can be used to hide some complexity factors (i.e. see Java RMI).
+In fact, while the application grows, is necessary to introduce more endpoints and distribute them in order to balance all the requests that has to be handled.
+Another question that needs a note is derived by the choice of the communication type to adopt.
+An intuitive option is to use a message-based communication model.
+This decision is primarly supported by the adoption of the Visitor design pattern. 
+In fact, the use of specific classes of messages offers to the developers the possibility to divide the various messages handling methods and it also relieves the dimension of all the classes which unpack the messages. 
+This can be done encapsulating some methods in the message itself.
+
+Regarding the database technology adopted, there is a huge variety of solutions.
+One peculiar option is to use, instead of a traditional database solution, a middleware that manages data in an efficient way.
+One of these could be Apache Flink which is a distributed stream and batch data processing system. This middleware also provides a set of API to enable SQL query and actually transform the distributed application in an efficient query system to retrieve a large amount of data.
 \clearpage
 
 \section{User Interface Design}
@@ -498,184 +466,9 @@ thousand).
 
 \end{enumerate}
 
-\clearpage
-
 \section{Implementation, Integration and Test Plan}
 
-\subsection{Implementation Plan}
-The core service developed by TrackMe is Data4Help. In fact the Third parties services, and also AutomatedSOS and Track4Run, are developed on top of Data4Help. 
-It is a reasonable strategy plan to start the implementation from Data4Help and then to proceed with AutomatedSOS and Track4Run.
-
-\begin{enumerate}[label*=\bf{\arabic*}]
-
-\item \textbf{Data4Help} First of all, the model of our application has to be developed in order to provide the basic unit to all the services that will run in Data4Help. Since the main functions of the application are all based on data management it is useful that the building process starts from the two services that involves the data and their relation with the database: Individual and Anonymous Data Service and DMBS integration [1.1].
-Once the data management is implemented, the next proposed section that has to be developed is the one devoted to manage the permission and access to the data: the Individual and the Anonymous Permission Service [1.2].
-The next step is to implement the services which create the permissions: the Individual and the Anonymous Permission Maker [1.3]. Finally, the development of the login, registration and the service that manages the request received from the third parties can conclude the model implementation:the RequestHandlerService [1.4], the LoginService and the RegistartionService [1.5].
-Since the model is completed the implementation can continue with the Data Collector, the service that is integrated with third party mobile apps, devoted to collect the users' data and send them to data4Help server [1.6]. Finally the web interface [1.7] can be developed.
-
-
-\begin{enumerate}[label*=\bf{.\arabic*}]
-    \item \textbf{Model} - IndividualDataService, AnonymousDataService, DBMS, Database
-    \item \textbf{Model} - IndividualPermissionService, AnonymousPermissionService, 
-    \item \textbf{Model} - IndividualPermissionMaker, AnonymousPermissionMaker
-    \item \textbf{Model} - RequestHandlerService
-    \item \textbf{Model} - LoginService, RegistrationService
-    \item \textbf{Model-Controller} - Data Collector for the third party applications
-    \item \textbf{View} - Web interface
-\end{enumerate}
-
-\item \textbf{AutomatedSOS}
-As regards AutomatedSOS the implementation should start from the model, in particular from the server services involved in some data receipt and the users' threshold evaluation [2.1]: LearnThresholdsService. Then can be implemeted the service which manage the emergency status and the ambulance call [2.2]: the EmergencyStatusService. Finally has to be developed the Client side, the mobile App [2.3], the integration with the Data4Help Collector and the service that check the user's status [2.4]: the MonitorStatusService.
-
-\begin{enumerate}[label*=\bf{.\arabic*}]
-    \item \textbf{Model-Controller} - LearnThresholdsService and communication with Data4Help
-    \item \textbf{Model-Controller} - EmergencyStatusService and communication with Ambulance Dispatcher
-    \item \textbf{Model-View-Controller} Mobile Application and communication
-    \item \textbf{Model} MonitorStatusService
-\end{enumerate}
-
-\item \textbf{Track4Run}
-Also for Track4Run the implementation should start from the model. At first the database [3.1] is developed, followed by the main service to manage the runs [3.2] and the service to create the run [3.3]: the RunManagementService and the RunCreationService. Then the service involved in the data receipt, the position tracking and the communication with external service can be implemented [3.4]: RunTrackingService. To conclude the model implementation the service to manage the run watch can be developed [3.5]: RunWatchService. 
-Finally can be developed the mobile app with the integration with the Data4Help Colector [3.6].
-
-\begin{enumerate}[label*=\bf{.\arabic*}]
-    \item \textbf{Model} database
-    \item \textbf{Model} RunManagementService
-    \item \textbf{Model}RunCreationService
-    \item \textbf{Model- Controller} RunTrackingService and communication with External Actors
-    \item \textbf{Model} RunWatchService
-    \item \textbf{View-Controller} Mobile App and communication
-\end{enumerate}
-\end{enumerate}
-
-\subsection{Integration and Testing}
-
-\subsubsection{Testing Strategy}
-It is highly recommended to start the testing phase since the first steps of the development in order to reduce the possibility to increase the risk of high cost of repairing during the implementation. For this reason, a strategy based on a Big Bang approach can be risky, instead an incremental one could be more appropriate.
-Since the implementation plan starts from the basic services proceeding incrementally to the top services, it is a reasonable decision to carry out a \textbf{bottom-up strategy} for the integration testing.
-Thanks to this solution the testing phase can start since the first moment of the implementation. As soon as the components are implemented, they can be tested through the use of drivers, then when also the component on the top are developed the integration between them can be tested, and so on and so forth.
-Otherwise, since all the functionality are implemented by specific and modular services and the communication among them is implemented by interfaces a low level of coupling is guaranteed, this allows to facilitate the integration testing.
-
-\subsubsection{Integration Testing Plan}
-
-\paragraph{Data4Help}
-The integration testing for Data4Help have to be executed between the following components:
-
-\begin{itemize}
-    \item Application Server with the DBMS
-    \item Application Server with Third Parties
-    \item Application Server with Data Collector API
-    \item Application Server with Web interface
-    \item Between the internal Application Server components
-\end{itemize}
-
-\begin{enumerate}
-    \item Database - AnonymousDataService
-    \item Database - IndividualDataService
-    \item Database - DataHandlerService
-    \item AnonymousDataService - AnonymousPermissionService
-    \item IndividualDataService - IndividualPermissionService
-    \item IndividualPermissionService - IndividualPermissionMaker
-    \item AnonymousPermissionService - AnonymousPermissionMaker
-    \item IndividualPermissionService - RequestHandlerService
-    \item AnonymousPermissionService - RequestHandlerService
-    \item AnonymousPermissionMaker - RequestHandlerService
-    \item IndividualPermissionMaker - RequestHandlerService
-    \item DataCollectorService - DataHandlerService
-    \item Web interface - LoginService
-    \item Web interface - RegistrationService
-\end{enumerate}
-
-\paragraph{AutomatedSOS}
-The integration testing for AutomatedSOS have to be executed between the following components:
-\begin{itemize}
-    \item Application Server with the Mobile App
-    \item Application Server with Data4Help
-    \item Application Server with Ambulance Dispatcher
-    \item Between the internal Application Server components
-\end{itemize}
-
-\begin{enumerate}
-    \item LearnThresholdsService - Data4Help
-    \item LearnThresholdsService - EmergencyStatusService
-    \item LearnThresholdsService - MonitorStatusService
-\end{enumerate}
-
-\paragraph{Track4Run}
-The integration testing for Track4Run have to be executed between the following components:
-
-\begin{itemize}
-    \item Application Server with the Mobile App
-    \item Application Server with Data4Help
-    \item Application Server with DBMS
-    \item Application Server with external services (i.e. Google Maps)
-    \item Between the internal Application Server components
-\end{itemize}
-
-\begin{enumerate}
-    \item RunManagementService - Database
-    \item RunCreationService - Database
-    \item RunTrackingService - Database
-    \item RunWatchService - Database
-    \item RunTrackingService - Data4Help
-    \item RunTrackingService - External Services (Google maps)
-    \item RunManagementService - Mobile App
-    \item RunCreationService - Mobile App
-    \item RunTrackingService - Mobile App
-    \item RunWatchService - Mobile App
-\end{enumerate}
-
-\clearpage
-
 \section{Effort Spent}
-
-Davide Salaorni
-
-\begin{center}
-\begin{tabular}{|l | l |}
-    \hline \bf{Purpose, Scope, Definitions} & 2 \\ \hline
-    \bf{High level Architecture}  & 3 \\ \hline
-    \bf{Component View} & 6 \\ \hline
-    \bf{Deployment View} & 3 \\ \hline
-    \bf{Run Time View} & 5\\ \hline
-    \bf{Component View} & 4 \\ \hline
-    \bf{Architectural Style and Pattern} & 2 \\ \hline
-    \bf{Requirement Traceability} & 2 \\ \hline
-    \bf{Implementation, Integration and Testing} & 2 \\ \hline
-\end{tabular}
-\end{center}
-
-\noindent  Luca Terracciano
-
-\begin{center}
-\begin{tabular}{|l | l |}
-    \hline \bf{Purpose, Scope, Definitions} & 1 \\ \hline
-    \bf{High level Architecture}  & 2 \\ \hline
-    \bf{Component View} & 6 \\ \hline
-    \bf{Deployment View} & 7 \\ \hline
-    \bf{Run Time View} & 2\\ \hline
-    \bf{Component View} & 4 \\ \hline
-    \bf{Architectural Style and Pattern} & 4 \\ \hline
-    \bf{Requirement Traceability} & 2 \\ \hline
-    \bf{Implementation, Integration and Testing} & 2 \\ \hline
-\end{tabular}
-\end{center}
-
-\noindent Manuel Trivilino
-
-\begin{center}
-\begin{tabular}{|l | l |}
-    \hline \bf{Purpose, Scope, Definitions} & 1 \\ \hline
-    \bf{High level Architecture}  & 4 \\ \hline
-    \bf{Component View} & 6 \\ \hline
-    \bf{Deployment View} & 1 \\ \hline
-    \bf{Run Time View} & 4\\ \hline
-    \bf{Component View} & 3 \\ \hline
-    \bf{Architectural Style and Pattern} & 4 \\ \hline
-    \bf{Requirement Traceability} & 2 \\ \hline
-    \bf{Implementation, Integration and Testing} & 5 \\ \hline
-\end{tabular}
-\end{center}
 
 \section{References}
 
