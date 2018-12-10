@@ -163,7 +163,9 @@ Here we have two specific schemata, one that describes Data4Help composition and
     \caption{AutomatedSOS and Track4Run structures communicating with external services.}
     \label{fig:my_label}
 \end{figure}
-The high-level components presented inside the diagrams are divided in different tiers in order to lighten the application on the user side and, at the same time, have a better control of the application logic and storage layers.\\
+\clearpage
+
+\noindent The high-level components presented inside the diagrams are divided in different tiers in order to lighten the application on the user side and, at the same time, have a better control of the application logic and storage layers.\\
 Precisely, the structure is composed by:\\ \\
 \textbf{Presentation Tier:} this is the user interface layer which permits the interaction of customers with the service. It consists in a web application for Data4Help, that communicates with users through a web page and specific forms, and in a software for smartwear and smartphone for AutomatedSOS and Track4Run, which need a mobile interface available whenever the user wants.\\ \\
 \textbf{Application Tier:} this is the application logic layer which contains the core of the software, composed by those functionalities and methods that are invoked from the user's interface to get the desired service.\\
@@ -182,50 +184,74 @@ The main services of Data4Help are:
     \item \textbf{LoginService:} manages login and logout routines, available to users already registered.
     \item \textbf{RequestHandlerService:} sorts the requests depending on what they ask for, permissions or data (in this second case does already exists a permission that is a subscription or an individual one).
     \item \textbf{DataHandlerService:} interacts with the Data Collector API installed in third parties' applications and communicates with the database.
-    \item \textbf{AnonymousPermissionMaker:} creates new anonymous permission and handles unsubscription request.
-    \item \textbf{IndividualPermissionMaker:}
-    \item \textbf{AnonymousPermissionService:} %gestisce le  anonime
-    \item \textbf{IndividualPermissionService:} %gestisce le individual
-    \item \textbf{IndividualDataService:} %Accede al db e elabora i dati per mandarli in uscita
-    \item \textbf{AnonymousDataService:} %Accede al db e elabora i dati per mandarli in uscita
+    \item \textbf{AnonymousPermissionMaker:} creates new anonymous permissions and handles requests for unsubscribe.
+    \item \textbf{IndividualPermissionMaker:} creates new individual permissions and forwards requests to users which have to give the consensus.
+    \item \textbf{AnonymousPermissionService:} handles subscription and sends requests of data to the interface communicating with the database.
+    \item \textbf{IndividualPermissionService:}  handles individual permission and sends requests of data to the interface communicating with the database.
+    \item \textbf{IndividualDataService:} communicates with the database to respond to individual data requests.
+    \item \textbf{AnonymousDataService:} communicates with the database to respond to group data requests and controls if they can be anonymized.
 \end{itemize}
 
 \begin{sidewaysfigure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{Component-Data4Help}
+    \includegraphics[width=\linewidth]{ComponentData4Help}
     \caption{Data4Help component view.}
     \label{fig:my_label}
 \end{sidewaysfigure}
 \clearpage
 
+\noindent The most important services of AutomateSOS are:
 \begin{itemize}
     %AutomatedSOS
-    \item \textbf{MonitorStatusService:}
-    \item \textbf{LearnThresholdsService:}
-    \item \textbf{EmergencyService:}
+    \item \textbf{MonitorStatusService:} checks user's health status (on the client).
+    \item \textbf{LearnThresholdsService:} gets user's data from Data4Help server and calculates specific user's thresholds.
+    \item \textbf{EmergencyService:} notifies the ambulance dispatcher if the health status is below the thresholds.
 \end{itemize}
 
-\begin{figure}[h!]
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Component-AutomatedSOS}
     \caption{AutomatedSOS component view.}
     \label{fig:my_label}
 \end{figure}
 
+\vspace{.5cm}
+\noindent The principal services of Track4Run are:
 \begin{itemize}    
     %Track4Run
-    \item \textbf{RunCreationService:} %creazione corsa
-    \item \textbf{RunManagementService:} %Gestione pre corsa(Aggiunta partecipanti)
-    \item \textbf{RunTrackingService:} %Gestione durante la corsa
-    \item \textbf{RunWatchService:} %Gestione spettatori durante la corsa
+    \item \textbf{RunCreationService:} allows organizers to create a run event.
+    \item \textbf{RunManagementService:} manages a specific run event, adding and removing participants and editing the path.
+    \item \textbf{RunTrackingService:} obtains runners' positions during a run event.
+    \item \textbf{RunWatchService:} handles the spectators and updates views during a run event.
 \end{itemize}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{Component-Track4Run}
     \caption{Track4Run component view.}
     \label{fig:my_label}
 \end{figure}
+
+\vspace{.5cm}
+\noindent The previous schemata represent the implementation of the interfaces containing those methods which allow to access to listed services. The \textit{Router} has the duty to sort requests and messages which arrive to the server port. It is a generic interface and it doesn't assume a specific aspect because it could work like a middleware or be a simply interfaces built on top a socket communication. This decision is a purely implementation detail.\\ \\ \\
+The following two diagrams illustrate the relationships inside the application logic of the entire system, considering also AutomatedSOS and Track4Run services, and give a more precise idea of the involved classes and interfaces from which are used.
+\clearpage
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=\linewidth]{classDiagram}
+    \caption{UML Class Diagram of the whole system.}
+    \label{fig:my_label}
+\end{sidewaysfigure}
+\clearpage
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=\linewidth]{ClassDiagramTotal}
+    \caption{UML Class Diagram of the whole system.}
+    \label{fig:my_label}
+\end{sidewaysfigure}
 \clearpage
 
 \subsection{Deployment View}
@@ -242,6 +268,13 @@ AutomatedSOS is designed as it is a third party application in order to reuse th
 
 \paragraph{Track4Run}
 Track4Run is built on top of Data4Help as AutomatedSOS so the previos considerations actuall hold for this application. The smartphone app allows the user to create, enroll and watch a run by communicating with the Track4Run server. It is also responsible for retrieving the data from the external map service (in this case Google Maps) and to mirror the major informations like the path during a run on the smartwatch app. Ther server app handles the runs management, the request of the spectator giving them the updated runner's position and all the routines which preceeds the start of the run event.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
 \clearpage
 
 \subsection{Runtime View}
